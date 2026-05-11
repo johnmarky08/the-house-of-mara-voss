@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://b2c277s0ldtnw"]
+
+[ext_resource type="Script" uid="uid://bsfipeh3grtw6" path="res://scripts/core/IntroCinematic.cs" id="1_wh5qk"]
+[ext_resource type="FontFile" uid="uid://cgh2kw8defkgq" path="res://assets/fonts/AlmendraDisplay-Regular.ttf" id="2_q3eam"]
+
+[node name="IntroCinematic" type="Control" unique_id=1115719817]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wh5qk")
+metadata/_edit_use_anchors_ = true
+
+[node name="BlackBG" type="ColorRect" parent="." unique_id=1140121595]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="IntroText" type="Label" parent="." unique_id=1917733569]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_q3eam")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WhiteFlash" type="ColorRect" parent="." unique_id=142708591]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleCard" type="Label" parent="." unique_id=1907143859]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.5
+offset_top = -11.5
+offset_right = 104.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_q3eam")
+theme_override_font_sizes/font_size = 56
+text = "THE HOUSE OF MARA VOSS"
+horizontal_alignment = 1
+vertical_alignment = 1
