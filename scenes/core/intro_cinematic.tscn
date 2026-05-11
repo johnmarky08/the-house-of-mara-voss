@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsfipeh3grtw6" path="res://scripts/core/IntroCinematic.cs" id="1_wh5qk"]
 [ext_resource type="FontFile" uid="uid://cgh2kw8defkgq" path="res://assets/fonts/AlmendraDisplay-Regular.ttf" id="2_q3eam"]
+[ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="3_l0gfb"]
 
 [node name="IntroCinematic" type="Control" unique_id=1115719817]
 layout_mode = 3
@@ -66,7 +67,7 @@ offset_right = 104.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_q3eam")
+theme_override_fonts/font = ExtResource("3_l0gfb")
 theme_override_font_sizes/font_size = 56
 text = "THE HOUSE OF MARA VOSS"
 horizontal_alignment = 1
