@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://qqsrimoosct4"]
+
+[ext_resource type="Script" uid="uid://ecdcbl5wn8tq" path="res://scripts/world/room4/Room4.cs" id="1_dk3gh"]
+[ext_resource type="Texture2D" uid="uid://dbvlhtkoulqh6" path="res://assets/images/bgs/Room_4_BG.png" id="1_vm8cx"]
+[ext_resource type="Texture2D" uid="uid://dj02dj2tf8axo" path="res://assets/images/tilemaps/Room_4-Objects.png" id="2_dk3gh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjcun"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(0, 0, 1876, 2475)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pvbv"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(1876, 0, 1876, 2475)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h6nac"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjcun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pvbv")
+}],
+"loop": true,
+"name": &"Mirror",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m311v"]
+size = Vector2(776.1456, 786.95215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i16n7"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(4367, 1650, 537, 825)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp8qu"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(4904, 1650, 537, 825)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nexf"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(5441, 1650, 537, 825)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v313n"]
+atlas = ExtResource("2_dk3gh")
+region = Rect2(5978, 1650, 537, 825)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2jtaa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i16n7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp8qu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nexf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v313n")
+}],
+"loop": true,
+"name": &"Mirror State",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwbvp"]
+size = Vector2(391.8575, 441.73273)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnohf"]
+size = Vector2(32.734375, 58.125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3cdq"]
+size = Vector2(229.25, 393.75)
+
+[node name="Room4" type="Node2D" unique_id=1922872642]
+script = ExtResource("1_dk3gh")
+
+[node name="Room4Bg" type="Sprite2D" parent="." unique_id=2002605858]
+position = Vector2(575.25, 326.75)
+scale = Vector2(0.7470703, 0.62353516)
+texture = ExtResource("1_vm8cx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=85872719]
+position = Vector2(102.000015, 347)
+scale = Vector2(0.2641258, 0.26939392)
+sprite_frames = SubResource("SpriteFrames_h6nac")
+animation = &"Mirror"
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite2D" unique_id=1613011263]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D" unique_id=1201892089]
+position = Vector2(-5.679138, 720.135)
+scale = Vector2(0.9999992, 0.9999992)
+shape = SubResource("RectangleShape2D_m311v")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1875278089]
+position = Vector2(517, 257)
+scale = Vector2(0.3334206, 0.26407197)
+sprite_frames = SubResource("SpriteFrames_2jtaa")
+animation = &"Mirror State"
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite2D2" unique_id=1738322229]
+position = Vector2(-1244.6742, 340.8161)
+scale = Vector2(0.79217, 1.0201534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D2/Area2D" unique_id=364226110]
+position = Vector2(1673.4443, -302.53088)
+scale = Vector2(0.99999887, 0.9999989)
+shape = SubResource("RectangleShape2D_hwbvp")
+
+[node name="Pic 1" type="Area2D" parent="." unique_id=1134101639]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 1" unique_id=255118232]
+position = Vector2(67.125, 124.5)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 2" type="Area2D" parent="." unique_id=1236403907]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 2" unique_id=2003645891]
+position = Vector2(159, 137)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 3" type="Area2D" parent="." unique_id=1059210588]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 3" unique_id=884296438]
+position = Vector2(83, 24)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 4" type="Area2D" parent="." unique_id=165585795]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 4" unique_id=527437266]
+position = Vector2(146, 35)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 5" type="Area2D" parent="." unique_id=1860266762]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 5" unique_id=1389110538]
+position = Vector2(195, 52)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 6" type="Area2D" parent="." unique_id=21466441]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 6" unique_id=1259899357]
+position = Vector2(245, 56)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 7" type="Area2D" parent="." unique_id=2087922450]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 7" unique_id=794544119]
+position = Vector2(-88, 148)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 8" type="Area2D" parent="." unique_id=399011681]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 8" unique_id=748015670]
+position = Vector2(9, 150)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 9" type="Area2D" parent="." unique_id=827627936]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 9" unique_id=80889805]
+position = Vector2(84, 137)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 10" type="Area2D" parent="." unique_id=1182237334]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 10" unique_id=1782965698]
+position = Vector2(139, 143)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 11" type="Area2D" parent="." unique_id=1753443208]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 11" unique_id=306048108]
+position = Vector2(196, 139)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Pic 12" type="Area2D" parent="." unique_id=1778056308]
+position = Vector2(159, 133)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pic 12" unique_id=1772937899]
+position = Vector2(243, 138)
+shape = SubResource("RectangleShape2D_dnohf")
+
+[node name="Area2D13" type="Area2D" parent="." unique_id=1423665294]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D13" unique_id=743452270]
+position = Vector2(949.625, 318.875)
+shape = SubResource("RectangleShape2D_m3cdq")
