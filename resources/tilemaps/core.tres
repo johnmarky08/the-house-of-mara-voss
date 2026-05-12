@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ck45f1c2romeq" path="res://assets/images/tilemaps/objects.png" id="1_ormqa"]
 [ext_resource type="Texture2D" uid="uid://dqnvd0hj60jfn" path="res://assets/images/tilemaps/tilemap_room_1.png" id="2_conyg"]
-[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room1BG.png" id="2_uekro"]
+[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room_1_BG.png" id="2_uekro"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wodat"]
 resource_name = "big_object"
@@ -379,6 +379,7 @@ texture = ExtResource("1_ormqa")
 41:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6hx4x"]
+resource_name = "room_1_bg"
 texture = ExtResource("2_uekro")
 0:0/0 = 0
 1:0/0 = 0
@@ -6423,6 +6424,7 @@ texture = ExtResource("2_uekro")
 105:56/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_conyg"]
+resource_name = "tilemap_room_1"
 texture = ExtResource("2_conyg")
 2:0/0 = 0
 9:0/0 = 0

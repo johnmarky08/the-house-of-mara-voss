@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://csuu3rp12akl8"]
 
-[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room1BG.png" id="1_g3xb1"]
+[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room_1_BG.png" id="1_g3xb1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d4t8t"]
 resource_name = "Room1"

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dpdighi1otfjt"]
 
-[ext_resource type="Script" uid="uid://b41f32cw50uor" path="res://scripts/ui/MainMenu.cs" id="1_0kq3x"]
-[ext_resource type="Texture2D" uid="uid://crohuf1f415uk" path="res://assets/images/bgs/Main_Menu_Background.png" id="2_1g8jr"]
+[ext_resource type="Script" path="res://scripts/ui/MainMenu.cs" id="1_0kq3x"]
+[ext_resource type="Texture2D" uid="uid://crohuf1f415uk" path="res://assets/images/bgs/Main_Menu_BG.png" id="2_1g8jr"]
 [ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="2_5nq8d"]
-[ext_resource type="Texture2D" uid="uid://cdgyewk63gkc7" path="res://assets/images/tilemaps/Options-removebg.png" id="3_9fkkv"]
+[ext_resource type="Texture2D" uid="uid://cdgyewk63gkc7" path="res://assets/images/core/game_menu.png" id="3_9fkkv"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_1g8jr"]
 color = Color(0, 0, 0, 0)

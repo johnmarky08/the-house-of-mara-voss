@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nfa5w4h1u4wx"
-path="res://.godot/imported/Room1BG.png-5451a4e491c189be41fcd14d499d87a2.ctex"
+uid="uid://b2wcw7jqpsrgp"
+path="res://.godot/imported/brass_key.png-5ced3a8f7952b8c42f239e9e08d408bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bgs/Room1BG.png"
-dest_files=["res://.godot/imported/Room1BG.png-5451a4e491c189be41fcd14d499d87a2.ctex"]
+source_file="res://assets/images/core/brass_key.png"
+dest_files=["res://.godot/imported/brass_key.png-5ced3a8f7952b8c42f239e9e08d408bf.ctex"]
 
 [params]
 

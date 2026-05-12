@@ -76,7 +76,7 @@ public partial class Room1Puzzle : Area2D
 				var half = rect.Size / 2f;
 				if (localMouse.X >= -half.X && localMouse.X <= half.X && localMouse.Y >= -half.Y && localMouse.Y <= half.Y)
 				{
-					Globals.Instance?.MarkReturnedFromPuzzle();
+					Globals.Instance.SHARDS_COLLECTED[0] = true;
 					SceneManager.ChangeScene("res://scenes/world/room_1.tscn");
 					GetViewport().SetInputAsHandled();
 					return;
@@ -170,7 +170,6 @@ public partial class Room1Puzzle : Area2D
 			if (spinbox != null)
 			{
 				currentValues[i] = (int)spinbox.Value;
-				GD.Print($"padlock-{i} value: {currentValues[i]}");
 			}
 			else
 			{
@@ -188,59 +187,42 @@ public partial class Room1Puzzle : Area2D
 			if (currentValues[i] != expectedCombination[i])
 			{
 				isCorrect = false;
-				GD.Print($"Mismatch at index {i}: got {currentValues[i]}, expected {expectedCombination[i]}");
 				break;
 			}
 		}
 
 		if (isCorrect)
-		{
-			GD.Print("Padlock combination correct!");
 			PlayDrawerAnimation();
-		}
+
 	}
 
 	private async void PlayDrawerAnimation()
 	{
 		var drawer = GetNode<AnimatedSprite2D>("Drawer");
 		if (drawer == null)
-		{
-			GD.Print("ERROR: Could not find Drawer node!");
+
 			return;
-		}
 
 
 		await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
 
-		GD.Print("Found drawer, playing animation after 500ms delay");
 		drawer.Play("DrawerOpen");
 
 
 		await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
 		drawer.Stop();
 		drawer.Frame = 1;
-		GD.Print($"Drawer animation stopped - current frame: {drawer.Frame}");
 
 
 		var padlock = GetNode<Node2D>("Padlock");
 		if (padlock != null)
-		{
 			padlock.Visible = false;
-			GD.Print("Padlock hidden after animation");
-		}
 
 
 		await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
 
 		var brassKey1 = GetNode<Area2D>("BrassKey1");
 		if (brassKey1 != null)
-		{
 			brassKey1.Visible = true;
-			GD.Print("BrassKey1 revealed");
-		}
-		else
-		{
-			GD.Print("WARNING: BrassKey1 node not found!");
-		}
 	}
 }

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://djkxom7clrlri"]
 
-[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room1BG.png" id="1_hnbyo"]
+[ext_resource type="Script" uid="uid://jdtew1iy5cr6" path="res://scripts/world/room1/Room1.cs" id="1_332ta"]
+[ext_resource type="Texture2D" uid="uid://nfa5w4h1u4wx" path="res://assets/images/bgs/Room_1_BG.png" id="1_hnbyo"]
 [ext_resource type="TileSet" uid="uid://csuu3rp12akl8" path="res://resources/tilemaps/bgs.tres" id="2_fbq1s"]
 [ext_resource type="TileSet" uid="uid://dal8dcqe0vbar" path="res://resources/tilemaps/core.tres" id="2_hnbyo"]
 [ext_resource type="Script" uid="uid://cjgprt6xovxjh" path="res://scripts/world/room1/cup/CupExamine2.cs" id="4_ev7th"]
@@ -28,8 +29,14 @@
 [ext_resource type="Script" uid="uid://ob13oeurtyqk" path="res://scripts/world/room1/clock/ClockClarify1.cs" id="20_pt4cd"]
 [ext_resource type="Script" uid="uid://bm0gf0w0sjmvw" path="res://scripts/world/room1/calendar/CalendarClarify1.cs" id="22_xwh56"]
 [ext_resource type="Script" uid="uid://beetkefdsbd2d" path="res://scripts/world/room1/drawing/DrawingClarify1.cs" id="24_h80xr"]
+[ext_resource type="Script" uid="uid://druhh55hn7ugb" path="res://scripts/world/room1/drawer/DrawerExamine2.cs" id="28_f0ooq"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="30_f0ooq"]
+[ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="32_kq8op"]
+[ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_t5d1k"]
 
-[node name="Room1" type="Node2D" unique_id=1869507838]
+[node name="Room1" type="TileMapLayer" unique_id=927437449]
+tile_set = ExtResource("2_hnbyo")
+script = ExtResource("1_332ta")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1699132744]
 z_index = -1
@@ -296,6 +303,14 @@ texture_filter = 1
 scale = Vector2(1.5, 1.5)
 tile_set = ExtResource("2_hnbyo")
 
+[node name="Examine2" type="TileMapLayer" parent="Objects/DrawerFinal" unique_id=600124820]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+tile_map_data = PackedByteArray("AAAGAAIABAAcABcAAAAGAAMABAAcABgAAAAGAAQABAAcABkAAAAGAAUABAAcABoAAAAGAAYABAAcABsAAAAGAAcABAAcABwAAAAGAAgABAAcAB0AAAAHAAMABAAdABgAAAAHAAQABAAdABkAAAAHAAUABAAdABoAAAAHAAYABAAdABsAAAAHAAcABAAdABwAAAAHAAgABAAdAB0AAAAIAAMABAAeABgAAAAIAAQABAAeABkAAAAIAAUABAAeABoAAAAIAAYABAAeABsAAAAIAAcABAAeABwAAAAIAAgABAAeAB0AAAAJAAMABAAfABgAAAAJAAQABAAfABkAAAAJAAUABAAfABoAAAAJAAYABAAfABsAAAAJAAcABAAfABwAAAAJAAgABAAfAB0AAAAKAAQABAAgABkAAAAKAAUABAAgABoAAAAKAAYABAAgABsAAAAKAAcABAAgABwAAAAKAAgABAAgAB0AAAALAAQABAAhABkAAAALAAUABAAhABoAAAALAAYABAAhABsAAAALAAcABAAhABwAAAAMAAQABAAiABkAAAAMAAUABAAiABoAAAAMAAYABAAiABsAAAAMAAcABAAiABwAAAANAAQABAAjABkAAAANAAUABAAjABoAAAANAAYABAAjABsAAAANAAcABAAjABwAAAA=")
+tile_set = ExtResource("2_hnbyo")
+script = ExtResource("28_f0ooq")
+
 [node name="Examine1" type="TileMapLayer" parent="Objects/DrawerFinal" unique_id=170286071]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAALAAUABAASABcAAAALAAYABAASABgAAAALAAcABAASABkAAAALAAgABAASABoAAAALAAkABAASABsAAAALAAoABAASABwAAAALAAsABAASAB0AAAAMAAUABAATABcAAAAMAAYABAATABgAAAAMAAcABAATABkAAAAMAAgABAATABoAAAAMAAkABAATABsAAAAMAAoABAATABwAAAAMAAsABAATAB0AAAANAAUABAAUABcAAAANAAYABAAUABgAAAANAAcABAAUABkAAAANAAgABAAUABoAAAANAAkABAAUABsAAAANAAoABAAUABwAAAANAAsABAAUAB0AAAAOAAUABAAVABcAAAAOAAYABAAVABgAAAAOAAcABAAVABkAAAAOAAgABAAVABoAAAAOAAkABAAVABsAAAAOAAoABAAVABwAAAAOAAsABAAVAB0AAAAPAAYABAAWABgAAAAPAAcABAAWABkAAAAPAAgABAAWABoAAAAPAAkABAAWABsAAAAPAAoABAAWABwAAAAPAAsABAAWAB0AAAAQAAYABAAXABgAAAAQAAcABAAXABkAAAAQAAgABAAXABoAAAAQAAkABAAXABsAAAAQAAoABAAXABwAAAAQAAsABAAXAB0AAAARAAYABAAYABgAAAARAAcABAAYABkAAAARAAgABAAYABoAAAARAAkABAAYABsAAAARAAoABAAYABwAAAARAAsABAAYAB0AAAA=")
@@ -310,6 +325,13 @@ texture_filter = 1
 scale = Vector2(1.5, 1.5)
 tile_map_data = PackedByteArray("AAAUABgAAAADAAkAAAALABYAAQAIAAkAAAALABcAAQAIAAoAAAALABgAAQAIAAsAAAALABkAAQAIAAwAAAALABoAAQAIAA0AAAAMABYAAQAJAAkAAAAMABcAAQAJAAoAAAAMABgAAQAJAAsAAAAMABkAAQAJAAwAAAAMABoAAQAJAA0AAAANABYAAQAKAAkAAAANABcAAQAKAAoAAAANABgAAQAKAAsAAAANABkAAQAKAAwAAAANABoAAQAKAA0AAAAOABYAAQALAAkAAAAOABcAAQALAAoAAAAOABgAAQALAAsAAAAOABkAAQALAAwAAAAOABoAAQALAA0AAAAPABYAAQAXAAkAAAAPABcAAQAXAAoAAAAPABgAAQAXAAsAAAAPABkAAQAXAAwAAAAPABoAAQAXAA0AAAA=")
 tile_set = ExtResource("2_hnbyo")
+
+[node name="BrassKey" type="Sprite2D" parent="UI/Inventory" unique_id=152966316]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(98.66669, 392.6667)
+rotation = 0.7853982
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("30_f0ooq")
 
 [node name="ClarityToggle" type="TileMapLayer" parent="UI" unique_id=2035719442]
 texture_filter = 1
@@ -349,3 +371,10 @@ modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAnABYAAQAjAAIAAAAnABcAAQAjAAMAAAAnABgAAQAjAAQAAAAnABkAAQAjAAUAAAAnABoAAQAjAAYAAAAoABYAAQAkAAIAAAAoABcAAQAkAAMAAAAoABgAAQAkAAQAAAAoABkAAQAkAAUAAAAoABoAAQAkAAYAAAApABYAAQAlAAIAAAApABcAAQAlAAMAAAApABgAAQAlAAQAAAApABkAAQAlAAUAAAApABoAAQAlAAYAAAAqABYAAQAmAAIAAAAqABcAAQAmAAMAAAAqABgAAQAmAAQAAAAqABkAAQAmAAUAAAAqABoAAQAmAAYAAAArABYAAQAnAAIAAAArABcAAQAnAAMAAAArABgAAQAnAAQAAAArABkAAQAnAAUAAAArABoAAQAnAAYAAAAsABYAAQAoAAIAAAAsABcAAQAoAAMAAAAsABgAAQAoAAQAAAAsABkAAQAoAAUAAAAsABoAAQAoAAYAAAAtABYAAQApAAIAAAAtABcAAQApAAMAAAAtABgAAQApAAQAAAAtABkAAQApAAUAAAAtABoAAQApAAYAAAA=")
 tile_set = ExtResource("2_hnbyo")
+
+[node name="RightArrow" type="Sprite2D" parent="UI" unique_id=2082962599]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(1082, 324)
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("32_kq8op")
+script = ExtResource("33_t5d1k")

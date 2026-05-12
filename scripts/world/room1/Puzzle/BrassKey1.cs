@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class BrassKey1 : Area2D
 {
@@ -19,7 +18,7 @@ public partial class BrassKey1 : Area2D
 		if (!mouseEvent.Pressed || mouseEvent.ButtonIndex != MouseButton.Left)
 			return;
 
-		Globals.Instance?.MarkReturnedFromPuzzle();
+		Globals.Instance.SHARDS_COLLECTED[0] = true;
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		SceneManager.ChangeScene("res://scenes/world/room_1.tscn");
 	}
