@@ -1,7 +1,15 @@
 using Godot;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
 
 public partial class ExamineHandler : TileMapLayer
 {
+    [Export(PropertyHint.MultilineText)] public string ExamineText = "";
+    [Export] public float DialogueDuration = 3f;
+    [Export(PropertyHint.MultilineText)] public string DialogueDurationText = "";
+    [Export] public int DialogueFontSize = 32;
     [ExportCategory("Hover Cursor")]
     [Export(PropertyHint.File, "*.png,*.webp,*.jpg")] public string UnlockedCursorTexturePath = "res://assets/images/core/cursor_magnifying_glass.png";
     [Export(PropertyHint.File, "*.png,*.webp,*.jpg")] public string LockedCursorTexturePath = "res://assets/images/core/cursor_locked_magnifying_glass.png";
@@ -29,6 +37,9 @@ public partial class ExamineHandler : TileMapLayer
 
     public override void _Input(InputEvent @event)
     {
+        if (Dialogue.IsInputBlocked)
+            return;
+
         if (!(@event is InputEventMouseButton mouseEvent) || !mouseEvent.Pressed || mouseEvent.ButtonIndex != MouseButton.Left)
             return;
 
@@ -43,8 +54,91 @@ public partial class ExamineHandler : TileMapLayer
             ExamineHelper.CycleExamine(this);
             RoomExamineTracker.OnExamineClicked(this);
             OnExamineClicked();
+
+            var dialogueSegments = GetDialogueSegments();
+            var dialogueDurations = GetDialogueDurations();
+            var globalPos = GetGlobalPosition();
+
+            _ = ShowDialogueSequenceAsync(dialogueSegments, dialogueDurations, globalPos);
             OnAnyExamineClicked();
             GetTree().Root.SetInputAsHandled();
+        }
+    }
+
+    private List<string> GetDialogueSegments()
+    {
+        var segments = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(ExamineText))
+            return segments;
+
+        var pipeSplit = ExamineText.Split('|');
+        foreach (var part in pipeSplit)
+        {
+            var lineSplit = part.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            foreach (var line in lineSplit)
+            {
+                var segment = line.Trim();
+                if (!string.IsNullOrWhiteSpace(segment))
+                    segments.Add(segment);
+            }
+        }
+
+        return segments;
+    }
+
+    private List<float> GetDialogueDurations()
+    {
+        var durations = new List<float>();
+
+        if (!string.IsNullOrWhiteSpace(DialogueDurationText))
+        {
+            // Split on pipe first, then on newlines to handle both separators
+            var pipeSplit = DialogueDurationText.Split('|');
+            foreach (var part in pipeSplit)
+            {
+                // Further split by newlines
+                var lineSplit = part.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+                foreach (var line in lineSplit)
+                {
+                    var trimmedDuration = line.Trim();
+                    if (string.IsNullOrWhiteSpace(trimmedDuration))
+                        continue;
+
+                    if (float.TryParse(trimmedDuration, NumberStyles.Float, CultureInfo.InvariantCulture, out var durationValue) ||
+                        float.TryParse(trimmedDuration, out durationValue))
+                    {
+                        durations.Add(durationValue);
+                    }
+                }
+            }
+        }
+
+        if (durations.Count == 0)
+            durations.Add(DialogueDuration);
+
+        return durations;
+    }
+
+    private async Task ShowDialogueSequenceAsync(List<string> dialogueSegments, List<float> dialogueDurations, Vector2 globalPos)
+    {
+        Dialogue.BeginInputBlock();
+
+        try
+        {
+            for (int index = 0; index < dialogueSegments.Count; index++)
+            {
+                var dialogueText = dialogueSegments[index];
+                if (string.IsNullOrWhiteSpace(dialogueText))
+                    continue;
+
+                float duration = dialogueDurations[Math.Min(index, dialogueDurations.Count - 1)];
+                await Dialogue.ShowText(this, dialogueText, duration, globalPos.X, globalPos.Y, fontSize: DialogueFontSize);
+            }
+        }
+        finally
+        {
+            Dialogue.EndInputBlock();
         }
     }
 
@@ -86,6 +180,9 @@ public partial class ExamineHandler : TileMapLayer
 
     public override void _Process(double delta)
     {
+        if (Dialogue.IsInputBlocked)
+            return;
+
         if (!HoverEnabled)
             return;
 

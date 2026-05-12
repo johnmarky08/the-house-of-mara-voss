@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class ToastClarify1 : ExamineHandler
+public partial class ClockClarify1 : ExamineHandler
 {
     protected override void OnExamineClicked()
     {

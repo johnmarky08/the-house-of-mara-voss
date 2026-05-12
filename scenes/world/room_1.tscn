@@ -25,6 +25,9 @@
 [ext_resource type="Script" uid="uid://deegt51futt44" path="res://scripts/world/room1/drawer/DrawerExamine1.cs" id="18_0dxsb"]
 [ext_resource type="Script" uid="uid://r1drw1000001" path="res://scripts/world/room1/drawing/DrawingExamine1.cs" id="18_drawing_examine1"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="19_8rvm2"]
+[ext_resource type="Script" uid="uid://ob13oeurtyqk" path="res://scripts/world/room1/clock/ClockClarify1.cs" id="20_pt4cd"]
+[ext_resource type="Script" uid="uid://bm0gf0w0sjmvw" path="res://scripts/world/room1/calendar/CalendarClarify1.cs" id="22_xwh56"]
+[ext_resource type="Script" uid="uid://beetkefdsbd2d" path="res://scripts/world/room1/drawing/DrawingClarify1.cs" id="24_h80xr"]
 
 [node name="Room1" type="Node2D" unique_id=1869507838]
 
@@ -59,6 +62,9 @@ scale = Vector2(0.99999994, 0.99999994)
 tile_map_data = PackedByteArray("AAAOAAsABAAKAAMAAAAOAAwABAAKAAQAAAAPAAoABAALAAIAAAAPAAsABAALAAMAAAAPAAwABAALAAQAAAAQAAsABAAMAAMAAAAQAAwABAAMAAQAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("5_pt4cd")
+ExamineText = "(A number written in ink on the base.)|(Like someone used it as a coaster for a pen, or pressed the pen down too hard while writing something else nearby.)"
+DialogueDurationText = "3.0|5.0"
+DialogueFontSize = 28
 
 [node name="Window" type="TileMapLayer" parent="Objects" unique_id=548799927]
 texture_filter = 1
@@ -72,6 +78,9 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAJAAAABAAdAAoAAAAJAAEABAAdAAsAAAAJAAIABAAdAAwAAAAJAAMABAAdAA0AAAAJAAQABAAdAA4AAAAJAAUABAAdAA8AAAAJAAYABAAdABAAAAAKAAAABAAeAAoAAAAKAAEABAAeAAsAAAAKAAIABAAeAAwAAAAKAAMABAAeAA0AAAAKAAQABAAeAA4AAAAKAAUABAAeAA8AAAAKAAYABAAeABAAAAALAAAABAAfAAoAAAALAAEABAAfAAsAAAALAAIABAAfAAwAAAALAAMABAAfAA0AAAALAAQABAAfAA4AAAALAAUABAAfAA8AAAALAAYABAAfABAAAAAMAAAABAAgAAoAAAAMAAEABAAgAAsAAAAMAAIABAAgAAwAAAAMAAMABAAgAA0AAAAMAAQABAAgAA4AAAAMAAUABAAgAA8AAAAMAAYABAAgABAAAAANAAAABAAhAAoAAAANAAEABAAhAAsAAAANAAIABAAhAAwAAAANAAMABAAhAA0AAAANAAQABAAhAA4AAAANAAUABAAhAA8AAAANAAYABAAhABAAAAAOAAAABAAiAAoAAAAOAAEABAAiAAsAAAAOAAIABAAiAAwAAAAOAAMABAAiAA0AAAAOAAQABAAiAA4AAAAOAAUABAAiAA8AAAAOAAYABAAiABAAAAAPAAAABAAjAAoAAAAPAAEABAAjAAsAAAAPAAIABAAjAAwAAAAPAAMABAAjAA0AAAAPAAQABAAjAA4AAAAPAAUABAAjAA8AAAAPAAYABAAjABAAAAAQAAAABAAkAAoAAAAQAAEABAAkAAsAAAAQAAIABAAkAAwAAAAQAAMABAAkAA0AAAAQAAQABAAkAA4AAAAQAAUABAAkAA8AAAAQAAYABAAkABAAAAARAAAABAAlAAoAAAARAAEABAAlAAsAAAARAAIABAAlAAwAAAARAAMABAAlAA0AAAARAAQABAAlAA4AAAARAAUABAAlAA8AAAARAAYABAAlABAAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("4_xk66e")
+ExamineText = "\"The swing was taken down. Something happened to the other tree.\"|\"The garden keeps going without anyone tending it.\""
+DialogueDurationText = "6.0|6.0"
+DialogueFontSize = 28
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Window" unique_id=627085884]
 modulate = Color(1, 1, 1, 0)
@@ -79,12 +88,18 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAJAAAABAAQAAoAAAAJAAEABAAQAAsAAAAJAAIABAAQAAwAAAAJAAMABAAQAA0AAAAJAAQABAAQAA4AAAAJAAUABAAQAA8AAAAJAAYABAAQABAAAAAKAAAABAARAAoAAAAKAAEABAARAAsAAAAKAAIABAARAAwAAAAKAAMABAARAA0AAAAKAAQABAARAA4AAAAKAAUABAARAA8AAAAKAAYABAARABAAAAALAAAABAASAAoAAAALAAEABAASAAsAAAALAAIABAASAAwAAAALAAMABAASAA0AAAALAAQABAASAA4AAAALAAUABAASAA8AAAALAAYABAASABAAAAAMAAAABAATAAoAAAAMAAEABAATAAsAAAAMAAIABAATAAwAAAAMAAMABAATAA0AAAAMAAQABAATAA4AAAAMAAUABAATAA8AAAAMAAYABAATABAAAAANAAAABAAUAAoAAAANAAEABAAUAAsAAAANAAIABAAUAAwAAAANAAMABAAUAA0AAAANAAQABAAUAA4AAAANAAUABAAUAA8AAAANAAYABAAUABAAAAAOAAAABAAVAAoAAAAOAAEABAAVAAsAAAAOAAIABAAVAAwAAAAOAAMABAAVAA0AAAAOAAQABAAVAA4AAAAOAAUABAAVAA8AAAAOAAYABAAVABAAAAAPAAAABAAWAAoAAAAPAAEABAAWAAsAAAAPAAIABAAWAAwAAAAPAAMABAAWAA0AAAAPAAQABAAWAA4AAAAPAAUABAAWAA8AAAAPAAYABAAWABAAAAAQAAAABAAXAAoAAAAQAAEABAAXAAsAAAAQAAIABAAXAAwAAAAQAAMABAAXAA0AAAAQAAQABAAXAA4AAAAQAAUABAAXAA8AAAAQAAYABAAXABAAAAARAAAABAAYAAoAAAARAAEABAAYAAsAAAARAAIABAAYAAwAAAARAAMABAAYAA0AAAARAAQABAAYAA4AAAARAAUABAAYAA8AAAARAAYABAAYABAAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("5_win_examine2")
+ExamineText = "\"Something is different. The light has not changed. The angle of it is wrong for the time on the clock.\""
+DialogueDuration = 5.0
+DialogueFontSize = 23
 
 [node name="Examine1" type="TileMapLayer" parent="Objects/Window" unique_id=2006738379]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAJAAAABAADAAoAAAAJAAEABAADAAsAAAAJAAIABAADAAwAAAAJAAMABAADAA0AAAAJAAQABAADAA4AAAAJAAUABAADAA8AAAAJAAYABAADABAAAAAKAAAABAAEAAoAAAAKAAEABAAEAAsAAAAKAAIABAAEAAwAAAAKAAMABAAEAA0AAAAKAAQABAAEAA4AAAAKAAUABAAEAA8AAAAKAAYABAAEABAAAAALAAAABAAFAAoAAAALAAEABAAFAAsAAAALAAIABAAFAAwAAAALAAMABAAFAA0AAAALAAQABAAFAA4AAAALAAUABAAFAA8AAAALAAYABAAFABAAAAAMAAAABAAGAAoAAAAMAAEABAAGAAsAAAAMAAIABAAGAAwAAAAMAAMABAAGAA0AAAAMAAQABAAGAA4AAAAMAAUABAAGAA8AAAAMAAYABAAGABAAAAANAAAABAAHAAoAAAANAAEABAAHAAsAAAANAAIABAAHAAwAAAANAAMABAAHAA0AAAANAAQABAAHAA4AAAANAAUABAAHAA8AAAANAAYABAAHABAAAAAOAAAABAAIAAoAAAAOAAEABAAIAAsAAAAOAAIABAAIAAwAAAAOAAMABAAIAA0AAAAOAAQABAAIAA4AAAAOAAUABAAIAA8AAAAOAAYABAAIABAAAAAPAAAABAAJAAoAAAAPAAEABAAJAAsAAAAPAAIABAAJAAwAAAAPAAMABAAJAA0AAAAPAAQABAAJAA4AAAAPAAUABAAJAA8AAAAPAAYABAAJABAAAAAQAAAABAAKAAoAAAAQAAEABAAKAAsAAAAQAAIABAAKAAwAAAAQAAMABAAKAA0AAAAQAAQABAAKAA4AAAAQAAUABAAKAA8AAAAQAAYABAAKABAAAAARAAAABAALAAoAAAARAAEABAALAAsAAAARAAIABAALAAwAAAARAAMABAALAA0AAAARAAQABAALAA4AAAARAAUABAALAA8AAAARAAYABAALABAAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("6_win_examine1")
+ExamineText = "\"The garden is still.\"|\"The swing moves just slightly — not from wind, maybe, but from the memory of someone having just been on it.\"|\"The apple trees are heavy. It is exactly the right time of year.\""
+DialogueDurationText = "3.0|6.0|5.0"
+DialogueFontSize = 25
 
 [node name="Cup2" type="TileMapLayer" parent="Objects" unique_id=909383377]
 texture_filter = 1
@@ -98,11 +113,6 @@ scale = Vector2(0.99999976, 0.99999976)
 tile_map_data = PackedByteArray("AAAXAAsABAABAAMAAAAXAAwABAABAAQAAAAYAAsABAACAAMAAAAYAAwABAACAAQAAAAZAAsABAADAAMAAAAZAAwABAADAAQAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("6_t7pc7")
-UnlockedCursorTexturePath = null
-LockedCursorTexturePath = null
-CursorWidth = null
-CursorHeight = null
-HoverEnabled = null
 
 [node name="Examine3" type="TileMapLayer" parent="Objects/Cup2" unique_id=391502311]
 modulate = Color(1, 1, 1, 0)
@@ -111,6 +121,9 @@ scale = Vector2(0.99999976, 0.99999976)
 tile_map_data = PackedByteArray("AAAXAAsABAAEAAMAAAAXAAwABAAEAAQAAAAYAAsABAAFAAMAAAAYAAwABAAFAAQAAAAZAAsABAAGAAMAAAAZAAwABAAGAAQAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("7_cup2_examine3")
+ExamineText = "(A cup.)|(There is no steam. There was never been. You are not sure why you thought there was.)"
+DialogueDurationText = "3.0|6.0"
+DialogueFontSize = 28
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Cup2" unique_id=2066080103]
 modulate = Color(1, 1, 1, 0)
@@ -119,6 +132,9 @@ scale = Vector2(0.9999998, 0.9999998)
 tile_map_data = PackedByteArray("AAAXAAwABAAHAAQAAAAYAAoABAAIAAIAAAAYAAsABAAIAAMAAAAYAAwABAAIAAQAAAAZAAsABAAJAAMAAAAZAAwABAAJAAQAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("8_cup2_examine2")
+ExamineText = "(Someone's cup. It was full a moment ago. Wasn't it?)"
+DialogueDuration = 4.0
+DialogueFontSize = 28
 
 [node name="Examine1" type="TileMapLayer" parent="Objects/Cup2" unique_id=405226149]
 texture_filter = 1
@@ -126,6 +142,8 @@ scale = Vector2(0.99999994, 0.99999994)
 tile_map_data = PackedByteArray("AAAVAAsABAABAAEAAAAVAAwABAABAAIAAAAWAAoABAACAAAAAAAWAAsABAACAAEAAAAWAAwABAACAAIAAAAXAAsABAADAAEAAAAXAAwABAADAAIAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("9_cup2_examine1")
+ExamineText = "(Ida's Cup)..."
+UnlockedCursorTexturePath = "uid://dxvnxka2qcdtu"
 
 [node name="Toast" type="TileMapLayer" parent="Objects" unique_id=1539624479]
 texture_filter = 1
@@ -138,6 +156,8 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAXAA8ABAAOAAYAAAAXABAABAAOAAcAAAAXABEABAAOAAgAAAAYAA8ABAAPAAYAAAAYABAABAAPAAcAAAAYABEABAAPAAgAAAAZAA8ABAAQAAYAAAAZABAABAAQAAcAAAAZABEABAAQAAgAAAAaAA8ABAARAAYAAAAaABAABAARAAcAAAAaABEABAARAAgAAAAbAA8ABAASAAYAAAAbABAABAASAAcAAAAbABEABAASAAgAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("11_n01by")
+ExamineText = "(The table is not set for two. It has been set for one for a very long time.)"
+DialogueFontSize = 29
 
 [node name="Examine3" type="TileMapLayer" parent="Objects/Toast" unique_id=450410329]
 modulate = Color(1, 1, 1, 0)
@@ -145,6 +165,7 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAXAA8ABAAOAAYAAAAXABAABAAOAAcAAAAXABEABAAOAAgAAAAYAA8ABAAPAAYAAAAYABAABAAPAAcAAAAYABEABAAPAAgAAAAZAA8ABAAQAAYAAAAZABAABAAQAAcAAAAZABEABAAQAAgAAAAaAA8ABAARAAYAAAAaABAABAARAAcAAAAaABEABAARAAgAAAAbAA8ABAASAAYAAAAbABAABAASAAcAAAAbABEABAASAAgAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("10_toast_examine3")
+ExamineText = "\"It doesn't matter. It was never the point.\""
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Toast" unique_id=1675839815]
 modulate = Color(1, 1, 1, 0)
@@ -152,12 +173,18 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAXAA8ABAAIAAYAAAAXABAABAAIAAcAAAAXABEABAAIAAgAAAAYAA8ABAAJAAYAAAAYABAABAAJAAcAAAAYABEABAAJAAgAAAAZAA8ABAAKAAYAAAAZABAABAAKAAcAAAAZABEABAAKAAgAAAAaAA8ABAALAAYAAAAaABAABAALAAcAAAAaABEABAALAAgAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("11_toast_examine2")
+ExamineText = "(You imagined the bite. The toast is untouched. No one has eaten here.)"
+DialogueDuration = 5.0
+DialogueFontSize = 28
 
 [node name="Examine1" type="TileMapLayer" parent="Objects/Toast" unique_id=499277942]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAXAA8ABAACAAYAAAAXABAABAACAAcAAAAXABEABAACAAgAAAAYAA8ABAADAAYAAAAYABAABAADAAcAAAAYABEABAADAAgAAAAZAA8ABAAEAAYAAAAZABAABAAEAAcAAAAZABEABAAEAAgAAAAaAA8ABAAFAAYAAAAaABAABAAFAAcAAAAaABEABAAFAAgAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("12_toast_examine1")
+ExamineText = "\"Butter, half-melted. A bite missing from the right side — small, a child's bite.\"|\"She was here just a moment ago.\""
+DialogueDurationText = "6.0|6.0"
+DialogueFontSize = 28
 
 [node name="Note" type="TileMapLayer" parent="Objects" unique_id=1589708906]
 texture_filter = 1
@@ -170,6 +197,8 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAADAAoABAAbABIAAAADAAsABAAbABMAAAADAAwABAAbABQAAAADAA0ABAAbABUAAAAEAAoABAAcABIAAAAEAAsABAAcABMAAAAEAAwABAAcABQAAAAEAA0ABAAcABUAAAAFAAoABAAdABIAAAAFAAsABAAdABMAAAAFAAwABAAdABQAAAAFAA0ABAAdABUAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("17_xwh56")
+ExamineText = "\"She didn't write it. The reminder she left herself only said when she'd be back.\"|\"The rest — she added it later. She adds it every time she looks.\""
+DialogueDurationText = "6.0|6.0"
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Note" unique_id=1238276835]
 modulate = Color(1, 1, 1, 0)
@@ -177,39 +206,73 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAADAAoABAAQABIAAAADAAsABAAQABMAAAADAAwABAAQABQAAAADAA0ABAAQABUAAAAEAAoABAARABIAAAAEAAsABAARABMAAAAEAAwABAARABQAAAAEAA0ABAARABUAAAAFAAoABAASABIAAAAFAAsABAASABMAAAAFAAwABAASABQAAAAFAA0ABAASABUAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("13_note_examine2")
+ExamineText = "(The second line is shorter than you remember. You may have misread it.)"
+DialogueDuration = 4.0
 
 [node name="Examine1" type="TileMapLayer" parent="Objects/Note" unique_id=190346510]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAADAAoABAAFABIAAAADAAsABAAFABMAAAADAAwABAAFABQAAAADAA0ABAAFABUAAAAEAAoABAAGABIAAAAEAAsABAAGABMAAAAEAAwABAAGABQAAAAEAA0ABAAGABUAAAAFAAoABAAHABIAAAAFAAsABAAHABMAAAAFAAwABAAHABQAAAAFAA0ABAAHABUAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("14_note_examine1")
+ExamineText = "\"Her own handwriting. A reminder she left for herself.\""
+DialogueDuration = 5.0
 
 [node name="Clock" type="TileMapLayer" parent="Objects" unique_id=439013947]
 texture_filter = 1
 scale = Vector2(2, 2)
 tile_set = ExtResource("2_hnbyo")
 
+[node name="Clarify1" type="TileMapLayer" parent="Objects/Clock" unique_id=1981846973]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAOAAAABAACABkAAAAOAAEABAACABoAAAAOAAIABAACABsAAAAOAAMABAACABwAAAAOAAQABAACAB0AAAAPAAAABAADABkAAAAPAAEABAADABoAAAAPAAIABAADABsAAAAPAAMABAADABwAAAAPAAQABAADAB0AAAAQAAAABAAEABkAAAAQAAEABAAEABoAAAAQAAIABAAEABsAAAAQAAMABAAEABwAAAAQAAQABAAEAB0AAAARAAAABAAFABkAAAARAAEABAAFABoAAAARAAIABAAFABsAAAARAAMABAAFABwAAAARAAQABAAFAB0AAAA=")
+tile_set = ExtResource("2_hnbyo")
+script = ExtResource("20_pt4cd")
+ExamineText = "\"7:42. That's when she left. She had been awake since six. She had time.\""
+DialogueDuration = 6.0
+
 [node name="Examine1" type="TileMapLayer" parent="Objects/Clock" unique_id=1764342630]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAOAAAABAACABkAAAAOAAEABAACABoAAAAOAAIABAACABsAAAAOAAMABAACABwAAAAOAAQABAACAB0AAAAPAAAABAADABkAAAAPAAEABAADABoAAAAPAAIABAADABsAAAAPAAMABAADABwAAAAPAAQABAADAB0AAAAQAAAABAAEABkAAAAQAAEABAAEABoAAAAQAAIABAAEABsAAAAQAAMABAAEABwAAAAQAAQABAAEAB0AAAARAAAABAAFABkAAAARAAEABAAFABoAAAARAAIABAAFABsAAAARAAMABAAFABwAAAARAAQABAAFAB0AAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("15_clock_examine")
+ExamineText = "\"7:42. The same time it always is in here.\""
+DialogueDuration = 5.0
 
 [node name="Calendar" type="TileMapLayer" parent="Objects" unique_id=308102933]
 texture_filter = 1
 scale = Vector2(2, 2)
 tile_set = ExtResource("2_hnbyo")
 
+[node name="Clarify1" type="TileMapLayer" parent="Objects/Calendar" unique_id=7074047]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAOAAUABAAKABgAAAAOAAYABAAKABkAAAAOAAcABAAKABoAAAAOAAgABAAKABsAAAAOAAkABAAKABwAAAAOAAoABAAKAB0AAAAPAAUABAALABgAAAAPAAYABAALABkAAAAPAAcABAALABoAAAAPAAgABAALABsAAAAPAAkABAALABwAAAAPAAoABAALAB0AAAAQAAUABAAMABgAAAAQAAYABAAMABkAAAAQAAcABAAMABoAAAAQAAgABAAMABsAAAAQAAkABAAMABwAAAAQAAoABAAMAB0AAAARAAUABAANABgAAAARAAYABAANABkAAAARAAcABAANABoAAAARAAgABAANABsAAAARAAkABAANABwAAAARAAoABAANAB0AAAA=")
+tile_set = ExtResource("2_hnbyo")
+script = ExtResource("22_xwh56")
+ExamineText = "\"October 14th. A date that happened.\""
+
 [node name="Examine1" type="TileMapLayer" parent="Objects/Calendar" unique_id=729183763]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAOAAUABAAKABgAAAAOAAYABAAKABkAAAAOAAcABAAKABoAAAAOAAgABAAKABsAAAAOAAkABAAKABwAAAAOAAoABAAKAB0AAAAPAAUABAALABgAAAAPAAYABAALABkAAAAPAAcABAALABoAAAAPAAgABAALABsAAAAPAAkABAALABwAAAAPAAoABAALAB0AAAAQAAUABAAMABgAAAAQAAYABAAMABkAAAAQAAcABAAMABoAAAAQAAgABAAMABsAAAAQAAkABAAMABwAAAAQAAoABAAMAB0AAAARAAUABAANABgAAAARAAYABAANABkAAAARAAcABAANABoAAAARAAgABAANABsAAAARAAkABAANABwAAAARAAoABAANAB0AAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("16_calendar_examine")
+ExamineText = "(October 14th. Circled. Nothing written beside it.)|\"She circled it so she wouldn't forget, and then she forgot what it meant to remember.\""
+DialogueDurationText = "4.0|6.0"
+DialogueFontSize = 28
 
 [node name="Drawing" type="TileMapLayer" parent="Objects" unique_id=63529877]
 texture_filter = 1
 scale = Vector2(1.5, 1.5)
 tile_set = ExtResource("2_hnbyo")
+
+[node name="Clarify1" type="TileMapLayer" parent="Objects/Drawing" unique_id=1442123496]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAEAAYABAAlAAIAAAAEAAcABAAlAAMAAAAEAAgABAAlAAQAAAAEAAkABAAlAAUAAAAEAAoABAAlAAYAAAAFAAYABAAmAAIAAAAFAAcABAAmAAMAAAAFAAgABAAmAAQAAAAFAAkABAAmAAUAAAAFAAoABAAmAAYAAAAGAAYABAAnAAIAAAAGAAcABAAnAAMAAAAGAAgABAAnAAQAAAAGAAkABAAnAAUAAAAGAAoABAAnAAYAAAAHAAYABAAoAAIAAAAHAAcABAAoAAMAAAAHAAgABAAoAAQAAAAHAAkABAAoAAUAAAAHAAoABAAoAAYAAAAIAAYABAApAAIAAAAIAAcABAApAAMAAAAIAAgABAApAAQAAAAIAAkABAApAAUAAAAIAAoABAApAAYAAAA=")
+tile_set = ExtResource("2_hnbyo")
+script = ExtResource("24_h80xr")
+ExamineText = "\"This drawing is real. She brought it with her. It's been on her wall for twelve years.\""
+DialogueDuration = 6.0
+DialogueFontSize = 27
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Drawing" unique_id=65233697]
 modulate = Color(1, 1, 1, 0)
@@ -217,12 +280,16 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAEAAYABAAlAAIAAAAEAAcABAAlAAMAAAAEAAgABAAlAAQAAAAEAAkABAAlAAUAAAAEAAoABAAlAAYAAAAFAAYABAAmAAIAAAAFAAcABAAmAAMAAAAFAAgABAAmAAQAAAAFAAkABAAmAAUAAAAFAAoABAAmAAYAAAAGAAYABAAnAAIAAAAGAAcABAAnAAMAAAAGAAgABAAnAAQAAAAGAAkABAAnAAUAAAAGAAoABAAnAAYAAAAHAAYABAAoAAIAAAAHAAcABAAoAAMAAAAHAAgABAAoAAQAAAAHAAkABAAoAAUAAAAHAAoABAAoAAYAAAAIAAYABAApAAIAAAAIAAcABAApAAMAAAAIAAgABAApAAQAAAAIAAkABAApAAUAAAAIAAoABAApAAYAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("17_drawing_examine2")
+ExamineText = "\"The 8 is still there.\""
 
 [node name="Examine1" type="TileMapLayer" parent="Objects/Drawing" unique_id=437539441]
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAEAAYABAAbAAIAAAAEAAcABAAbAAMAAAAEAAgABAAbAAQAAAAEAAkABAAbAAUAAAAEAAoABAAbAAYAAAAFAAYABAAcAAIAAAAFAAcABAAcAAMAAAAFAAgABAAcAAQAAAAFAAkABAAcAAUAAAAFAAoABAAcAAYAAAAGAAYABAAdAAIAAAAGAAcABAAdAAMAAAAGAAgABAAdAAQAAAAGAAkABAAdAAUAAAAGAAoABAAdAAYAAAAHAAYABAAeAAIAAAAHAAcABAAeAAMAAAAHAAgABAAeAAQAAAAHAAkABAAeAAUAAAAHAAoABAAeAAYAAAAIAAYABAAfAAIAAAAIAAcABAAfAAMAAAAIAAgABAAfAAQAAAAIAAkABAAfAAUAAAAIAAoABAAfAAYAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("18_drawing_examine1")
+ExamineText = "(She drew the 8 the way you do when you've just learned how. Oversized. Pleased with it.)"
+DialogueDuration = 6.0
+DialogueFontSize = 27
 
 [node name="DrawerFinal" type="TileMapLayer" parent="Objects" unique_id=786805557]
 texture_filter = 1
@@ -251,8 +318,8 @@ tile_map_data = PackedByteArray("AAAnABYAAQABAAcAAAAoABYAAQACAAcAAAApABYAAQADAAc
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("19_8rvm2")
 CursorTexturePath = "uid://b8fxnqeaoma5t"
-CursorWidth = 25
-CursorHeight = 25
+CursorWidth = 30
+CursorHeight = 30
 
 [node name="5" type="TileMapLayer" parent="UI/ClarityToggle" unique_id=542942056]
 texture_filter = 1

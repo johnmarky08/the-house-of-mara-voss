@@ -21,7 +21,6 @@ public partial class GameManager : Node
         }
 
         Logger.Info("Initializing Game Manager...");
-
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         SceneManager.ChangeScene(FirstRoomScenePath);
     }

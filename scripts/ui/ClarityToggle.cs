@@ -3,6 +3,9 @@ public partial class ClarityToggle : TileMapHoverCursor
 {
 	public override void _Input(InputEvent @event)
 	{
+		if (Dialogue.IsInputBlocked)
+			return;
+
 		if (@event is not InputEventMouseButton mouseButton)
 			return;
 
@@ -24,6 +27,9 @@ public partial class ClarityToggle : TileMapHoverCursor
 
 	public override void _Process(double delta)
 	{
+		if (Dialogue.IsInputBlocked)
+			return;
+
 		if (Globals.Instance.IS_CLARIFYING)
 			return;
 
