@@ -69,6 +69,103 @@ StartButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContai
 FullStoryButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContainer/VBox/FullStoryButton")
 AboutButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContainer/VBox/AboutButton")
 QuitButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContainer/VBox/QuitButton")
+FullStoryBody = "Premise
+Mara Voss is a 34-year-old woman who has not left her apartment in four months. She is not aware of this. In her mind, she lives in the house she grew up in — her childhood home in a quiet town called Eldfen — and every morning she wakes up, makes coffee, and tends to the rooms as she always has.
+The house, as she remembers it, is warm. It smells like cedarwood and old paper. There are seven rooms. Each one holds a version of something that happened.
+The player is not Mara. The player is Mara's memory — the part of her that still knows something is wrong.
+
+The True Story (Revealed Gradually)
+Mara had a younger sister named Ida. Ida was eight years younger — bright, loud, the kind of child who named every spider she found and kept a jar of them on the windowsill. When Mara was twenty-two and Ida was fourteen, Mara was supposed to pick Ida up from school. She forgot. She was with someone she loved then, someone whose name the game never gives. She stayed too long. She forgot.
+Ida walked home alone. The road between the school and the house crossed a bridge over the Harren canal. It was autumn. The railing was old.
+Ida did not make it home.
+Mara's parents never said it was her fault. That was worse. She moved away. She built a quiet life. She did not speak of Ida for twelve years. Then, four months ago, she found a jar on the street — glass, lid rusted shut, empty — and something in her simply closed. She went home. She locked the door. And somewhere in the space between grief and survival, her mind built the house again. Filled it with Ida. Made it safe.
+The house the player walks through is Mara's attempt to live in a world where she never forgot.
+
+The Seven Rooms
+Room One — The Kitchen In Mara's memory: a bright kitchen with a yellow tablecloth, two cups of coffee on the table, the smell of toast. Everything is warm and slightly overexposed, like a photograph left in the sun.
+What it really was: the morning of the day Ida died. One cup of coffee. Mara was already thinking about where she was going instead.
+Room Two — The Study In Mara's memory: her father's study, papers everywhere, a globe on the desk, two chairs facing each other. She remembers sitting here with Ida, reading aloud.
+What it really was: the room where her parents sat the night they got the call. One chair is pulled closer to the phone on the wall. The globe is turned to face away.
+Room Three — Ida's Bedroom In Mara's memory: a perfect, lived-in child's room. Drawings on the wall. The spider jar on the windowsill, full. Ida's school bag hanging on the door hook.
+What it really was: the room as it looked three years after Ida died. Cleaned. Preserved. The drawings are still there but the colors faded. The jar is empty. The bag was still on the hook because no one could move it.
+Room Four — The Hallway In Mara's memory: a long hallway with family photographs lining the walls. Every photo includes Ida. In some, Ida is older than she ever got to be. Mara built her forward in time, imagined her at sixteen, eighteen, twenty.
+What it really was: a hallway. Photographs with a gap in them — a slightly lighter patch of wallpaper where one frame used to be. The frame was the last school photo. Her mother took it down because looking at it while walking to the kitchen every morning was too much.
+Room Five — The Bathroom In Mara's memory: an ordinary bathroom, a little cluttered, a child's drawings taped to the mirror.
+What it really was: the room where Mara sat on the floor for six hours the night she found the jar on the street. The drawings are in her apartment. She brought them with her when she moved out, years ago. She has been carrying them.
+Room Six — The Garden In Mara's memory: the garden in autumn, golden and still. Ida is almost visible at the edge — just a shape, a color, a presence. There are two apple trees. A swing.
+What it really was: the garden as it looks now. Overgrown. The swing rotted and removed. One apple tree fell in a storm and was never cleared. The other still stands, but it hasn't been tended and the apples it gives are small and bitter.
+Room Seven — The Front Door In Mara's memory: a grand door, solid, warm wood, a brass knocker shaped like a fox. Unlocked. She just needs to turn the handle.
+What it really was — what it is: the front door of her apartment. Which she has not opened in four months.
+
+The Ending
+When the player opens the front door, the house dissolves. Not dramatically — quietly. The rooms fold into each other. The yellow tablecloth, the spider jar, the photographs, Ida's school bag, all of it softens and overlaps until it is just light, just the sound of a city outside a window.
+The final image: a woman sitting on a floor. Around her, scattered: two drawings taped to nothing, a glass jar with a rusted lid, a phone with a name on the screen she hasn't called. The room is small. It is an apartment. It is real.
+Then, in the corner of the screen, a single line of text:
+\"She picked up the phone.\"
+The screen goes white."
+AboutBody = "Creative Overview
+“We Don’t See Things as They Are.”
+
+The game is a psychological story-driven escape experience where the player is trapped inside a shifting house made from fragmented memories. Every room represents a distorted piece of the protagonist’s mind — a place shaped not by reality, but by trauma, denial, fear, and imperfect recollection.
+
+At first, the player believes the objective is simple: solve puzzles, uncover clues, and escape the house. But as rooms begin to contradict themselves and reality becomes unstable, the player slowly realizes the house is not a physical place at all — it is a broken memory trying to reconstruct the truth.
+
+Objects change when revisited. Narratives conflict with one another. The environment manipulates perception. Even the game’s own interface becomes unreliable. The player is forced to question not only the world around them, but also the information they trust.
+
+The core emotional experience is not fear of monsters — it is fear of uncertainty.
+
+Every solved puzzle is not merely progression, but an attempt to understand a mind collapsing under the weight of suppressed memories. By the end of the game, the player escapes the house only to discover that the “house” itself was a manifestation of fragmented memories surrounding a traumatic event the protagonist could not fully confront.
+
+The final realization reframes the entire experience:
+
+The player was never escaping a house.
+They were escaping the truth.
+
+Core Theme
+“We Don’t See Things as They Are — We See Them as We Remember Them.”
+
+The game explores how trauma distorts perception. Memories become unreliable. Truth becomes fragmented. The player experiences firsthand how the mind reshapes reality to protect itself from pain.
+
+Instead of presenting the twist only at the ending, the game embeds the theme directly into gameplay mechanics, environmental storytelling, puzzles, and UI behavior. The player does not simply witness distorted perception — they live inside it.
+
+
+ Key Features
+
+ 1. Memory Corruption System
+
+Rooms and objects subtly change over time, making players question what is real and what is distorted memory.
+
+ 2. Clarity Mechanic
+
+Players can briefly reveal the “true” version of reality to uncover hidden clues and solve puzzles.
+
+ 3. Contradicting Story Fragments
+
+Each escaped room reveals conflicting memories that players must piece together through the Memory Board system.
+
+ 4. Psychological Environment
+
+The house constantly shifts and evolves, symbolizing the protagonist’s unstable mind and fragmented memories.
+
+ 5. Unreliable UI
+
+The game interface intentionally misleads players through false prompts, incorrect inventory counts, and distorted objectives.
+
+ 6. Perception-Based Puzzles
+
+Puzzles rely on interpreting changing realities, hidden meanings, and emotional connections rather than simple logic.
+
+ 7. Final Revelation
+
+The player discovers the house is a manifestation of fragmented memories, transforming the entire experience into a journey through trauma and perception.
+
+
+
+Game by:
+Carlos James Alanano
+Joshua Bartolome
+John Marky Natividad
+Nico Gabriel Domingo"
 metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=228626187]
@@ -165,7 +262,7 @@ texture_normal = SubResource("AtlasTexture_8g5eo")
 texture_pressed = SubResource("AtlasTexture_7suek")
 texture_hover = SubResource("AtlasTexture_877pj")
 
-[node name="InfoModal" type="Control" parent="SubViewportContainer/SubViewport" unique_id=2004871020]
+[node name="FullStoryModal" type="Control" parent="SubViewportContainer/SubViewport" unique_id=2004871020]
 visible = false
 z_index = 50
 layout_mode = 3
@@ -178,7 +275,7 @@ mouse_filter = 2
 script = ExtResource("2_infomodal")
 metadata/_edit_use_anchors_ = true
 
-[node name="Backdrop" type="ColorRect" parent="SubViewportContainer/SubViewport/InfoModal" unique_id=892463212]
+[node name="Backdrop" type="ColorRect" parent="SubViewportContainer/SubViewport/FullStoryModal" unique_id=892463212]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,7 +286,7 @@ mouse_filter = 1
 color = Color(0, 0, 0, 0.65)
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="PanelContainer" parent="SubViewportContainer/SubViewport/InfoModal" unique_id=61398244]
+[node name="Panel" type="PanelContainer" parent="SubViewportContainer/SubViewport/FullStoryModal" unique_id=61398244]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
@@ -201,32 +298,98 @@ grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Content" type="VBoxContainer" parent="SubViewportContainer/SubViewport/InfoModal/Panel" unique_id=171968230]
+[node name="Content" type="VBoxContainer" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel" unique_id=171968230]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="SubViewportContainer/SubViewport/InfoModal/Panel/Content" unique_id=1615240014]
+[node name="Title" type="Label" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel/Content" unique_id=1615240014]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_5nq8d")
 theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
 
-[node name="Art" type="TextureRect" parent="SubViewportContainer/SubViewport/InfoModal/Panel/Content" unique_id=1240949040]
+[node name="Art" type="TextureRect" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel/Content" unique_id=1240949040]
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Scroll" type="ScrollContainer" parent="SubViewportContainer/SubViewport/InfoModal/Panel/Content" unique_id=1988161689]
+[node name="Scroll" type="ScrollContainer" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel/Content" unique_id=1988161689]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Body" type="RichTextLabel" parent="SubViewportContainer/SubViewport/InfoModal/Panel/Content/Scroll" unique_id=1271957519]
+[node name="Body" type="RichTextLabel" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel/Content/Scroll" unique_id=1271957519]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 fit_content = true
 
-[node name="CloseButton" type="Button" parent="SubViewportContainer/SubViewport/InfoModal/Panel/Content" unique_id=474845699]
+[node name="CloseButton" type="Button" parent="SubViewportContainer/SubViewport/FullStoryModal/Panel/Content" unique_id=474845699]
+layout_mode = 2
+text = "Close"
+
+[node name="AboutModal" type="Control" parent="SubViewportContainer/SubViewport" unique_id=2004871021]
+visible = false
+z_index = 50
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_infomodal")
+metadata/_edit_use_anchors_ = true
+
+[node name="Backdrop" type="ColorRect" parent="SubViewportContainer/SubViewport/AboutModal" unique_id=892463213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.65)
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="PanelContainer" parent="SubViewportContainer/SubViewport/AboutModal" unique_id=61398245]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.08
+anchor_right = 0.9
+anchor_bottom = 0.92
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Content" type="VBoxContainer" parent="SubViewportContainer/SubViewport/AboutModal/Panel" unique_id=171968231]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="SubViewportContainer/SubViewport/AboutModal/Panel/Content" unique_id=1615240015]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5nq8d")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+
+[node name="Art" type="TextureRect" parent="SubViewportContainer/SubViewport/AboutModal/Panel/Content" unique_id=1240949041]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Scroll" type="ScrollContainer" parent="SubViewportContainer/SubViewport/AboutModal/Panel/Content" unique_id=1988161690]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Body" type="RichTextLabel" parent="SubViewportContainer/SubViewport/AboutModal/Panel/Content/Scroll" unique_id=1271957520]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="SubViewportContainer/SubViewport/AboutModal/Panel/Content" unique_id=474845700]
 layout_mode = 2
 text = "Close"

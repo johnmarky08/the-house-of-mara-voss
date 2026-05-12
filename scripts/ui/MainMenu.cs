@@ -19,7 +19,10 @@ public partial class MainMenu : Control
 	public NodePath QuitButtonPath { get; set; } = "Center/MarginContainer/VBox/QuitButton";
 
 	[Export]
-	public NodePath InfoModalPath { get; set; } = "SubViewportContainer/SubViewport/InfoModal";
+	public NodePath FullStoryModalPath { get; set; } = "SubViewportContainer/SubViewport/FullStoryModal";
+
+	[Export]
+	public NodePath AboutModalPath { get; set; } = "SubViewportContainer/SubViewport/AboutModal";
 
 	[ExportGroup("Full Story")]
 	[Export]
@@ -45,7 +48,8 @@ public partial class MainMenu : Control
 	private BaseButton _fullStoryButton;
 	private BaseButton _aboutButton;
 	private BaseButton _quitButton;
-	private InfoModal _infoModal;
+	private InfoModal _fullStoryModal;
+	private InfoModal _aboutModal;
 	private AudioStreamPlayer _musicPlayer;
 
 	public override void _Ready()
@@ -63,9 +67,13 @@ public partial class MainMenu : Control
 			"Center/MarginContainer/VBox/QuitButton",
 			"Center/VBox/QuitButton");
 
-		_infoModal = GetNodeOrNull<InfoModal>(InfoModalPath);
-		if (_infoModal == null)
-			Logger.Error("MainMenu could not find InfoModal at: ", InfoModalPath);
+		_fullStoryModal = GetNodeOrNull<InfoModal>(FullStoryModalPath);
+		if (_fullStoryModal == null)
+			Logger.Error("MainMenu could not find FullStoryModal at: ", FullStoryModalPath);
+
+		_aboutModal = GetNodeOrNull<InfoModal>(AboutModalPath);
+		if (_aboutModal == null)
+			Logger.Error("MainMenu could not find AboutModal at: ", AboutModalPath);
 
 		if (_startButton == null)
 			Logger.Error("MainMenu could not find StartButton at Center/VBox/StartButton.");
@@ -108,18 +116,18 @@ public partial class MainMenu : Control
 
 	private void OnFullStoryPressed()
 	{
-		if (_infoModal == null)
+		if (_fullStoryModal == null)
 			return;
 
-		_infoModal.Open(FullStoryTitle, FullStoryBody, FullStoryArt);
+		_fullStoryModal.Open(FullStoryTitle, FullStoryBody, FullStoryArt);
 	}
 
 	private void OnAboutPressed()
 	{
-		if (_infoModal == null)
+		if (_aboutModal == null)
 			return;
 
-		_infoModal.Open(AboutTitle, AboutBody, AboutArt);
+		_aboutModal.Open(AboutTitle, AboutBody, AboutArt);
 	}
 
 	private BaseButton ResolveButton(NodePath configuredPath, string logicalName, params string[] fallbackPaths)
