@@ -6,6 +6,8 @@ public partial class Globals : Node
 
 	[ExportCategory("Gameplay")]
 	[Export] public int CORRUPTION_COUNT = 0;
+	[Export] public int CLARITY_TOGGLE_COUNT = 5;
+	[Export] public bool IS_CLARIFYING = false;
 
 	public override void _Ready()
 	{

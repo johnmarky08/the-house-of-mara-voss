@@ -10,7 +10,7 @@ public static class CursorHelper
 
     public static void ApplyCursor(string texturePath, int width = 0, int height = 0)
     {
-        if (string.IsNullOrWhiteSpace(texturePath))
+        if (string.IsNullOrWhiteSpace(texturePath) || Globals.Instance.IS_CLARIFYING)
             return;
 
         var texture = ResourceLoader.Load<Texture2D>(texturePath);

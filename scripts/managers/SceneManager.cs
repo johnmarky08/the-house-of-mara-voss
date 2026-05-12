@@ -6,6 +6,7 @@ public partial class SceneManager : Node
 {
     public static SceneManager Instance { get; private set; }
     public static bool IsChanging { get; private set; }
+    private static string _pendingScenePath;
 
     [ExportCategory("Scene Manager Variables")]
     [Export] public NodePath SceneRootPath = "../Control/SubViewportContainer/SubViewport";
@@ -21,19 +22,15 @@ public partial class SceneManager : Node
     {
         Instance = this;
         IsChanging = false;
-
         _sceneRoot = GetNodeOrNull(SceneRootPath);
         _fadeRect = GetNodeOrNull<ColorRect>(FadeRectPath);
 
         if (_sceneRoot == null)
-        {
             Logger.Error($"SceneManager could not resolve SceneRootPath: {SceneRootPath}");
-        }
+
 
         if (_fadeRect == null)
-        {
             Logger.Error($"SceneManager could not resolve FadeRectPath: {FadeRectPath}");
-        }
         else
         {
             var color = _fadeRect.Color;
@@ -44,19 +41,24 @@ public partial class SceneManager : Node
         }
 
         Logger.Info("Initializing Scene Manager...");
+
+        if (!string.IsNullOrWhiteSpace(_pendingScenePath))
+        {
+            string pendingScenePath = _pendingScenePath;
+            _pendingScenePath = null;
+            ChangeScene(pendingScenePath);
+        }
     }
 
     public static async void ChangeScene(string scenePath)
     {
+        if (string.IsNullOrWhiteSpace(scenePath))
+            return;
+
         if (Instance == null)
         {
-            Logger.Error("SceneManager.ChangeScene called before SceneManager was initialized.");
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(scenePath))
-        {
-            Logger.Error("SceneManager.ChangeScene received an empty scene path.");
+            Logger.Debug($"SceneManager Instance is null, deferring scene path: {scenePath}");
+            _pendingScenePath = scenePath;
             return;
         }
 
@@ -72,7 +74,7 @@ public partial class SceneManager : Node
         }
         catch (Exception ex)
         {
-            Logger.Error("Scene change failed: ", ex.Message);
+            Logger.Error($"Scene change failed: {ex.Message}\nStackTrace: {ex.StackTrace}");
         }
         finally
         {
@@ -98,7 +100,7 @@ public partial class SceneManager : Node
     private async Task LoadScene(string scenePath)
     {
         if (_sceneRoot == null)
-            throw new Exception("Scene root is null. Cannot load scenes.");
+            Logger.Error("_sceneRoot is null in LoadScene");
 
         if (CurrentScene != null)
         {
@@ -111,6 +113,7 @@ public partial class SceneManager : Node
         var packedScene = GD.Load<PackedScene>(scenePath);
         if (packedScene == null)
             throw new Exception("Could not load scene at path: " + scenePath);
+
 
         CurrentScene = packedScene.Instantiate<Node>();
         _sceneRoot.AddChild(CurrentScene);

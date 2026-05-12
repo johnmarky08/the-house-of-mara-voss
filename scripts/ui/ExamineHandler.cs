@@ -3,12 +3,14 @@ using Godot;
 public partial class ExamineHandler : TileMapLayer
 {
     [ExportCategory("Hover Cursor")]
-    [Export(PropertyHint.File, "*.png,*.webp,*.jpg")] public string CursorTexturePath = "res://assets/images/core/cursor_magnifying_glass.png";
+    [Export(PropertyHint.File, "*.png,*.webp,*.jpg")] public string UnlockedCursorTexturePath = "res://assets/images/core/cursor_magnifying_glass.png";
+    [Export(PropertyHint.File, "*.png,*.webp,*.jpg")] public string LockedCursorTexturePath = "res://assets/images/core/cursor_locked_magnifying_glass.png";
     [Export] public int CursorWidth = 30;
     [Export] public int CursorHeight = 30;
     [Export] public bool HoverEnabled = true;
 
     private bool _isHovering = false;
+    private string _currentHoverCursorTexturePath = string.Empty;
 
     public override void _Ready()
     {
@@ -50,29 +52,32 @@ public partial class ExamineHandler : TileMapLayer
     {
         if (ExamineHelper.ExtractExamineNumber(Name.ToString()) != 1)
             Globals.Instance.CORRUPTION_COUNT++;
+    }
 
-        // Determine current room name by walking up the scene tree (mirrors RoomExamineTracker logic)
-        string roomName = "Room1";
-        Node current = this;
+    private static string GetRoomNameFromNode(Node node)
+    {
+        var current = node;
+        bool passedObjects = false;
+
         while (current != null)
         {
             current = current.GetParent();
-            if (current != null && current.Name.ToString() != "Objects")
+            if (current == null)
+                break;
+
+            string currentName = current.Name.ToString();
+
+            if (currentName == "Objects")
             {
-                if (current is Node2D || current is CanvasLayer)
-                {
-                    roomName = current.Name.ToString();
-                    break;
-                }
+                passedObjects = true;
+                continue;
             }
+
+            if (passedObjects && (current is Node2D || current is CanvasLayer))
+                return currentName;
         }
 
-        var parent = GetParent();
-        if (RoomExamineTracker.HasRoomBeenFullyExamined(roomName) && parent != null && parent.Name.ToString().EndsWith("Final"))
-        {
-            CursorTexturePath = "res://assets/images/core/cursor_magnifying_glass.png";
-            HoverEnabled = true;
-        }
+        return "Room1";
     }
 
     protected virtual void OnExamineClicked()
@@ -89,12 +94,31 @@ public partial class ExamineHandler : TileMapLayer
         Vector2I cell = LocalToMap(localMouse);
 
         bool hasTile = GetCellSourceId(cell) != -1;
+        var parent = GetParent();
+        bool isFinal = parent != null && parent.Name.ToString().EndsWith("Final");
 
         if (hasTile)
         {
+            if (isFinal)
+            {
+                string roomName = GetRoomNameFromNode(this);
+                bool roomReady = RoomExamineTracker.HasRoomBeenFullyExamined(roomName);
+                string desiredCursor = roomReady ? UnlockedCursorTexturePath : LockedCursorTexturePath;
+
+                if (!_isHovering || _currentHoverCursorTexturePath != desiredCursor)
+                {
+                    CursorHelper.BeginHover(this, desiredCursor, CursorWidth, CursorHeight);
+                    _currentHoverCursorTexturePath = desiredCursor;
+                    _isHovering = true;
+                }
+
+                return;
+            }
+
             if (!_isHovering)
             {
-                CursorHelper.BeginHover(this, CursorTexturePath, CursorWidth, CursorHeight);
+                CursorHelper.BeginHover(this, UnlockedCursorTexturePath, CursorWidth, CursorHeight);
+                _currentHoverCursorTexturePath = UnlockedCursorTexturePath;
                 _isHovering = true;
             }
         }
@@ -104,6 +128,7 @@ public partial class ExamineHandler : TileMapLayer
             {
                 CursorHelper.EndHover(this);
                 _isHovering = false;
+                _currentHoverCursorTexturePath = string.Empty;
             }
         }
     }

@@ -3,8 +3,19 @@ using System.Collections.Generic;
 
 public partial class RoomExamineTracker : Node
 {
+    private static readonly string[] Room1RequiredObjects =
+    [
+        "Window",
+        "Cup2",
+        "Toast",
+        "Note",
+        "Clock",
+        "Calendar",
+        "Drawing"
+    ];
+
     // Track which examine nodes have been clicked: roomName -> objectName -> set of examine layer names
-    private readonly Dictionary<string, Dictionary<string, HashSet<string>>> _examineProgress = new();
+    private static Dictionary<string, Dictionary<string, HashSet<string>>> _examineProgress = new();
 
     private static RoomExamineTracker _instance;
 
@@ -13,9 +24,17 @@ public partial class RoomExamineTracker : Node
         _instance = this;
     }
 
+    private static RoomExamineTracker GetInstance()
+    {
+        if (_instance != null)
+            return _instance;
+
+        return null;
+    }
+
     public static void OnExamineClicked(TileMapLayer examineNode)
     {
-        if (_instance == null)
+        if (examineNode == null)
             return;
 
         var parent = examineNode.GetParent();
@@ -26,136 +45,102 @@ public partial class RoomExamineTracker : Node
         string objectName = parent.Name.ToString();
         string examineName = examineNode.Name.ToString();
 
-        if (!_instance._examineProgress.ContainsKey(roomName))
-        {
-            _instance._examineProgress[roomName] = [];
-        }
+        if (objectName.EndsWith("Final"))
+            return;
 
-        if (!_instance._examineProgress[roomName].ContainsKey(objectName))
-        {
-            _instance._examineProgress[roomName][objectName] = [];
-        }
+        if (!_examineProgress.ContainsKey(roomName))
+            _examineProgress[roomName] = [];
 
-        _instance._examineProgress[roomName][objectName].Add(examineName);
+
+        if (!_examineProgress[roomName].ContainsKey(objectName))
+            _examineProgress[roomName][objectName] = [];
+
+
+        _examineProgress[roomName][objectName].Add(examineName);
     }
 
     private static string GetRoomNameFromNode(Node node)
     {
         var current = node;
+        bool passedObjects = false;
+
         while (current != null)
         {
             current = current.GetParent();
-            if (current != null && current.Name.ToString() != "Objects")
+            if (current == null)
+                break;
+
+            string currentName = current.Name.ToString();
+
+            // Track when we pass the Objects node
+            if (currentName == "Objects")
             {
-                if (current is Node2D or CanvasLayer)
-                {
-                    return current.Name.ToString();
-                }
+                passedObjects = true;
+                continue;
             }
+
+            // Once we've passed Objects, the next Node2D/CanvasLayer is the room
+            if (passedObjects && (current is Node2D or CanvasLayer))
+                return currentName;
         }
+
         return "Room1";
     }
 
     public static bool HasObjectBeenFullyExamined(string roomName, string objectName)
     {
-        if (_instance == null)
-            return false;
+        if (objectName.EndsWith("Final") || objectName.EndsWith("Exclude"))
+            return true;
 
-        if (!_instance._examineProgress.ContainsKey(roomName))
-            return false;
-
-        if (!_instance._examineProgress[roomName].ContainsKey(objectName))
-            return false;
-
-        var root = _instance.GetTree().Root.GetChild(0);
-        var roomNode = root.FindChild(roomName, true, false);
-
-        if (roomNode == null)
-            return false;
-
-        var objectNode = roomNode.FindChild(objectName, true, false);
-
-        if (objectNode == null)
-            return false;
-
-        int totalExamines = 0;
-        foreach (var child in objectNode.GetChildren())
+        if (_examineProgress.ContainsKey(roomName) && _examineProgress[roomName].ContainsKey(objectName))
         {
-            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith("Examine"))
-            {
-                totalExamines++;
-            }
+            int clickedExamines = _examineProgress[roomName][objectName].Count;
+            return clickedExamines >= 1;
         }
 
-        int clickedExamines = _instance._examineProgress[roomName][objectName].Count;
-        return clickedExamines >= totalExamines;
+        if (_examineProgress.ContainsKey(objectName) && _examineProgress[objectName].Count > 0)
+            return true;
+
+        return false;
     }
 
     public static bool HasRoomBeenFullyExamined(string roomName, string objectName = null)
     {
-        if (_instance == null)
-            return false;
-
         if (!string.IsNullOrEmpty(objectName))
-        {
             return HasObjectBeenFullyExamined(roomName, objectName);
-        }
 
-        if (!_instance._examineProgress.ContainsKey(roomName))
-            return false;
+        List<string> notExamined = new();
 
-        var root = _instance.GetTree().Root.GetChild(0);
-        var roomNode = root.FindChild(roomName, true, false);
-
-        if (roomNode == null)
-            return false;
-
-        var objectsNode = roomNode.FindChild("Objects", true, false);
-
-        if (objectsNode == null)
-            return false;
-
-        foreach (var child in objectsNode.GetChildren())
+        foreach (var requiredObject in Room1RequiredObjects)
         {
-            bool hasExamineChildren = false;
-            foreach (var subChild in child.GetChildren())
-            {
-                if (subChild is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith("Examine"))
-                {
-                    hasExamineChildren = true;
-                    break;
-                }
-            }
-
-            if (hasExamineChildren)
-            {
-                if (!HasObjectBeenFullyExamined(roomName, child.Name.ToString()))
-                {
-                    return false;
-                }
-            }
+            if (!HasObjectBeenFullyExamined(roomName, requiredObject))
+                notExamined.Add(requiredObject);
         }
 
+        if (notExamined.Count > 0)
+        {
+            // Logger.Debug($"[Drawer Check] LOCKED - Still need to examine: {string.Join(", ", notExamined)}");
+            return false;
+        }
+
+        // Logger.Debug($"[Drawer Check] ✓ ALL OBJECTS EXAMINED - Drawer is UNLOCKED!");
         return true;
     }
 
     public static Dictionary<string, Dictionary<string, HashSet<string>>> GetExamineProgress()
     {
-        return _instance?._examineProgress ?? new Dictionary<string, Dictionary<string, HashSet<string>>>();
+        return _examineProgress;
     }
 
     public static void ResetProgress(string roomName = null)
     {
-        if (_instance == null)
-            return;
-
         if (string.IsNullOrEmpty(roomName))
         {
-            _instance._examineProgress.Clear();
+            _examineProgress.Clear();
         }
-        else if (_instance._examineProgress.ContainsKey(roomName))
+        else if (_examineProgress.ContainsKey(roomName))
         {
-            _instance._examineProgress[roomName].Clear();
+            _examineProgress[roomName].Clear();
         }
     }
 }

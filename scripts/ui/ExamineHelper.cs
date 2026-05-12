@@ -6,44 +6,60 @@ public static class ExamineHelper
 {
     public static void CycleExamine(TileMapLayer currentExamine)
     {
+        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
         if (currentExamine == null)
             return;
 
-        // Determine if this is a parent node or an examine child node
         var parent = currentExamine.GetParent();
         Node targetParent = null;
         TileMapLayer targetLayer = null;
 
-        // Check if this layer has Examine children (it's a parent like Toast)
         var childrenExamineLayers = new List<TileMapLayer>();
         foreach (var child in currentExamine.GetChildren())
         {
-            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith("Examine"))
+            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith(fileStart))
             {
                 childrenExamineLayers.Add(tileLayer);
             }
         }
 
-        // If this node has Examine children, use it as the parent
         if (childrenExamineLayers.Count > 0)
         {
             targetParent = currentExamine;
+
+            if (Globals.Instance.IS_CLARIFYING)
+            {
+                foreach (var child in currentExamine.GetChildren())
+                {
+                    if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
+                        HideExamine(tile);
+                }
+            }
+
             ProcessExamineLayerCycle(childrenExamineLayers);
             return;
         }
 
-        // Otherwise, this IS an Examine child - collect only siblings from this specific parent
         targetParent = parent;
         targetLayer = currentExamine;
 
         if (targetParent == null)
             return;
 
-        // Collect ONLY Examine layers that are direct children of this specific parent
         var examineLayers = new List<TileMapLayer>();
+
+        if (Globals.Instance.IS_CLARIFYING)
+        {
+            foreach (var child in targetParent.GetChildren())
+            {
+                if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
+                    HideExamine(tile);
+            }
+        }
+
         foreach (var child in targetParent.GetChildren())
         {
-            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith("Examine"))
+            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith(fileStart))
             {
                 examineLayers.Add(tileLayer);
             }
@@ -52,30 +68,38 @@ public static class ExamineHelper
         if (examineLayers.Count == 0)
             return;
 
-        // Sort by examine number and ensure independence
         examineLayers = examineLayers.OrderBy(layer => ExtractExamineNumber(layer.Name.ToString())).ToList();
 
-        // IMPORTANT: Check which layer is actually visible, not which was clicked
-        // This ensures each parent's examine cycle is truly independent
         int currentIndex = -1;
         for (int i = 0; i < examineLayers.Count; i++)
         {
-            var color = examineLayers[i].Modulate;
-            if (color.A >= 0.9f)  // Visible
+            if (IsLayerVisible(examineLayers[i]))
             {
                 currentIndex = i;
                 break;
             }
         }
 
-        // If none visible, assume clicked layer
+        if (Globals.Instance.IS_CLARIFYING)
+        {
+            if (targetLayer != null)
+                HideExamine(targetLayer);
+
+            if (currentIndex == -1)
+            {
+                ShowExamine(examineLayers[0]);
+                if (examineLayers.Count <= 1)
+                    PruneEarlierExamineLayers(examineLayers, 0);
+                return;
+            }
+        }
+
         if (currentIndex == -1)
             currentIndex = examineLayers.FindIndex(layer => layer == targetLayer);
 
         if (currentIndex == -1)
             return;
 
-        // If at the last examine, stay there
         if (currentIndex >= examineLayers.Count - 1)
         {
             ShowExamine(examineLayers[currentIndex]);
@@ -83,7 +107,6 @@ public static class ExamineHelper
             return;
         }
 
-        // Hide current, show next
         HideExamine(examineLayers[currentIndex]);
         var nextExamine = examineLayers[currentIndex + 1];
         ShowExamine(nextExamine);
@@ -97,26 +120,26 @@ public static class ExamineHelper
         if (examineLayers.Count == 0)
             return;
 
-        // Sort by examine number
         examineLayers = examineLayers.OrderBy(layer => ExtractExamineNumber(layer.Name.ToString())).ToList();
 
-        // Find which examine is currently visible
         int currentIndex = -1;
         for (int i = 0; i < examineLayers.Count; i++)
         {
-            var color = examineLayers[i].Modulate;
-            if (color.A >= 0.9f)  // Visible
+            if (IsLayerVisible(examineLayers[i]))
             {
                 currentIndex = i;
                 break;
             }
         }
 
-        // If none visible, start at index 0
         if (currentIndex == -1)
-            currentIndex = 0;
+        {
+            ShowExamine(examineLayers[0]);
+            if (examineLayers.Count <= 1)
+                PruneEarlierExamineLayers(examineLayers, 0);
+            return;
+        }
 
-        // If at the last examine, stay there
         if (currentIndex >= examineLayers.Count - 1)
         {
             ShowExamine(examineLayers[currentIndex]);
@@ -124,7 +147,6 @@ public static class ExamineHelper
             return;
         }
 
-        // Hide current, show next
         HideExamine(examineLayers[currentIndex]);
         var nextExamine = examineLayers[currentIndex + 1];
         ShowExamine(nextExamine);
@@ -138,9 +160,43 @@ public static class ExamineHelper
         if (examineLayer == null)
             return;
 
+        if (examineLayer.Name.ToString() == "Clarify1" && examineLayer.GetParent() != null && examineLayer.GetParent().Name.ToString() == "Toast")
+        {
+            var currentScene = SceneManager.Instance?.CurrentScene;
+            var cup2Node = currentScene?.GetNodeOrNull<TileMapLayer>("Objects/Cup2");
+            cup2Node?.QueueFree();
+        }
+
         var color = examineLayer.Modulate;
         color.A = 1.0f;
         examineLayer.Modulate = color;
+
+        if (Globals.Instance.IS_CLARIFYING)
+        {
+            Globals.Instance.IS_CLARIFYING = false;
+            Globals.Instance.CLARITY_TOGGLE_COUNT--;
+            CursorHelper.ResetCursor();
+
+            int newToggleNumber = Globals.Instance.CLARITY_TOGGLE_COUNT;
+            int toggleNumber = newToggleNumber + 1;
+            string newToggleName = newToggleNumber.ToString();
+            string toggleName = toggleNumber.ToString();
+
+            var currentScene = SceneManager.Instance?.CurrentScene;
+            var togglePath = $"UI/ClarityToggle/{toggleName}";
+            var newTogglePath = $"UI/ClarityToggle/{newToggleName}";
+
+            var toggle = currentScene?.GetNodeOrNull<TileMapLayer>(togglePath);
+            var newToggle = currentScene?.GetNodeOrNull<TileMapLayer>(newTogglePath);
+
+            if (toggle != null)
+                SetLayerAlpha(toggle, 0.0f);
+
+            if (newToggle != null)
+                SetLayerAlpha(newToggle, 1.0f);
+
+            Logger.Info("New Clarity Toggle Count: " + newToggleName);
+        }
     }
 
     public static void HideExamine(TileMapLayer examineLayer)
@@ -148,14 +204,30 @@ public static class ExamineHelper
         if (examineLayer == null)
             return;
 
-        var color = examineLayer.Modulate;
-        color.A = 0.0f;
-        examineLayer.Modulate = color;
+        SetLayerAlpha(examineLayer, 0.0f);
+    }
+
+    private static void SetLayerAlpha(CanvasItem layer, float alpha)
+    {
+        var modulate = layer.Modulate;
+        modulate.A = alpha;
+        layer.Modulate = modulate;
+
+        var selfModulate = layer.SelfModulate;
+        selfModulate.A = alpha;
+        layer.SelfModulate = selfModulate;
+    }
+
+    private static bool IsLayerVisible(CanvasItem layer)
+    {
+        return layer.Modulate.A >= 0.9f && layer.SelfModulate.A >= 0.9f;
     }
 
     public static int ExtractExamineNumber(string layerName)
     {
-        if (layerName.StartsWith("Examine") && int.TryParse(layerName.Substring(7), out int number))
+        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
+
+        if (layerName.StartsWith(fileStart) && int.TryParse(layerName.Substring(fileStart.Length), out int number))
             return number;
         return 0;
     }
