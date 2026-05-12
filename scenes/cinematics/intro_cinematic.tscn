@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2c277s0ldtnw"]
 
-[ext_resource type="Script" uid="uid://bsfipeh3grtw6" path="res://scripts/core/IntroCinematic.cs" id="1_wh5qk"]
+[ext_resource type="Script" uid="uid://bsfipeh3grtw6" path="res://scripts/cinematics/IntroCinematic.cs" id="1_wh5qk"]
 [ext_resource type="FontFile" uid="uid://cgh2kw8defkgq" path="res://assets/fonts/AlmendraDisplay-Regular.ttf" id="2_q3eam"]
 [ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="3_l0gfb"]
 
