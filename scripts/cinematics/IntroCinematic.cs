@@ -53,8 +53,8 @@ public partial class IntroCinematic : Control
 		await FadeRectAlpha(_whiteFlash, 0.0f, 0.8f);
 		await Wait(0.3f);
 
-		// Hand off to GameManager, which fade-loads the first room through SceneManager.
-		GetTree().ChangeSceneToFile("res://scenes/managers/game_manager.tscn");
+		// Hand off to the Main Menu.
+		GetTree().ChangeSceneToFile("res://scenes/ui/main_menu.tscn");
 	}
 
 	public override void _ExitTree()
