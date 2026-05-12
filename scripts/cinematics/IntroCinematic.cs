@@ -14,6 +14,7 @@ public partial class IntroCinematic : Control
 	private Label _introText;
 	private Label _titleCard;
 	private ColorRect _whiteFlash;
+	private AudioStreamPlayer _musicPlayer;
 
 	public override async void _Ready()
 	{
@@ -21,6 +22,21 @@ public partial class IntroCinematic : Control
 		_introText = GetNode<Label>("IntroText");
 		_titleCard = GetNode<Label>("TitleCard");
 		_whiteFlash = GetNode<ColorRect>("WhiteFlash");
+		_musicPlayer = GetNodeOrNull<AudioStreamPlayer>("MusicPlayer");
+
+		if (_musicPlayer == null)
+		{
+			_musicPlayer = new AudioStreamPlayer();
+			AddChild(_musicPlayer);
+		}
+
+		// Load and play the intro music
+		var introMusic = GD.Load<AudioStream>("res://assets/Music/bg/conclusion.mp3");
+		if (introMusic != null)
+		{
+			_musicPlayer.Stream = introMusic;
+			_musicPlayer.Play();
+		}
 
 		ConfigureFullscreenRect(_blackBg, new Color(0, 0, 0, 1), 0);
 		ConfigureFullscreenRect(_whiteFlash, new Color(1, 1, 1, 1), 2);
@@ -52,6 +68,9 @@ public partial class IntroCinematic : Control
 		await FadeLabelAlpha(_titleCard, 0.0f, 0.6f);
 		await FadeRectAlpha(_whiteFlash, 0.0f, 0.8f);
 		await Wait(0.3f);
+
+		// Fade out music before transitioning
+		await FadeMusicAlpha(0.0f, 0.5f);
 
 		// Hand off to the Main Menu.
 		GetTree().ChangeSceneToFile("res://scenes/ui/main_menu.tscn");
@@ -117,5 +136,15 @@ public partial class IntroCinematic : Control
 	private async Task Wait(float seconds)
 	{
 		await ToSignal(GetTree().CreateTimer(seconds), SceneTreeTimer.SignalName.Timeout);
+	}
+
+	private async Task FadeMusicAlpha(float targetAlpha, float duration)
+	{
+		if (_musicPlayer == null)
+			return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_musicPlayer, "volume_db", Mathf.LinearToDb(targetAlpha), duration);
+		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 }
