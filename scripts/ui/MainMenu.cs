@@ -1,4 +1,5 @@
 using Godot;
+using System.Threading.Tasks;
 
 public partial class MainMenu : Control
 {
@@ -13,6 +14,7 @@ public partial class MainMenu : Control
 
 	private BaseButton _startButton;
 	private BaseButton _quitButton;
+	private AudioStreamPlayer _musicPlayer;
 
 	public override void _Ready()
 	{
@@ -34,6 +36,22 @@ public partial class MainMenu : Control
 			_quitButton.Pressed += OnQuitPressed;
 
 		_startButton?.GrabFocus();
+
+		// Initialize music player
+		_musicPlayer = GetNodeOrNull<AudioStreamPlayer>("MusicPlayer");
+		if (_musicPlayer == null)
+		{
+			_musicPlayer = new AudioStreamPlayer();
+			AddChild(_musicPlayer);
+		}
+
+		// Load and play the menu loop music
+		var menuMusic = GD.Load<AudioStream>("res://assets/Music/bg/Glance Out A Casement Window.mp3");
+		if (menuMusic != null)
+		{
+			_musicPlayer.Stream = menuMusic;
+			_musicPlayer.Play();
+		}
 	}
 
 	private BaseButton ResolveButton(NodePath configuredPath, string logicalName, params string[] fallbackPaths)
@@ -57,7 +75,7 @@ public partial class MainMenu : Control
 		return null;
 	}
 
-	private void OnStartPressed()
+	private async void OnStartPressed()
 	{
 		if (string.IsNullOrWhiteSpace(StartScenePath))
 		{
@@ -66,6 +84,10 @@ public partial class MainMenu : Control
 		}
 
 		Logger.Info("Starting game; changing scene to: ", StartScenePath);
+
+		// Fade out music before transitioning
+		await FadeMusicAlpha(0.0f, 0.5f);
+
 		GetTree().ChangeSceneToFile(StartScenePath);
 	}
 
@@ -73,5 +95,15 @@ public partial class MainMenu : Control
 	{
 		Logger.Info("Quitting game from main menu.");
 		GetTree().Quit();
+	}
+
+	private async Task FadeMusicAlpha(float targetAlpha, float duration)
+	{
+		if (_musicPlayer == null)
+			return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_musicPlayer, "volume_db", Mathf.LinearToDb(targetAlpha), duration);
+		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 }
