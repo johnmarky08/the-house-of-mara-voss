@@ -167,7 +167,7 @@ public partial class ExamineHandler : TileMapLayer
                 continue;
             }
 
-            if (passedObjects && (current is Node2D || current is CanvasLayer))
+            if (passedObjects && (current is Node2D || current is CanvasLayer || current is TileMapLayer))
                 return currentName;
         }
 

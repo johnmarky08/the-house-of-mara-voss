@@ -14,6 +14,17 @@ public partial class RoomExamineTracker : Node
         "Drawing"
     ];
 
+    private static readonly string[] Room2RequiredObjects =
+    [
+        "Bookshelf",
+        "Phone",
+        "RightChair",
+        "LeftChair",
+        "Painting",
+        "Globe",
+        "Letter"
+    ];
+
     // Track which examine nodes have been clicked: roomName -> objectName -> set of examine layer names
     private static Dictionary<string, Dictionary<string, HashSet<string>>> _examineProgress = new();
 
@@ -79,8 +90,8 @@ public partial class RoomExamineTracker : Node
                 continue;
             }
 
-            // Once we've passed Objects, the next Node2D/CanvasLayer is the room
-            if (passedObjects && (current is Node2D or CanvasLayer))
+            // Once we've passed Objects, the room root can be a Node2D, CanvasLayer, or TileMapLayer
+            if (passedObjects && (current is Node2D or CanvasLayer or TileMapLayer))
                 return currentName;
         }
 
@@ -111,7 +122,14 @@ public partial class RoomExamineTracker : Node
 
         List<string> notExamined = new();
 
-        foreach (var requiredObject in Room1RequiredObjects)
+        var requiredObjects = roomName switch
+        {
+            "Room1" => Room1RequiredObjects,
+            "Room2" => Room2RequiredObjects,
+            _ => []
+        };
+
+        foreach (var requiredObject in requiredObjects)
         {
             if (!HasObjectBeenFullyExamined(roomName, requiredObject))
                 notExamined.Add(requiredObject);
