@@ -39,7 +39,7 @@ public partial class DrawerExamine1 : ExamineHandler
 		{
 			Logger.Debug("[Drawer Unlocked] Changing to puzzle scene!");
 			Logger.Info("Current Corruption Count: " + Globals.Instance.CORRUPTION_COUNT);
-			SceneManager.ChangeScene("res://scenes/world/room_2.tscn");
+			SceneManager.ChangeScene("res://scenes/world/room_1_puzzle.tscn");
 		}
 	}
 }
