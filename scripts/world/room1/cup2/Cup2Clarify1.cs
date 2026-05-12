@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Cup2Clarify : ExamineHandler
+public partial class Cup2Clarify1 : ExamineHandler
 {
 	protected override void OnExamineClicked()
 	{

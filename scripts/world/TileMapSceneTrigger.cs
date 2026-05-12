@@ -15,6 +15,9 @@ public partial class TileMapSceneTrigger : TileMapLayer
 
     public override void _Input(InputEvent @event)
     {
+        if (Dialogue.IsInputBlocked)
+            return;
+
         if (!TriggerEnabled || !TriggerOnLeftClick)
             return;
 

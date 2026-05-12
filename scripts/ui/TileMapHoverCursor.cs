@@ -26,6 +26,9 @@ public partial class TileMapHoverCursor : TileMapLayer
 
     public override void _Process(double delta)
     {
+        if (Dialogue.IsInputBlocked)
+            return;
+
         if (!HoverEnabled)
             return;
 
