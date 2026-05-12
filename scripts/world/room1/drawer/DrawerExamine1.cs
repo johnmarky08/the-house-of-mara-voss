@@ -4,6 +4,9 @@ public partial class DrawerExamine1 : ExamineHandler
 {
 	protected override void OnExamineClicked()
 	{
+		if (Globals.Instance != null && Globals.Instance.HAS_RETURNED_FROM_PUZZLE)
+			return;
+
 		string roomName = "Room1";
 		var parent = GetParent();
 		bool isFullyExamined = RoomExamineTracker.HasRoomBeenFullyExamined(roomName);

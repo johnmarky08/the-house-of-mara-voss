@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://dpdighi1otfjt"]
+
+[ext_resource type="Script" uid="uid://b41f32cw50uor" path="res://scripts/ui/MainMenu.cs" id="1_0kq3x"]
+[ext_resource type="Texture2D" uid="uid://crohuf1f415uk" path="res://assets/images/bgs/Main_Menu_Background.png" id="2_1g8jr"]
+[ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="2_5nq8d"]
+[ext_resource type="Texture2D" uid="uid://cdgyewk63gkc7" path="res://assets/images/tilemaps/Options-removebg.png" id="3_9fkkv"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1g8jr"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1kxf"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(87, 63, 196, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2yvf"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 66, 253, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otr3d"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 66, 253, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhagc"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(87, 143, 192, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btxxm"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(393, 144, 255, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ekit"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(393, 144, 255, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb0q5"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(89, 222, 138, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q85j6"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 222, 201, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4uci"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 222, 201, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g5eo"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(87, 300, 86, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7suek"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 299, 142, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_877pj"]
+atlas = ExtResource("3_9fkkv")
+region = Rect2(392, 299, 142, 32)
+
+[node name="MainMenu" type="Control" unique_id=1004610284]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0kq3x")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="TextureRect" parent="." unique_id=246765696]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0026041667
+anchor_top = -0.0015432099
+anchor_right = 1.453125
+anchor_bottom = 1.4459877
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.69, 0.69)
+mouse_filter = 2
+texture = ExtResource("2_1g8jr")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Center" type="HBoxContainer" parent="." unique_id=725999620]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Center" unique_id=1058911001]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Center/MarginContainer" unique_id=487717483]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/MarginContainer/VBox" unique_id=201665591]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5nq8d")
+theme_override_font_sizes/font_size = 50
+text = "THE HOUSE OF MARA VOSS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Center/MarginContainer/VBox" unique_id=186054672]
+layout_mode = 2
+theme_override_constants/separation = 150
+theme_override_styles/separator = SubResource("StyleBoxLine_1g8jr")
+
+[node name="StartButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1602210753]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_m1kxf")
+texture_pressed = SubResource("AtlasTexture_x2yvf")
+texture_hover = SubResource("AtlasTexture_otr3d")
+
+[node name="FullStoryButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1085748213]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_uhagc")
+texture_pressed = SubResource("AtlasTexture_btxxm")
+texture_hover = SubResource("AtlasTexture_8ekit")
+
+[node name="AboutButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1489428595]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_wb0q5")
+texture_pressed = SubResource("AtlasTexture_q85j6")
+texture_hover = SubResource("AtlasTexture_n4uci")
+
+[node name="QuitButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1421538295]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_8g5eo")
+texture_pressed = SubResource("AtlasTexture_7suek")
+texture_hover = SubResource("AtlasTexture_877pj")

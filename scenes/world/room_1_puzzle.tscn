@@ -1,3 +1,194 @@
 [gd_scene format=3 uid="uid://e3g1hocmh7xt"]
 
-[node name="Room1Puzzle" type="Node2D" unique_id=543742527]
+[ext_resource type="Texture2D" uid="uid://dqnvd0hj60jfn" path="res://assets/images/tilemaps/tilemap_room_1.png" id="1_k5by6"]
+[ext_resource type="Texture2D" uid="uid://5coprka28w1g" path="res://assets/images/bgs/Wall.png" id="3_1lge1"]
+[ext_resource type="Script" uid="uid://d3icl4t7kjcac" path="res://scripts/world/room1/Puzzle/Room1Puzzle.cs" id="3_4grsi"]
+[ext_resource type="Script" uid="uid://ca5480muse6xj" path="res://scripts/world/room1/Puzzle/BrassKey1.cs" id="4_ca548"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/tilemaps/brass key 1.png" id="4_hxjmd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwhye"]
+atlas = ExtResource("1_k5by6")
+region = Rect2(590, 248, 295, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4grsi"]
+atlas = ExtResource("1_k5by6")
+region = Rect2(590, 372, 295, 124)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hxjmd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwhye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4grsi")
+}],
+"loop": true,
+"name": &"DrawerOpen",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4grsi"]
+size = Vector2(122.5, 70)
+
+[sub_resource type="FontFile" id="FontFile_nwhye"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/80/0/ascent = 0.0
+cache/0/80/0/descent = 0.0
+cache/0/80/0/underline_position = 0.0
+cache/0/80/0/underline_thickness = 0.0
+cache/0/80/0/scale = 1.0
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+cache/0/17/0/ascent = 0.0
+cache/0/17/0/descent = 0.0
+cache/0/17/0/underline_position = 0.0
+cache/0/17/0/underline_thickness = 0.0
+cache/0/17/0/scale = 1.0
+cache/0/13/0/ascent = 0.0
+cache/0/13/0/descent = 0.0
+cache/0/13/0/underline_position = 0.0
+cache/0/13/0/underline_thickness = 0.0
+cache/0/13/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_spinbox"]
+default_font = SubResource("FontFile_nwhye")
+default_font_size = 80
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxjmd"]
+size = Vector2(142.5, 44)
+
+[node name="Room1Puzzle" type="Area2D" unique_id=1638166998]
+script = ExtResource("3_4grsi")
+
+[node name="Wall" type="Sprite2D" parent="." unique_id=133186935]
+position = Vector2(581.49994, 323.50003)
+scale = Vector2(0.8313802, 0.725586)
+texture = ExtResource("3_1lge1")
+
+[node name="Drawer" type="AnimatedSprite2D" parent="." unique_id=2040142679]
+position = Vector2(656, 331.99997)
+scale = Vector2(5.122033, 4.104334)
+sprite_frames = SubResource("SpriteFrames_hxjmd")
+animation = &"DrawerOpen"
+frame_progress = 0.8237113
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858551432]
+position = Vector2(555, 327)
+shape = SubResource("RectangleShape2D_4grsi")
+
+[node name="Padlock" type="Node2D" parent="." unique_id=283147229]
+visible = false
+
+[node name="Title" type="Label" parent="Padlock" unique_id=100001]
+custom_minimum_size = Vector2(72, 60)
+offset_left = 280.0
+offset_top = 90.0
+offset_right = 350.0
+offset_bottom = 200.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Sometimes,.. You just need to pay attention"
+
+[node name="padlock-0" type="SpinBox" parent="Padlock" unique_id=1935873558]
+self_modulate = Color(0.95, 0.9, 0.88, 1)
+custom_minimum_size = Vector2(72, 60)
+offset_left = 283.0
+offset_top = 140.0
+offset_right = 355.0
+offset_bottom = 256.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+alignment = 1
+
+[node name="padlock-1" type="SpinBox" parent="Padlock" unique_id=72588684]
+self_modulate = Color(0.95, 0.9, 0.88, 1)
+custom_minimum_size = Vector2(72, 60)
+offset_left = 362.0
+offset_top = 140.0
+offset_right = 432.0
+offset_bottom = 200.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+alignment = 1
+
+[node name="padlock-2" type="SpinBox" parent="Padlock" unique_id=798578088]
+self_modulate = Color(0.9, 0.85, 0.83, 1)
+custom_minimum_size = Vector2(72, 60)
+offset_left = 444.0
+offset_top = 140.0
+offset_right = 514.0
+offset_bottom = 200.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+alignment = 1
+
+[node name="padlock-3" type="SpinBox" parent="Padlock" unique_id=2047676471]
+self_modulate = Color(0.92, 0.88, 0.86, 1)
+custom_minimum_size = Vector2(72, 60)
+offset_left = 526.0
+offset_top = 140.0
+offset_right = 596.0
+offset_bottom = 200.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+alignment = 1
+
+[node name="padlock-4" type="SpinBox" parent="Padlock" unique_id=453465781]
+self_modulate = Color(0.94, 0.9, 0.88, 1)
+custom_minimum_size = Vector2(72, 60)
+offset_left = 609.0
+offset_top = 140.0
+offset_right = 679.0
+offset_bottom = 200.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_spinbox")
+alignment = 1
+
+[node name="BrassKey1" type="Area2D" parent="." unique_id=626319018]
+visible = false
+position = Vector2(759, 308)
+scale = Vector2(0.64824796, 0.6723122)
+script = ExtResource("4_ca548")
+
+[node name="BrassKey2" type="Sprite2D" parent="BrassKey1" unique_id=745337044]
+position = Vector2(24.68193, 1.4873962)
+scale = Vector2(0.674636, 0.57447976)
+texture = ExtResource("4_hxjmd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BrassKey1" unique_id=894663536]
+position = Vector2(23.139282, -5.9496155)
+scale = Vector2(1.5426196, 1.4874042)
+shape = SubResource("RectangleShape2D_hxjmd")

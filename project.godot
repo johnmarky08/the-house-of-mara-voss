@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="The House of Mara Voss"
-run/main_scene="uid://c7enheeflfpwh"
+run/main_scene="uid://b2c277s0ldtnw"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
