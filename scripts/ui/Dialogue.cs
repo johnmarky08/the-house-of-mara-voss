@@ -28,7 +28,7 @@ public partial class Dialogue : Control
             _inputBlockCount--;
     }
 
-    public void Initialize(Vector2 viewportSize)
+    public void Initialize()
     {
         Name = "DialogueUI";
         ProcessMode = ProcessModeEnum.Always;
@@ -89,9 +89,9 @@ public partial class Dialogue : Control
             AnchorRight = 1,
             AnchorBottom = 1,
             OffsetLeft = 50,
-            OffsetTop = -223,
+            OffsetTop = -233,
             OffsetRight = -27,
-            OffsetBottom = -123,
+            OffsetBottom = -133,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
             AutowrapMode = TextServer.AutowrapMode.Word,
@@ -124,18 +124,46 @@ public partial class Dialogue : Control
     {
         var tree = caller.GetTree();
         var root = tree.Root;
-        var viewportSize = caller.GetViewport().GetVisibleRect().Size;
 
-        var dialogue = new Dialogue();
-        dialogue._fullText = text;
+        var container = new SubViewportContainer
+        {
+            Name = "DialogueContainer",
+            Stretch = true,
+            AnchorLeft = 0,
+            AnchorTop = 0,
+            AnchorRight = 1,
+            AnchorBottom = 1,
+            OffsetLeft = 0,
+            OffsetTop = 0,
+            OffsetRight = 0,
+            OffsetBottom = 0,
+            GrowHorizontal = GrowDirection.Both,
+            GrowVertical = GrowDirection.Both,
+        };
+
+        var subViewport = new SubViewport
+        {
+            Name = "DialogueViewport",
+            Size = new Vector2I(1152, 648),
+            TransparentBg = true,
+        };
+        subViewport.SetSize2DOverride(new Vector2I(1152, 648));
+        subViewport.SetSize2DOverrideStretch(true);
+        container.AddChild(subViewport);
+
+        var dialogue = new Dialogue
+        {
+            _fullText = text
+        };
 
         if (fontPath != null) dialogue._fontPath = fontPath;
         if (fontSize.HasValue) dialogue._fontSize = fontSize.Value;
         if (textColor.HasValue) dialogue._textColor = textColor.Value;
         if (typewriterSpeed.HasValue) dialogue._typewriterSpeed = typewriterSpeed.Value;
 
-        dialogue.Initialize(viewportSize);
-        root.AddChild(dialogue);
+        dialogue.Initialize();
+        subViewport.AddChild(dialogue);
+        root.AddChild(container);
 
         await dialogue.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
 
@@ -158,7 +186,7 @@ public partial class Dialogue : Control
         }
         finally
         {
-            dialogue.QueueFree();
+            container.QueueFree();
         }
     }
 
@@ -189,8 +217,8 @@ public partial class Dialogue : Control
     private async Task PlayFadeOutAnimation()
     {
         var tween = CreateTween();
-        tween.TweenProperty(_backgroundRect, "modulate:a", 0.0f, 0.4f);
-        tween.TweenProperty(_dialogueLabel, "modulate:a", 0.0f, 0.4f);
+        tween.TweenProperty(_backgroundRect, "modulate:a", 0.0f, 0.3f);
+        tween.TweenProperty(_dialogueLabel, "modulate:a", 0.0f, 0.3f);
         await ToSignal(tween, Tween.SignalName.Finished);
     }
 }

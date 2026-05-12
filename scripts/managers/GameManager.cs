@@ -3,9 +3,8 @@ using Godot;
 public partial class GameManager : Node
 {
     public static GameManager Instance { get; private set; }
-
     [ExportCategory("Game Flow")]
-    [Export(PropertyHint.File, "*.tscn")] public string FirstRoomScenePath = "res://scenes/world/room_1.tscn";
+    [Export(PropertyHint.File, "*.tscn")] public string FirstRoomScenePath = "res://scenes/world/room_2.tscn";
 
     public SubViewport GameViewport { get; private set; }
 

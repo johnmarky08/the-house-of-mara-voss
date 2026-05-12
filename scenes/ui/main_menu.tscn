@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dpdighi1otfjt"]
 
-[ext_resource type="Script" path="res://scripts/ui/MainMenu.cs" id="1_0kq3x"]
+[ext_resource type="Script" uid="uid://b41f32cw50uor" path="res://scripts/ui/MainMenu.cs" id="1_0kq3x"]
 [ext_resource type="Texture2D" uid="uid://crohuf1f415uk" path="res://assets/images/bgs/Main_Menu_BG.png" id="2_1g8jr"]
 [ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="2_5nq8d"]
 [ext_resource type="Texture2D" uid="uid://cdgyewk63gkc7" path="res://assets/images/core/game_menu.png" id="3_9fkkv"]
@@ -64,10 +64,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0kq3x")
+StartButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContainer/VBox/StartButton")
+QuitButtonPath = NodePath("SubViewportContainer/SubViewport/Center/MarginContainer/VBox/QuitButton")
 metadata/_edit_use_anchors_ = true
 
-[node name="Background" type="TextureRect" parent="." unique_id=246765696]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=228626187]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=358120027]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+size_2d_override = Vector2i(1152, 648)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Background" type="TextureRect" parent="SubViewportContainer/SubViewport" unique_id=246765696]
 anchors_preset = -1
 anchor_left = -0.0026041667
 anchor_top = -0.0015432099
@@ -85,62 +102,60 @@ texture = ExtResource("2_1g8jr")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Center" type="HBoxContainer" parent="." unique_id=725999620]
-layout_mode = 1
+[node name="Center" type="HBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=725999620]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="Center" unique_id=1058911001]
+[node name="MarginContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport/Center" unique_id=1058911001]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBox" type="VBoxContainer" parent="Center/MarginContainer" unique_id=487717483]
+[node name="VBox" type="VBoxContainer" parent="SubViewportContainer/SubViewport/Center/MarginContainer" unique_id=487717483]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Title" type="Label" parent="Center/MarginContainer/VBox" unique_id=201665591]
+[node name="Title" type="Label" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=201665591]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_5nq8d")
 theme_override_font_sizes/font_size = 50
 text = "THE HOUSE OF MARA VOSS"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Center/MarginContainer/VBox" unique_id=186054672]
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=186054672]
 layout_mode = 2
 theme_override_constants/separation = 150
 theme_override_styles/separator = SubResource("StyleBoxLine_1g8jr")
 
-[node name="StartButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1602210753]
+[node name="StartButton" type="TextureButton" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=1602210753]
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_m1kxf")
 texture_pressed = SubResource("AtlasTexture_x2yvf")
 texture_hover = SubResource("AtlasTexture_otr3d")
 
-[node name="FullStoryButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1085748213]
+[node name="FullStoryButton" type="TextureButton" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=1085748213]
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_uhagc")
 texture_pressed = SubResource("AtlasTexture_btxxm")
 texture_hover = SubResource("AtlasTexture_8ekit")
 
-[node name="AboutButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1489428595]
+[node name="AboutButton" type="TextureButton" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=1489428595]
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_wb0q5")
 texture_pressed = SubResource("AtlasTexture_q85j6")
 texture_hover = SubResource("AtlasTexture_n4uci")
 
-[node name="QuitButton" type="TextureButton" parent="Center/MarginContainer/VBox" unique_id=1421538295]
+[node name="QuitButton" type="TextureButton" parent="SubViewportContainer/SubViewport/Center/MarginContainer/VBox" unique_id=1421538295]
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_8g5eo")
