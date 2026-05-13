@@ -73,6 +73,8 @@ public partial class Room4 : Node2D
 	private int _currentSequenceIndex = 0;
 	private AnimatedSprite2D _doorAnimation;
 	private Area2D _doorClickArea;
+	private Area2D _mirrorCollisionArea;
+	private Area2D _drawerCollisionArea;
 	private bool _doorAnimationStarted = false;
 	private bool _doorUnlocked = false;
 	private Label _sentenceLabel;
@@ -86,14 +88,20 @@ public partial class Room4 : Node2D
 		HideRuntimeLabel(true);
 
 		_doorAnimation = GetNodeOrNull<AnimatedSprite2D>("Door");
-		if (_doorAnimation == null)
-			GD.PrintErr("[Room4] Door animation not found in scene!");
-		else
+		if (_doorAnimation != null)
 			_doorAnimation.Visible = false;
+
+		_mirrorCollisionArea = GetNodeOrNull<Area2D>("Mirror/Mirror");
+		if (_mirrorCollisionArea != null)
+			_mirrorCollisionArea.InputPickable = true;
+
+		_drawerCollisionArea = GetNodeOrNull<Area2D>("Drawer/Drawer");
+		if (_drawerCollisionArea != null)
+			_drawerCollisionArea.InputPickable = true;
 
 		_doorClickArea = GetNodeOrNull<Area2D>(DoorClickAreaPath);
 		if (_doorClickArea == null)
-			GD.PrintErr($"[Room4] Door click area not found at path: {DoorClickAreaPath}");
+			Logger.Error("[ Room4 ] Door click area not found at path: " + DoorClickAreaPath);
 
 		_sentenceLayer = GetNodeOrNull<CanvasLayer>("SentenceLayer");
 		if (_sentenceLayer == null)
@@ -137,33 +145,67 @@ public partial class Room4 : Node2D
 		}
 	}
 
+	private async void OnMirrorCollisionPressed()
+	{
+		var globalPosition = _mirrorCollisionArea.GlobalPosition;
+		await Dialogue.ShowText(this, "The hallway stretches back in the mirror. All those photographs, reversed. Ida at fourteen, mirrored, looking in the other direction.", 6.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 20);
+		await Dialogue.ShowText(this, "The mirror is showing something different. A different version of this hallway. One where more has been taken down.", 6.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 20);
+		await Dialogue.ShowText(this, "That's not this hallway. That's somewhere else.", 4.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 32);
+		await Dialogue.ShowText(this, "There is a woman in the mirror. She is sitting on a floor. She is not here.", 5.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 28);
+	}
+
+	private async void OnDrawerCollisionPressed()
+	{
+		var globalPosition = _drawerCollisionArea.GlobalPosition;
+		await Dialogue.ShowText(this, "A hall table drawer. Old wood, slightly sticky.", 4.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 32);
+		await Dialogue.ShowText(this, "These were here. In the truth of the house, these tools were always here. Someone who lived here was a locksmith, or careful, or both.", 4.0f, globalPosition.X, globalPosition.Y, HoverFontPath, 32);
+	}
+
+	private bool TryHandleMirrorCollision(InputEventMouseButton mouseButton)
+	{
+		if (Dialogue.IsInputBlocked || _mirrorCollisionArea == null)
+			return false;
+
+		Vector2 globalMouse = GetGlobalMousePosition();
+		if (!IsInsideArea2D(_mirrorCollisionArea, globalMouse, 0f))
+			return false;
+
+		OnMirrorCollisionPressed();
+		GetTree().Root.SetInputAsHandled();
+		return true;
+	}
+
+	private bool TryHandleDrawerCollision(InputEventMouseButton mouseButton)
+	{
+		if (Dialogue.IsInputBlocked || _drawerCollisionArea == null)
+			return false;
+
+		Vector2 globalMouse = GetGlobalMousePosition();
+		if (!IsInsideArea2D(_drawerCollisionArea, globalMouse, 0f))
+			return false;
+
+		OnDrawerCollisionPressed();
+		GetTree().Root.SetInputAsHandled();
+		return true;
+	}
+
 	private void EnsureRuntimeHoverLabel()
 	{
-		GD.Print("[Room4] EnsureRuntimeHoverLabel called");
-
 		var layer = GetNodeOrNull<CanvasLayer>("HoverLabelLayer");
 		if (layer == null)
 		{
-			GD.Print("[Room4] Creating new CanvasLayer");
 			layer = new CanvasLayer
 			{
 				Name = "HoverLabelLayer"
 			};
 			AddChild(layer);
-			GD.Print($"[Room4] CanvasLayer added, children count: {GetChildCount()}");
-		}
-		else
-		{
-			GD.Print("[Room4] Found existing HoverLabelLayer");
 		}
 
 		var font = ResourceLoader.Load<FontFile>(HoverFontPath);
-		GD.Print($"[Room4] Font loaded: {(font != null ? "YES" : "NO")}");
 
 		_runtimeHoverLabel = layer.GetNodeOrNull<Label>("RuntimeHoverLabel");
 		if (_runtimeHoverLabel == null)
 		{
-			GD.Print("[Room4] Creating new Label node");
 			_runtimeHoverLabel = new Label
 			{
 				Name = "RuntimeHoverLabel",
@@ -172,11 +214,6 @@ public partial class Room4 : Node2D
 				ZIndex = 1000
 			};
 			layer.AddChild(_runtimeHoverLabel);
-			GD.Print($"[Room4] Label added to layer. Layer children: {layer.GetChildCount()}");
-		}
-		else
-		{
-			GD.Print("[Room4] Found existing RuntimeHoverLabel");
 		}
 
 		if (font != null)
@@ -187,7 +224,6 @@ public partial class Room4 : Node2D
 		_runtimeHoverLabel.HorizontalAlignment = HorizontalAlignment.Center;
 		_runtimeHoverLabel.AddThemeFontSizeOverride("font_size", 32);
 
-		GD.Print($"[Room4] Label ready. Visible={_runtimeHoverLabel.Visible}, Text='{_runtimeHoverLabel.Text}'");
 	}
 
 	public override void _Process(double delta)
@@ -219,13 +255,22 @@ public partial class Room4 : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (!_doorUnlocked || SceneManager.IsChanging)
+		if (SceneManager.IsChanging)
 			return;
 
 		if (@event is not InputEventMouseButton mouseButton)
 			return;
 
 		if (!mouseButton.Pressed || mouseButton.ButtonIndex != MouseButton.Left)
+			return;
+
+		if (TryHandleMirrorCollision(mouseButton))
+			return;
+
+		if (TryHandleDrawerCollision(mouseButton))
+			return;
+
+		if (!_doorUnlocked)
 			return;
 
 		if (_doorAnimation == null || !_doorAnimation.Visible)
@@ -239,10 +284,8 @@ public partial class Room4 : Node2D
 			return;
 
 		if (string.IsNullOrWhiteSpace(DoorTargetScenePath))
-		{
-			GD.PrintErr("[Room4] DoorTargetScenePath is empty.");
 			return;
-		}
+
 
 		SceneManager.ChangeScene(DoorTargetScenePath);
 		GetTree().Root.SetInputAsHandled();
@@ -254,59 +297,35 @@ public partial class Room4 : Node2D
 		{
 			var pictureArea = GetNodeOrNull<Area2D>(PictureNodePaths[index]);
 			if (pictureArea == null)
-			{
-				if (DebugHoverDetection)
-					GD.Print($"[Room4 Hover] missing Area2D: {PictureNodePaths[index]}");
 				continue;
-			}
+
 
 			float padding = HoverPaddingByIndex[index] + HoverPaddingPixels;
 			if (IsInsideArea2D(pictureArea, mousePosition, padding))
-			{
-				if (DebugHoverDetection)
-					GD.Print($"[Room4 Hover] hit {PictureNodePaths[index]} at mouse={mousePosition} padding={padding}");
 				return index;
-			}
 		}
-
-		if (DebugHoverDetection)
-			GD.Print($"[Room4 Hover] no hit at mouse={mousePosition}");
 
 		return -1;
 	}
 
 	private void ShowRuntimeLabel(int index)
 	{
-		GD.Print($"[Room4] ShowRuntimeLabel called for index {index} ({HoverWords[index]})");
-
 		if (Dialogue.IsInputBlocked)
-		{
-			GD.Print("[Room4] ShowRuntimeLabel early exit: Dialogue blocked");
 			return;
-		}
 
 		if (_runtimeHoverLabel == null)
-		{
-			GD.Print("[Room4] ShowRuntimeLabel early exit: _runtimeHoverLabel is NULL!");
 			return;
-		}
 
 		var pictureArea = GetNodeOrNull<Area2D>(PictureNodePaths[index]);
 		if (pictureArea == null)
-		{
-			GD.Print($"[Room4] ShowRuntimeLabel early exit: picture area '{PictureNodePaths[index]}' not found");
 			return;
-		}
 
 		Vector2 labelPosition = pictureArea.GlobalPosition + HoverLabelOffsets[index] + HoverLabelNudge;
-		GD.Print($"[Room4] Setting label: text='{HoverWords[index]}' pos={labelPosition}");
 
 		_runtimeHoverLabel.Text = HoverWords[index];
 		_runtimeHoverLabel.Position = labelPosition;
 		_runtimeHoverLabel.Visible = true;
 		_runtimeHoverLabel.Modulate = new Color(1, 1, 1, 0);
-
-		GD.Print($"[Room4] Label after set: Visible={_runtimeHoverLabel.Visible}, Modulate.A={_runtimeHoverLabel.Modulate.A}, Parent={_runtimeHoverLabel.GetParent()?.Name}");
 
 		_hoverTween?.Kill();
 		_hoverTween = CreateTween();
@@ -314,12 +333,8 @@ public partial class Room4 : Node2D
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.Out);
 
-		GD.Print("[Room4] Fade tween started");
-
 		if (HoverWords[index] == HoverWords[_currentSequenceIndex])
 		{
-			GD.Print($"HOVERED: {HoverWords[index]}");
-
 			if (_sentenceLabel != null)
 			{
 				if (_currentSequenceIndex == 0)
@@ -335,7 +350,6 @@ public partial class Room4 : Node2D
 
 			if (_currentSequenceIndex >= HoverWords.Length)
 			{
-				GD.Print("✓✓✓ ALL WORDS HOVERED! Triggering door animation!");
 				TriggerDoorAnimation();
 				_currentSequenceIndex = 0;
 				if (_sentenceLabel != null)
@@ -369,10 +383,7 @@ public partial class Room4 : Node2D
 	{
 		var collisionShape = area.GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
 		if (collisionShape == null || collisionShape.Shape is not RectangleShape2D rectangleShape)
-		{
-			GD.Print($"[Room4 DEBUG IsInsideArea2D] Invalid collision on {area.Name}");
 			return false;
-		}
 
 		Vector2 localMousePosition = collisionShape.ToLocal(globalMousePosition);
 		Vector2 halfSize = rectangleShape.Size / 2f;
@@ -381,8 +392,6 @@ public partial class Room4 : Node2D
 			localMousePosition.X <= expandedHalfSize.X &&
 			localMousePosition.Y >= -expandedHalfSize.Y &&
 			localMousePosition.Y <= expandedHalfSize.Y;
-
-		GD.Print($"[Room4 DEBUG IsInsideArea2D] {area.Name} - Local: {localMousePosition}, HalfSize: {halfSize}, Expanded: {expandedHalfSize}, Inside: {inside}");
 
 		return inside;
 	}
@@ -395,35 +404,19 @@ public partial class Room4 : Node2D
 			int randomIndex = (int)(random.Randi() % (i + 1));
 			(array[i], array[randomIndex]) = (array[randomIndex], array[i]);
 		}
-		GD.Print("[Room4] Words shuffled. New order:");
-		for (int i = 0; i < array.Length; i++)
-		{
-			GD.Print($"  Pic {i + 1}: {array[i]}");
-		}
 	}
 
 	private void TriggerDoorAnimation()
 	{
 		if (_doorAnimation == null)
-		{
-			GD.PrintErr("[Room4] Cannot trigger door animation: node not found");
 			return;
-		}
 
-		GD.Print("[Room4] Triggering door animation...");
 		_doorAnimation.Visible = true;
 		_doorAnimationStarted = true;
 
 		var animations = _doorAnimation.SpriteFrames.GetAnimationNames();
 		if (animations.Length > 0)
-		{
 			_doorAnimation.Play(animations[0]);
-			GD.Print($"[Room4] Playing animation: {animations[0]}");
-		}
-		else
-		{
-			GD.Print("[Room4] No animations found in door sprite frames");
-		}
 
 		_doorAnimation.Frame = 0;
 
@@ -439,7 +432,6 @@ public partial class Room4 : Node2D
 
 			_doorAnimation.Frame = Mathf.Max(0, frameCount - 1);
 			_doorUnlocked = true;
-			GD.Print($"[Room4] door_animation stopped at frame {_doorAnimation.Frame + 1}");
 		})).SetDelay(5.0 / animSpeed);
 	}
 }
