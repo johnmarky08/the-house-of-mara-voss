@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ccxgs2ecr38tm"]
+[gd_scene format=3 uid="uid://crv2frnsynjh5"]
 
 [ext_resource type="Script" uid="uid://d3xgs740xotrw" path="res://scripts/world/room4/Room4Puzzle.cs" id="1_gp86n"]
 [ext_resource type="Texture2D" uid="uid://cpf8dj4tctfjb" path="res://assets/images/bgs/DoorCloseup.png" id="1_mmc3o"]

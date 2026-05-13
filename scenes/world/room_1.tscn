@@ -35,7 +35,7 @@
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_t5d1k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5d1k"]
-size = Vector2(390, 168.1818)
+size = Vector2(341.81848, 254.54538)
 
 [node name="Room1" type="TileMapLayer" unique_id=927437449]
 tile_set = ExtResource("2_hnbyo")
@@ -376,9 +376,9 @@ tile_map_data = PackedByteArray("AAAnABYAAQAjAAIAAAAnABcAAQAjAAMAAAAnABgAAQAjAAQ
 tile_set = ExtResource("2_hnbyo")
 
 [node name="RightArrow" type="Area2D" parent="UI" unique_id=1882857415]
-visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = 10
+texture_filter = 1
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
 script = ExtResource("33_t5d1k")
@@ -388,5 +388,5 @@ position = Vector2(-50.90918, 3.6363525)
 texture = ExtResource("32_kq8op")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UI/RightArrow" unique_id=399190991]
-position = Vector2(-116.36377, -43.636353)
+position = Vector2(-50.90918, -3.6363525)
 shape = SubResource("RectangleShape2D_t5d1k")
