@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="26_3cd3d"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="27_qtejw"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="28_x1ffx"]
-[ext_resource type="AtlasTexture" path="res://resources/items/photo1.tres" id="29_photo1_tex"]
 [ext_resource type="Script" uid="uid://dw6mt4k3hp0a7" path="res://scripts/world/room3/Room3.cs" id="30_room3_script"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wlug7"]
@@ -1918,12 +1917,6 @@ position = Vector2(98.66669, 392.6667)
 rotation = 0.7853982
 scale = Vector2(0.13, 0.13)
 texture = ExtResource("25_v02rg")
-
-[node name="Photo1" type="Sprite2D" parent="UI/Inventory" unique_id=152966317]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(160, 392.6667)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("29_photo1_tex")
 
 [node name="ClarityToggle" type="TileMapLayer" parent="UI" unique_id=2035719442]
 texture_filter = 1

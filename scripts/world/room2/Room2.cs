@@ -1,28 +1,25 @@
 using Godot;
-
 public partial class Room2 : ExamineHandler
 {
     public override void _Ready()
     {
-        if (Globals.Instance != null && Globals.Instance.PHOTO1_COLLECTED)
+        if (Globals.Instance != null && Globals.SHARDS_COLLECTED[1])
         {
-            // TO DO: MANY!
-            var photoSprite = GetNodeOrNull<Sprite2D>("UI/Inventory/Photo");
-            var rightArrow = GetNodeOrNull<Sprite2D>("UI/RightArrow");
+            var rightArrow = GetNode<Area2D>("UI/RightArrow");
+            var leftArrow = GetNode<Area2D>("UI/LeftArrow");
+            var photo = GetNode<Sprite2D>("UI/Photo");
 
-            if (photoSprite != null)
-            {
-                var color = photoSprite.Modulate;
-                color.A = 1.0f;
-                photoSprite.Modulate = color;
-            }
+            var rightArrowColor = rightArrow.Modulate;
+            rightArrowColor.A = 1.0f;
+            rightArrow.Modulate = rightArrowColor;
 
-            if (rightArrow != null)
-            {
-                var rightArrowColor = rightArrow.Modulate;
-                rightArrowColor.A = 1.0f;
-                rightArrow.Modulate = rightArrowColor;
-            }
+            var leftArrowColor = leftArrow.Modulate;
+            leftArrowColor.A = 1.0f;
+            leftArrow.Modulate = leftArrowColor;
+
+            var photoColor = photo.Modulate;
+            photoColor.A = 1.0f;
+            photo.Modulate = photoColor;
         }
     }
 }

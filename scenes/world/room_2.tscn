@@ -1256,6 +1256,9 @@ texture = ExtResource("3_4730r")
 [sub_resource type="TileSet" id="TileSet_elej8"]
 sources/0 = SubResource("TileSetAtlasSource_wlug7")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihi4w"]
+size = Vector2(341.81848, 254.54538)
+
 [node name="Room2" type="TileMapLayer" unique_id=927437449]
 tile_set = ExtResource("1_j1llv")
 
@@ -1571,9 +1574,34 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAnABYAAQAjAAIAAAAnABcAAQAjAAMAAAAnABgAAQAjAAQAAAAnABkAAQAjAAUAAAAnABoAAQAjAAYAAAAoABYAAQAkAAIAAAAoABcAAQAkAAMAAAAoABgAAQAkAAQAAAAoABkAAQAkAAUAAAAoABoAAQAkAAYAAAApABYAAQAlAAIAAAApABcAAQAlAAMAAAApABgAAQAlAAQAAAApABkAAQAlAAUAAAApABoAAQAlAAYAAAAqABYAAQAmAAIAAAAqABcAAQAmAAMAAAAqABgAAQAmAAQAAAAqABkAAQAmAAUAAAAqABoAAQAmAAYAAAArABYAAQAnAAIAAAArABcAAQAnAAMAAAArABgAAQAnAAQAAAArABkAAQAnAAUAAAArABoAAQAnAAYAAAAsABYAAQAoAAIAAAAsABcAAQAoAAMAAAAsABgAAQAoAAQAAAAsABkAAQAoAAUAAAAsABoAAQAoAAYAAAAtABYAAQApAAIAAAAtABcAAQApAAMAAAAtABgAAQApAAQAAAAtABkAAQApAAUAAAAtABoAAQApAAYAAAA=")
 tile_set = ExtResource("1_j1llv")
 
-[node name="RightArrow" type="Sprite2D" parent="UI" unique_id=2082962599]
+[node name="RightArrow" type="Area2D" parent="UI" unique_id=365866064]
 modulate = Color(1, 1, 1, 0)
+z_index = 10
+texture_filter = 1
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
-texture = ExtResource("32_h6hnl")
 script = ExtResource("33_hix3k")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/RightArrow" unique_id=566122843]
+position = Vector2(-50.90918, 3.6363525)
+texture = ExtResource("32_h6hnl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/RightArrow" unique_id=1527699006]
+position = Vector2(-50.90918, -3.6363525)
+shape = SubResource("RectangleShape2D_ihi4w")
+
+[node name="LeftArrow" type="Area2D" parent="UI" unique_id=274990980]
+modulate = Color(1, 1, 1, 0)
+z_index = 10
+texture_filter = 1
+position = Vector2(93.99999, 324)
+scale = Vector2(0.275, 0.275)
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/LeftArrow" unique_id=118542830]
+position = Vector2(-50.90918, 3.6363525)
+rotation = -3.1415927
+texture = ExtResource("32_h6hnl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/LeftArrow" unique_id=311157471]
+position = Vector2(-50.90918, 10.909058)
+shape = SubResource("RectangleShape2D_ihi4w")
