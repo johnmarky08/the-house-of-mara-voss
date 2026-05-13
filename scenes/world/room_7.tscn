@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bnjg857wvhmki"]
+
+[ext_resource type="Texture2D" uid="uid://dpw8e2sg3j415" path="res://assets/images/bgs/room_7_bg.png" id="1_311k7"]
+[ext_resource type="Texture2D" uid="uid://du2iooq4u7pgo" path="res://assets/images/tilemaps/Frame 5.png" id="2_frame5"]
+[ext_resource type="Script" uid="uid://dohnhrcr483ne" path="res://scripts/world/room7/ShardSlot.cs" id="3_slot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_slot"]
+size = Vector2(100, 100)
+
+[node name="Room7" type="Node2D" unique_id=522506759]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=276788471]
+z_index = -1
+position = Vector2(576, 324)
+scale = Vector2(0.6784452, 0.699784)
+texture = ExtResource("1_311k7")
+
+[node name="Objects" type="Node2D" parent="." unique_id=616921115]
+
+[node name="Slot0" type="Area2D" parent="Objects" unique_id=2083000993]
+position = Vector2(485, 146)
+script = ExtResource("3_slot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot0" unique_id=73809035]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot0" unique_id=1542718337]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
+
+[node name="Slot1" type="Area2D" parent="Objects" unique_id=242020021]
+position = Vector2(663, 146)
+script = ExtResource("3_slot")
+SlotIndex = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot1" unique_id=276784613]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot1" unique_id=1156457831]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
+
+[node name="Slot2" type="Area2D" parent="Objects" unique_id=1397529359]
+position = Vector2(492, 300)
+script = ExtResource("3_slot")
+SlotIndex = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot2" unique_id=1023975130]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot2" unique_id=1679045712]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
+
+[node name="Slot3" type="Area2D" parent="Objects" unique_id=110404090]
+position = Vector2(656, 300)
+script = ExtResource("3_slot")
+SlotIndex = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot3" unique_id=1734842746]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot3" unique_id=1870149199]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
+
+[node name="Slot4" type="Area2D" parent="Objects" unique_id=266722987]
+position = Vector2(488, 445)
+script = ExtResource("3_slot")
+SlotIndex = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot4" unique_id=729154538]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot4" unique_id=1929585708]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
+
+[node name="Slot5" type="Area2D" parent="Objects" unique_id=1321634345]
+position = Vector2(660, 445)
+script = ExtResource("3_slot")
+SlotIndex = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Slot5" unique_id=247388515]
+shape = SubResource("RectangleShape2D_slot")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Slot5" unique_id=471175219]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_frame5")
