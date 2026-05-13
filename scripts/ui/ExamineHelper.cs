@@ -6,11 +6,25 @@ public static class ExamineHelper
 {
     public static void CycleExamine(TileMapLayer currentExamine)
     {
-        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
         if (currentExamine == null)
             return;
 
+        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
+
         var parent = currentExamine.GetParent();
+        if (Globals.Instance.IS_CLARIFYING)
+        {
+            bool hasClarify = currentExamine.GetChildren().OfType<TileMapLayer>().Any(t => t.Name.ToString().StartsWith("Clarify"));
+            if (!hasClarify && parent != null)
+                hasClarify = parent.GetChildren().OfType<TileMapLayer>().Any(t => t.Name.ToString().StartsWith("Clarify"));
+
+            if (!hasClarify)
+            {
+                Globals.Instance.IS_CLARIFYING = false;
+                Logger.Info("No Clarify layers found; cancelling clarify mode.");
+                return;
+            }
+        }
         Node targetParent = null;
         TileMapLayer targetLayer = null;
 
@@ -32,7 +46,7 @@ public static class ExamineHelper
                 foreach (var child in currentExamine.GetChildren())
                 {
                     if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
-                        HideExamine(tile);
+                        QueueFreeExamine(tile);
                 }
             }
 
@@ -53,7 +67,7 @@ public static class ExamineHelper
             foreach (var child in targetParent.GetChildren())
             {
                 if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
-                    HideExamine(tile);
+                    QueueFreeExamine(tile);
             }
         }
 
@@ -83,7 +97,7 @@ public static class ExamineHelper
         if (Globals.Instance.IS_CLARIFYING)
         {
             if (targetLayer != null)
-                HideExamine(targetLayer);
+                QueueFreeExamine(targetLayer);
 
             if (currentIndex == -1)
             {
@@ -240,5 +254,20 @@ public static class ExamineHelper
             if (GodotObject.IsInstanceValid(layer))
                 layer.QueueFree();
         }
+    }
+
+    private static void QueueFreeExamine(TileMapLayer examineLayer)
+    {
+        if (examineLayer == null)
+            return;
+
+        if (examineLayer is ExamineHandler examineHandler)
+        {
+            examineHandler.HoverEnabled = false;
+            examineHandler.SetProcessInput(false);
+            examineHandler.SetProcess(false);
+        }
+
+        examineLayer.QueueFree();
     }
 }
