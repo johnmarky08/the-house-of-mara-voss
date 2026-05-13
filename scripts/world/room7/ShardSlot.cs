@@ -43,9 +43,9 @@ public partial class ShardSlot : Area2D
 
 		// Find a collected shard in inventory
 		int shardToPlace = -1;
-		for (int i = 0; i < Globals.Instance.SHARDS_COLLECTED.Count; i++)
+		for (int i = 0; i < Globals.SHARDS_COLLECTED.Count; i++)
 		{
-			if (Globals.Instance.SHARDS_COLLECTED[i])
+			if (Globals.SHARDS_COLLECTED[i])
 			{
 				shardToPlace = i;
 				break;
@@ -55,7 +55,7 @@ public partial class ShardSlot : Area2D
 		if (shardToPlace != -1)
 		{
 			// Place it
-			Globals.Instance.SHARDS_COLLECTED[shardToPlace] = false; // Take out of inventory
+			Globals.SHARDS_COLLECTED[shardToPlace] = false; // Take out of inventory
 			Globals.Instance.SHARDS_PLACED[SlotIndex] = true;
 			UpdateVisuals();
 		}
