@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c00dy0361b2bo"]
+
+[ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="1_ujbsv"]
+[ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="2_37g75"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrc3a"]
+size = Vector2(574.5454, 287.2727)
+
+[node name="Test" type="Node2D" unique_id=1554478647]
+
+[node name="RightArrow" type="Area2D" parent="." unique_id=263720998]
+modulate = Color(1, 1, 1, 0)
+z_index = 4096
+texture_filter = 1
+position = Vector2(1040, 308)
+scale = Vector2(0.275, 0.27500007)
+script = ExtResource("1_ujbsv")
+
+[node name="Sprite2D" type="Sprite2D" parent="RightArrow" unique_id=1027641019]
+position = Vector2(39.99991, 105.45462)
+scale = Vector2(1.3598814, 0.7162007)
+texture = ExtResource("2_37g75")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArrow" unique_id=1293089474]
+z_index = 4096
+position = Vector2(58.18164, 61.818237)
+scale = Vector2(1, 1.0000002)
+shape = SubResource("RectangleShape2D_xrc3a")

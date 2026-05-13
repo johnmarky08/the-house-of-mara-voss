@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cgsc8d8xyguj6"]
+
+[ext_resource type="Script" uid="uid://db8xibb1usidi" path="res://scripts/world/room4/Door.cs" id="1_omjrn"]
+[ext_resource type="Texture2D" uid="uid://dyw806qu1seua" path="res://assets/images/tilemaps/6frames-removebg-preview.png" id="2_e0vqi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wr1s"]
+atlas = ExtResource("2_e0vqi")
+region = Rect2(354, 10, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu05g"]
+atlas = ExtResource("2_e0vqi")
+region = Rect2(6, 209, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqgv2"]
+atlas = ExtResource("2_e0vqi")
+region = Rect2(180, 209, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lyb3"]
+atlas = ExtResource("2_e0vqi")
+region = Rect2(354, 209, 174, 199)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nkvj6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wr1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu05g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqgv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lyb3")
+}],
+"loop": true,
+"name": &"door_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpe3i"]
+size = Vector2(76.76843, 150.4753)
+
+[node name="Door" type="Node2D" unique_id=617350454]
+script = ExtResource("1_omjrn")
+TargetScenePath = null
+TriggerEnabled = null
+ClickAreaPath = null
+DoorSpritePath = null
+
+[node name="DoorSprite" type="AnimatedSprite2D" parent="." unique_id=1422965829]
+position = Vector2(951.00006, 431.99994)
+scale = Vector2(2.5541897, 3.3286617)
+sprite_frames = SubResource("SpriteFrames_nkvj6")
+animation = &"door_animation"
+frame_progress = 0.17474602
+
+[node name="Clickarea" type="Area2D" parent="." unique_id=1036858535]
+position = Vector2(951.00006, 431.99994)
+scale = Vector2(2.5541897, 3.3286617)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Clickarea" unique_id=657570672]
+position = Vector2(36.802273, -14.119774)
+scale = Vector2(0.9999998, 1)
+shape = SubResource("RectangleShape2D_gpe3i")
