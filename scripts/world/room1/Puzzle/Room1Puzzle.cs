@@ -6,6 +6,8 @@ public partial class Room1Puzzle : Area2D
 	private const string PuzzleCursorPath = "res://assets/images/core/cursor_magnifying_glass.png";
 	private const string PointerCursorPath = "res://assets/images/core/cursor_pointer.png";
 
+	private string FontPath = "res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf";
+
 	private int[] expectedCombination = { 7, 1, 4, 8, 3 };
 	private string _currentHoverCursorPath = string.Empty;
 
@@ -57,7 +59,7 @@ public partial class Room1Puzzle : Area2D
 		}
 	}
 
-	public override void _UnhandledInput(InputEvent @event)
+	public override async void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is not InputEventMouseButton mouseEvent)
 			return;
@@ -77,6 +79,11 @@ public partial class Room1Puzzle : Area2D
 				if (localMouse.X >= -half.X && localMouse.X <= half.X && localMouse.Y >= -half.Y && localMouse.Y <= half.Y)
 				{
 					Globals.SHARDS_COLLECTED[0] = true;
+
+					await Dialogue.ShowText(this, "\"Every morning started here. Every morning she was already waiting, already loud, already herself.\"", 4.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 26);
+					await Dialogue.ShowText(this, "\"You could set your clock by her. You always knew, in that kitchen, that someone else was in the world with you.\"", 6.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 20);
+					await Dialogue.ShowText(this, "\"That's not something you notice until it's gone.\"", 4.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 30);
+
 					SceneManager.ChangeScene("res://scenes/world/room_2.tscn");
 					GetViewport().SetInputAsHandled();
 					return;

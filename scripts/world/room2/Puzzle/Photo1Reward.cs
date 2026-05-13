@@ -2,8 +2,10 @@ using Godot;
 
 public partial class Photo1Reward : Area2D
 {
-	private const string NextScenePath = "res://scenes/world/room_2.tscn";
+	private const string NextScenePath = "res://scenes/world/room_3.tscn";
 	private const string PointerCursorPath = "res://assets/images/core/cursor_pointer.png";
+	private string FontPath = "res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf";
+
 	private bool _isHovering = false;
 
 	public override void _Ready()
@@ -99,6 +101,12 @@ public partial class Photo1Reward : Area2D
 
 		Globals.SHARDS_COLLECTED[1] = true;
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+		await Dialogue.ShowText(this, "\"She used to fall asleep in that chair and think it was the best thing in the world — to fall asleep to the sound of someone else in the room.\"", 6.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 18);
+		await Dialogue.ShowText(this, "\"Not silence. Not the sound of herself.\"", 4.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 30);
+		await Dialogue.ShowText(this, "\"Someone else breathing. Someone turning a page.\"", 4.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 30);
+
+
 		SceneManager.ChangeScene(NextScenePath);
 	}
 }

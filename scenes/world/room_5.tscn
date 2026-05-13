@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" path="res://assets/images/core/brass_key.png" id="5_g8vx1"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="6_dca2a"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="7_3eawk"]
-[ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="8_javye"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o6kxa"]
 texture = ExtResource("3_ijb0d")
@@ -1842,4 +1841,3 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
 texture = ExtResource("7_3eawk")
-script = ExtResource("8_javye")

@@ -3,13 +3,16 @@ using Godot;
 public partial class Room4 : Node2D
 {
 	[ExportCategory("Door Transition")]
-	[Export(PropertyHint.File, "*.tscn")] public string DoorTargetScenePath = "res://scenes/world/Room4Puzzle.tscn";
+	[Export(PropertyHint.File, "*.tscn")] public string DoorTargetScenePath = "res://scenes/ui/main_menu.tscn";
 	[Export] public NodePath DoorClickAreaPath = "Door/Area2D";
 
 	[Export] public bool DebugHoverDetection = true;
 	[Export] public float HoverPaddingPixels = 14f;
 	[Export] public Vector2 HoverLabelNudge = new Vector2(3f, -14f);
 	private const string HoverFontPath = "res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf";
+
+	private string FontPath = "res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf";
+
 
 	private static readonly string[] HoverWords =
 	[
@@ -253,7 +256,7 @@ public partial class Room4 : Node2D
 			ShowRuntimeLabel(_currentHoveredIndex);
 	}
 
-	public override void _Input(InputEvent @event)
+	public override async void _Input(InputEvent @event)
 	{
 		if (SceneManager.IsChanging)
 			return;
@@ -286,6 +289,10 @@ public partial class Room4 : Node2D
 		if (string.IsNullOrWhiteSpace(DoorTargetScenePath))
 			return;
 
+		await Dialogue.ShowText(this, "\"She used to run this hallway. Slide on the wooden floor in her socks — she'd get a running start from the kitchen doorway and coast all the way to the mirror at the end.\"", 6.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 20);
+		await Dialogue.ShowText(this, "\"She could make it from one end to the other in eleven seconds. She counted. She made everyone count.\"", 6.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 24);
+		await Dialogue.ShowText(this, "\"She made Mara count. Mara counted. Eleven seconds. She still knows the number. Some numbers stay.\"", 6.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 24);
+		await Dialogue.ShowText(this, "Part 1 of \"The House of Mara Voss\" End.", 5.0f, GlobalPosition.X, GlobalPosition.Y, FontPath, 32);
 
 		SceneManager.ChangeScene(DoorTargetScenePath);
 		GetTree().Root.SetInputAsHandled();

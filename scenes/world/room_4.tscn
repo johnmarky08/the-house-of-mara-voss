@@ -351,8 +351,6 @@ position = Vector2(159, 133)
 position = Vector2(243, 138)
 shape = SubResource("RectangleShape2D_dnohf")
 
-[node name="Area2D13" type="Area2D" parent="." unique_id=1423665294]
-
 [node name="HoverLabelLayer" type="CanvasLayer" parent="." unique_id=2000000001]
 
 [node name="HoverLabel1" type="Label" parent="HoverLabelLayer" unique_id=2000000002]

@@ -20,6 +20,7 @@ public partial class RightArrow : Area2D
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
+
         SceneManager.ChangeScene("res://scenes/world/room_2.tscn");
     }
 }

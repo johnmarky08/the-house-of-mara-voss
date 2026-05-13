@@ -28,7 +28,6 @@
 [ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="30_qxf5x"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="31_oasvk"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="32_h6hnl"]
-[ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_hix3k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wlug7"]
 texture = ExtResource("3_4730r")
@@ -1580,7 +1579,6 @@ z_index = 10
 texture_filter = 1
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
-script = ExtResource("33_hix3k")
 
 [node name="Sprite2D" type="Sprite2D" parent="UI/RightArrow" unique_id=566122843]
 position = Vector2(-50.90918, 3.6363525)

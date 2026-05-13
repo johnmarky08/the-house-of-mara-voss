@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="3_exqx5"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="4_ydxrx"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="5_2tnpj"]
-[ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="6_lk1sq"]
 
 [node name="Room6" type="TileMapLayer" unique_id=927437449]
 tile_set = ExtResource("1_wilut")
@@ -162,4 +161,3 @@ texture_filter = 1
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
 texture = ExtResource("5_2tnpj")
-script = ExtResource("6_lk1sq")
