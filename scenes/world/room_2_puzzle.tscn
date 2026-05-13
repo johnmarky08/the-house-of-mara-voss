@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://c85ncoyrw83ev"]
 
+[ext_resource type="Script" uid="uid://5th76ddrd4fo" path="res://scripts/world/room2/Puzzle/Room2Puzzle.cs" id="1_room2p"]
 [ext_resource type="Texture2D" uid="uid://5coprka28w1g" path="res://assets/images/bgs/Wall.png" id="2_stxag"]
 [ext_resource type="Texture2D" uid="uid://dqnvd0hj60jfn" path="res://assets/images/tilemaps/tilemap_room_1.png" id="3_unsnw"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="5_a40tr"]
+[ext_resource type="Texture2D" uid="uid://b4ubsspphxn61" path="res://assets/images/tilemaps/tilemap_room_2.png" id="4_e6iw2"]
+[ext_resource type="Script" uid="uid://dhn2ck30dhukh" path="res://scripts/world/room2/Puzzle/Photo1Reward.cs" id="5_photo1_reward"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nwhye"]
 atlas = ExtResource("3_unsnw")
@@ -18,7 +20,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nwhye")
 }, {
-"duration": 1.0,
+"duration": 2.5,
 "texture": SubResource("AtlasTexture_4grsi")
 }],
 "loop": true,
@@ -72,15 +74,25 @@ cache/0/14/0/descent = 0.0
 cache/0/14/0/underline_position = 0.0
 cache/0/14/0/underline_thickness = 0.0
 cache/0/14/0/scale = 1.0
+cache/0/56/0/ascent = 0.0
+cache/0/56/0/descent = 0.0
+cache/0/56/0/underline_position = 0.0
+cache/0/56/0/underline_thickness = 0.0
+cache/0/56/0/scale = 1.0
 
 [sub_resource type="Theme" id="Theme_spinbox"]
 default_font = SubResource("FontFile_nwhye")
 default_font_size = 80
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxjmd"]
-size = Vector2(142.5, 44)
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmxeq"]
+atlas = ExtResource("4_e6iw2")
+region = Rect2(440.182, 618.931, 100, 75)
 
-[node name="Room1Puzzle" type="Area2D" unique_id=1638166998]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxjmd"]
+size = Vector2(166, 94)
+
+[node name="Room2Puzzle" type="Area2D" unique_id=1638166998]
+script = ExtResource("1_room2p")
 
 [node name="Wall" type="Sprite2D" parent="." unique_id=133186935]
 position = Vector2(581.49994, 323.50003)
@@ -92,21 +104,19 @@ position = Vector2(656, 331.99997)
 scale = Vector2(5.122033, 4.104334)
 sprite_frames = SubResource("SpriteFrames_hxjmd")
 animation = &"DrawerOpen"
-frame_progress = 0.8237113
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858551432]
 position = Vector2(555, 327)
 shape = SubResource("RectangleShape2D_4grsi")
 
 [node name="Padlock" type="Node2D" parent="." unique_id=283147229]
-visible = false
 
 [node name="Title" type="Label" parent="Padlock" unique_id=100001]
 custom_minimum_size = Vector2(72, 60)
-offset_left = 280.0
-offset_top = 90.0
-offset_right = 350.0
-offset_bottom = 200.0
+offset_left = 403.0
+offset_top = 91.0
+offset_right = 710.0
+offset_bottom = 201.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_spinbox")
@@ -114,77 +124,78 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "Sometimes,.. You just need to pay attention"
 
-[node name="padlock-0" type="SpinBox" parent="Padlock" unique_id=1935873558]
+[node name="letter-0" type="LineEdit" parent="Padlock" unique_id=1935873558]
 self_modulate = Color(0.95, 0.9, 0.88, 1)
-custom_minimum_size = Vector2(72, 60)
-offset_left = 283.0
-offset_top = 140.0
-offset_right = 355.0
-offset_bottom = 256.0
+custom_minimum_size = Vector2(75, 60)
+offset_left = 387.0
+offset_top = 221.0
+offset_right = 459.0
+offset_bottom = 281.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_spinbox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 56
 alignment = 1
+max_length = 1
 
-[node name="padlock-1" type="SpinBox" parent="Padlock" unique_id=72588684]
+[node name="letter-1" type="LineEdit" parent="Padlock" unique_id=72588684]
 self_modulate = Color(0.95, 0.9, 0.88, 1)
-custom_minimum_size = Vector2(72, 60)
-offset_left = 362.0
-offset_top = 140.0
-offset_right = 432.0
-offset_bottom = 200.0
+custom_minimum_size = Vector2(75, 60)
+offset_left = 479.0
+offset_top = 220.0
+offset_right = 551.0
+offset_bottom = 280.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_spinbox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 56
 alignment = 1
+max_length = 1
 
-[node name="padlock-2" type="SpinBox" parent="Padlock" unique_id=798578088]
+[node name="letter-2" type="LineEdit" parent="Padlock" unique_id=798578088]
 self_modulate = Color(0.9, 0.85, 0.83, 1)
-custom_minimum_size = Vector2(72, 60)
-offset_left = 444.0
-offset_top = 140.0
-offset_right = 514.0
-offset_bottom = 200.0
+custom_minimum_size = Vector2(75, 60)
+offset_left = 576.0
+offset_top = 220.0
+offset_right = 648.0
+offset_bottom = 280.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_spinbox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 56
 alignment = 1
+max_length = 1
 
-[node name="padlock-3" type="SpinBox" parent="Padlock" unique_id=2047676471]
+[node name="letter-3" type="LineEdit" parent="Padlock" unique_id=2047676471]
 self_modulate = Color(0.92, 0.88, 0.86, 1)
-custom_minimum_size = Vector2(72, 60)
-offset_left = 526.0
-offset_top = 140.0
-offset_right = 596.0
-offset_bottom = 200.0
+custom_minimum_size = Vector2(75, 60)
+offset_left = 667.0
+offset_top = 220.0
+offset_right = 739.0
+offset_bottom = 280.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_spinbox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 56
 alignment = 1
+max_length = 1
 
-[node name="padlock-4" type="SpinBox" parent="Padlock" unique_id=453465781]
-self_modulate = Color(0.94, 0.9, 0.88, 1)
-custom_minimum_size = Vector2(72, 60)
-offset_left = 609.0
-offset_top = 140.0
-offset_right = 679.0
-offset_bottom = 200.0
-mouse_filter = 1
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_spinbox")
-alignment = 1
-
-[node name="BrassKey1" type="Area2D" parent="." unique_id=626319018]
+[node name="Photo1" type="Area2D" parent="." unique_id=626319018]
 visible = false
 position = Vector2(759, 308)
 scale = Vector2(0.64824796, 0.6723122)
+script = ExtResource("5_photo1_reward")
 
-[node name="BrassKey2" type="Sprite2D" parent="BrassKey1" unique_id=745337044]
-position = Vector2(24.68193, 1.4873962)
-scale = Vector2(0.674636, 0.57447976)
-texture = ExtResource("5_a40tr")
+[node name="Photo1" type="Sprite2D" parent="Photo1" unique_id=745337044]
+position = Vector2(3.8565211, -30.132126)
+scale = Vector2(1.5888983, 1.417667)
+texture = SubResource("AtlasTexture_hmxeq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BrassKey1" unique_id=894663536]
-position = Vector2(23.139282, -5.9496155)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Photo1" unique_id=894663536]
+position = Vector2(10.798323, -25.285885)
 scale = Vector2(1.5426196, 1.4874042)
 shape = SubResource("RectangleShape2D_hxjmd")

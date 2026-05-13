@@ -353,8 +353,7 @@ color = Color(0, 0, 0, 0.65)
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="PanelContainer" parent="SubViewportContainer/SubViewport/AboutModal" unique_id=61398245]
-layout_mode = 1
-anchors_preset = -1
+layout_mode = 0
 anchor_left = 0.1
 anchor_top = 0.08
 anchor_right = 0.9

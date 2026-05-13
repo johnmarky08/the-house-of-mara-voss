@@ -15,7 +15,7 @@ public partial class Cup2Clarify1 : ExamineHandler
 				examineHandler.HoverEnabled = false;
 				examineHandler.SetProcessInput(false);
 				examineHandler.SetProcess(false);
-				ExamineHelper.HideExamine(examineHandler);
+				examineHandler.QueueFree();
 			}
 		}
 	}

@@ -1303,6 +1303,7 @@ tile_map_data = PackedByteArray("AAAFAAEAAAAXAAwAAAAFAAIAAAAXAA0AAAAFAAMAAAAXAA4
 tile_set = SubResource("TileSet_elej8")
 script = ExtResource("6_bxwnc")
 ExamineText = "\"Someone held this phone while being told something.\"|\"They held it for a long time.\"|\"When they put it down, they weren't careful.\""
+DialogueDurationText = "3.0|3.0|3.0"
 
 [node name="Examine2" type="TileMapLayer" parent="Objects/Phone" unique_id=550287338]
 modulate = Color(1, 1, 1, 0)
