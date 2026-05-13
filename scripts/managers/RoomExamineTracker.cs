@@ -25,6 +25,14 @@ public partial class RoomExamineTracker : Node
         "Letter"
     ];
 
+    private static readonly string[] Room3RequiredObjects =
+    [
+        "Painting",
+        "Bag",
+        "Bed",
+        "Note"
+    ];
+
     // Track which examine nodes have been clicked: roomName -> objectName -> set of examine layer names
     private static Dictionary<string, Dictionary<string, HashSet<string>>> _examineProgress = new();
 
@@ -126,6 +134,7 @@ public partial class RoomExamineTracker : Node
         {
             "Room1" => Room1RequiredObjects,
             "Room2" => Room2RequiredObjects,
+            "Room3" => Room3RequiredObjects,
             _ => []
         };
 
