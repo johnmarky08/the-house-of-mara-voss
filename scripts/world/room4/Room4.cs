@@ -85,20 +85,16 @@ public partial class Room4 : Node2D
 		SetProcess(true);
 		HideRuntimeLabel(true);
 
-
-
-		// Try to find door_animation
 		_doorAnimation = GetNodeOrNull<AnimatedSprite2D>("Door");
 		if (_doorAnimation == null)
 			GD.PrintErr("[Room4] Door animation not found in scene!");
 		else
-			_doorAnimation.Visible = false;  // Hide initially
+			_doorAnimation.Visible = false;
 
 		_doorClickArea = GetNodeOrNull<Area2D>(DoorClickAreaPath);
 		if (_doorClickArea == null)
 			GD.PrintErr($"[Room4] Door click area not found at path: {DoorClickAreaPath}");
 
-		// Create label for displaying the sentence as pictures are hovered
 		_sentenceLayer = GetNodeOrNull<CanvasLayer>("SentenceLayer");
 		if (_sentenceLayer == null)
 		{
@@ -119,7 +115,7 @@ public partial class Room4 : Node2D
 				Text = string.Empty,
 				Visible = true,
 				CustomMinimumSize = new Vector2(800, 160),
-				ZIndex = 10000
+				ZIndex = 4096  // Fixed: was 10000, Godot max is 4096
 			};
 			_sentenceLayer.AddChild(_sentenceLabel);
 		}
@@ -320,12 +316,10 @@ public partial class Room4 : Node2D
 
 		GD.Print("[Room4] Fade tween started");
 
-		// Check if this is the next word in the sequence
 		if (HoverWords[index] == HoverWords[_currentSequenceIndex])
 		{
 			GD.Print($"HOVERED: {HoverWords[index]}");
 
-			// Add this word to the sentence display
 			if (_sentenceLabel != null)
 			{
 				if (_currentSequenceIndex == 0)
@@ -339,12 +333,11 @@ public partial class Room4 : Node2D
 
 			_currentSequenceIndex++;
 
-			// Check if all words have been hovered
 			if (_currentSequenceIndex >= HoverWords.Length)
 			{
 				GD.Print("✓✓✓ ALL WORDS HOVERED! Triggering door animation!");
 				TriggerDoorAnimation();
-				_currentSequenceIndex = 0; // Reset for potential replay
+				_currentSequenceIndex = 0;
 				if (_sentenceLabel != null)
 					_sentenceLabel.Text = string.Empty;
 			}
@@ -418,10 +411,9 @@ public partial class Room4 : Node2D
 		}
 
 		GD.Print("[Room4] Triggering door animation...");
-		_doorAnimation.Visible = true;  // Show door
+		_doorAnimation.Visible = true;
 		_doorAnimationStarted = true;
 
-		// Try to play the animation
 		var animations = _doorAnimation.SpriteFrames.GetAnimationNames();
 		if (animations.Length > 0)
 		{
@@ -435,7 +427,6 @@ public partial class Room4 : Node2D
 
 		_doorAnimation.Frame = 0;
 
-		// Stop at frame 5 after animation finishes one full cycle
 		var speedVar = _doorAnimation.SpriteFrames.GetAnimationSpeed(animations.Length > 0 ? animations[0] : "default");
 		double animSpeed = speedVar is double speed ? speed : 5.0;
 		var tween = CreateTween();

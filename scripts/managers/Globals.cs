@@ -4,6 +4,7 @@ using Godot.Collections;
 public partial class Globals : Node
 {
 	public static Globals Instance { get; private set; }
+	public static Array<bool> SHARDS_COLLECTED = [false, false, false, false, false, false];
 
 	[ExportCategory("Gameplay")]
 	[Export] public int CORRUPTION_COUNT = 0;

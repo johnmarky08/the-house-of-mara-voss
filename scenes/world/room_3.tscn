@@ -15,12 +15,12 @@
 [ext_resource type="Script" uid="uid://dvcgrcbffj5gi" path="res://scripts/world/room3/note/R3NoteClarify1.cs" id="13_b2gip"]
 [ext_resource type="Script" uid="uid://72uob36s3btj" path="res://scripts/world/room3/note/R3NoteExamine2.cs" id="14_yyrpi"]
 [ext_resource type="Script" uid="uid://cgjf8hk3inumg" path="res://scripts/world/room3/note/R3NoteExamine1.cs" id="15_a05kp"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="25_v02rg"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="25_v02rg"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="26_3cd3d"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="27_qtejw"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="28_x1ffx"]
 [ext_resource type="AtlasTexture" path="res://resources/items/photo1.tres" id="29_photo1_tex"]
-[ext_resource type="Script" path="res://scripts/world/room3/Room3.cs" id="30_room3_script"]
+[ext_resource type="Script" uid="uid://dw6mt4k3hp0a7" path="res://scripts/world/room3/Room3.cs" id="30_room3_script"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wlug7"]
 texture = ExtResource("3_appgg")

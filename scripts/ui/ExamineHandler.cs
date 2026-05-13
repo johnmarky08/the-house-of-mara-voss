@@ -28,10 +28,12 @@ public partial class ExamineHandler : TileMapLayer
 
     public override void _ExitTree()
     {
+        // Always clean up cursor on removal, regardless of any state flags.
         if (_isHovering)
         {
             CursorHelper.EndHover(this);
             _isHovering = false;
+            _currentHoverCursorTexturePath = string.Empty;
         }
     }
 
@@ -47,22 +49,28 @@ public partial class ExamineHandler : TileMapLayer
         Vector2 localMouse = ToLocal(globalMouse);
         Vector2I cell = LocalToMap(localMouse);
 
-        bool hasTile = GetCellSourceId(cell) != -1;
+        if (GetCellSourceId(cell) == -1)
+            return;
 
-        if (hasTile)
+        // If clarifying, delegate entirely to clarify logic and return.
+        if (Globals.Instance.IS_CLARIFYING)
         {
-            ExamineHelper.CycleExamine(this);
-            RoomExamineTracker.OnExamineClicked(this);
-            OnExamineClicked();
-
-            var dialogueSegments = GetDialogueSegments();
-            var dialogueDurations = GetDialogueDurations();
-            var globalPos = GetGlobalPosition();
-
-            _ = ShowDialogueSequenceAsync(dialogueSegments, dialogueDurations, globalPos);
-            OnAnyExamineClicked();
+            ExamineHelper.TriggerClarify(this);
             GetTree().Root.SetInputAsHandled();
+            return;
         }
+
+        ExamineHelper.CycleExamine(this);
+        RoomExamineTracker.OnExamineClicked(this);
+        OnExamineClicked();
+        OnAnyExamineClicked();
+
+        var dialogueSegments = GetDialogueSegments();
+        var dialogueDurations = GetDialogueDurations();
+        var globalPos = GetGlobalPosition();
+        _ = ShowDialogueSequenceAsync(dialogueSegments, dialogueDurations, globalPos);
+
+        GetTree().Root.SetInputAsHandled();
     }
 
     private List<string> GetDialogueSegments()
@@ -93,22 +101,20 @@ public partial class ExamineHandler : TileMapLayer
 
         if (!string.IsNullOrWhiteSpace(DialogueDurationText))
         {
-            // Split on pipe first, then on newlines to handle both separators
             var pipeSplit = DialogueDurationText.Split('|');
             foreach (var part in pipeSplit)
             {
-                // Further split by newlines
                 var lineSplit = part.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
                 foreach (var line in lineSplit)
                 {
-                    var trimmedDuration = line.Trim();
-                    if (string.IsNullOrWhiteSpace(trimmedDuration))
+                    var trimmed = line.Trim();
+                    if (string.IsNullOrWhiteSpace(trimmed))
                         continue;
 
-                    if (float.TryParse(trimmedDuration, NumberStyles.Float, CultureInfo.InvariantCulture, out var durationValue) ||
-                        float.TryParse(trimmedDuration, out durationValue))
+                    if (float.TryParse(trimmed, NumberStyles.Float, CultureInfo.InvariantCulture, out var val) ||
+                        float.TryParse(trimmed, out val))
                     {
-                        durations.Add(durationValue);
+                        durations.Add(val);
                     }
                 }
             }
@@ -120,20 +126,29 @@ public partial class ExamineHandler : TileMapLayer
         return durations;
     }
 
-    private async Task ShowDialogueSequenceAsync(List<string> dialogueSegments, List<float> dialogueDurations, Vector2 globalPos)
+    private async Task ShowDialogueSequenceAsync(List<string> segments, List<float> durations, Vector2 globalPos)
     {
         Dialogue.BeginInputBlock();
 
+        // When input is blocked the cursor must be cleared immediately —
+        // _Process will not run its EndHover path while blocked.
+        if (_isHovering)
+        {
+            CursorHelper.EndHover(this);
+            _isHovering = false;
+            _currentHoverCursorTexturePath = string.Empty;
+        }
+
         try
         {
-            for (int index = 0; index < dialogueSegments.Count; index++)
+            for (int i = 0; i < segments.Count; i++)
             {
-                var dialogueText = dialogueSegments[index];
-                if (string.IsNullOrWhiteSpace(dialogueText))
+                var text = segments[i];
+                if (string.IsNullOrWhiteSpace(text))
                     continue;
 
-                float duration = dialogueDurations[Math.Min(index, dialogueDurations.Count - 1)];
-                await Dialogue.ShowText(this, dialogueText, duration, globalPos.X, globalPos.Y, fontSize: DialogueFontSize);
+                float duration = durations[Math.Min(i, durations.Count - 1)];
+                await Dialogue.ShowText(this, text, duration, globalPos.X, globalPos.Y, fontSize: DialogueFontSize);
             }
         }
         finally
@@ -144,8 +159,78 @@ public partial class ExamineHandler : TileMapLayer
 
     private void OnAnyExamineClicked()
     {
+        // Only increment corruption when clicking something other than Examine1
+        // (the first/default examine layer).
         if (ExamineHelper.ExtractExamineNumber(Name.ToString()) != 1)
             Globals.Instance.CORRUPTION_COUNT++;
+    }
+
+    protected virtual void OnExamineClicked()
+    {
+    }
+
+    public override void _Process(double delta)
+    {
+        // While input is blocked (dialogue playing), forcibly end any hover so
+        // the cursor doesn't stay stuck as a magnifying glass during dialogue.
+        if (Dialogue.IsInputBlocked)
+        {
+            if (_isHovering)
+            {
+                CursorHelper.EndHover(this);
+                _isHovering = false;
+                _currentHoverCursorTexturePath = string.Empty;
+            }
+            return;
+        }
+
+        if (!HoverEnabled)
+        {
+            if (_isHovering)
+            {
+                CursorHelper.EndHover(this);
+                _isHovering = false;
+                _currentHoverCursorTexturePath = string.Empty;
+            }
+            return;
+        }
+
+        Vector2 globalMouse = GetGlobalMousePosition();
+        Vector2 localMouse = ToLocal(globalMouse);
+        Vector2I cell = LocalToMap(localMouse);
+        bool hasTile = GetCellSourceId(cell) != -1;
+
+        if (hasTile)
+        {
+            // Determine which cursor to show.
+            string desiredCursor = UnlockedCursorTexturePath;
+
+            var parent = GetParent();
+            bool isFinal = parent != null && parent.Name.ToString().EndsWith("Final");
+            if (isFinal)
+            {
+                string roomName = GetRoomNameFromNode(this);
+                bool roomReady = RoomExamineTracker.HasRoomBeenFullyExamined(roomName);
+                desiredCursor = roomReady ? UnlockedCursorTexturePath : LockedCursorTexturePath;
+            }
+
+            // Only call BeginHover when we first enter or when the cursor type changes.
+            if (!_isHovering || _currentHoverCursorTexturePath != desiredCursor)
+            {
+                CursorHelper.BeginHover(this, desiredCursor, CursorWidth, CursorHeight);
+                _currentHoverCursorTexturePath = desiredCursor;
+                _isHovering = true;
+            }
+        }
+        else
+        {
+            if (_isHovering)
+            {
+                CursorHelper.EndHover(this);
+                _isHovering = false;
+                _currentHoverCursorTexturePath = string.Empty;
+            }
+        }
     }
 
     private static string GetRoomNameFromNode(Node node)
@@ -172,61 +257,5 @@ public partial class ExamineHandler : TileMapLayer
         }
 
         return "Room1";
-    }
-
-    protected virtual void OnExamineClicked()
-    {
-    }
-
-    public override void _Process(double delta)
-    {
-        if (Dialogue.IsInputBlocked)
-            return;
-
-        if (!HoverEnabled)
-            return;
-
-        Vector2 globalMouse = GetGlobalMousePosition();
-        Vector2 localMouse = ToLocal(globalMouse);
-        Vector2I cell = LocalToMap(localMouse);
-
-        bool hasTile = GetCellSourceId(cell) != -1;
-        var parent = GetParent();
-        bool isFinal = parent != null && parent.Name.ToString().EndsWith("Final");
-
-        if (hasTile)
-        {
-            if (isFinal)
-            {
-                string roomName = GetRoomNameFromNode(this);
-                bool roomReady = RoomExamineTracker.HasRoomBeenFullyExamined(roomName);
-                string desiredCursor = roomReady ? UnlockedCursorTexturePath : LockedCursorTexturePath;
-
-                if (!_isHovering || _currentHoverCursorTexturePath != desiredCursor)
-                {
-                    CursorHelper.BeginHover(this, desiredCursor, CursorWidth, CursorHeight);
-                    _currentHoverCursorTexturePath = desiredCursor;
-                    _isHovering = true;
-                }
-
-                return;
-            }
-
-            if (!_isHovering)
-            {
-                CursorHelper.BeginHover(this, UnlockedCursorTexturePath, CursorWidth, CursorHeight);
-                _currentHoverCursorTexturePath = UnlockedCursorTexturePath;
-                _isHovering = true;
-            }
-        }
-        else
-        {
-            if (_isHovering)
-            {
-                CursorHelper.EndHover(this);
-                _isHovering = false;
-                _currentHoverCursorTexturePath = string.Empty;
-            }
-        }
     }
 }

@@ -30,9 +30,12 @@
 [ext_resource type="Script" uid="uid://bm0gf0w0sjmvw" path="res://scripts/world/room1/calendar/CalendarClarify1.cs" id="22_xwh56"]
 [ext_resource type="Script" uid="uid://beetkefdsbd2d" path="res://scripts/world/room1/drawing/DrawingClarify1.cs" id="24_h80xr"]
 [ext_resource type="Script" uid="uid://druhh55hn7ugb" path="res://scripts/world/room1/drawer/DrawerExamine2.cs" id="28_f0ooq"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="30_f0ooq"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="30_f0ooq"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="32_kq8op"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_t5d1k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t5d1k"]
+size = Vector2(341.81848, 254.54538)
 
 [node name="Room1" type="TileMapLayer" unique_id=927437449]
 tile_set = ExtResource("2_hnbyo")
@@ -59,7 +62,7 @@ tile_set = ExtResource("2_hnbyo")
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 scale = Vector2(1.2, 1.2)
-tile_map_data = PackedByteArray("AAAMAAgABQAgACgAAAAMAAkABQAgACkAAAAMAAoABQAgACoAAAANAAgABQAhACgAAAANAAkABQAhACkAAAANAAoABQAhACoAAAAEAAYABQAbACYAAAAEAAcABQAbACcAAAAEAAgABQAbACgAAAAEAAkABQAbACkAAAAEAAoABQAbACoAAAAEAAsABQAbACsAAAAFAAcABQAcACcAAAAFAAgABQAcACgAAAAFAAkABQAcACkAAAAFAAoABQAcACoAAAAFAAsABQAcACsAAAAGAAcABQAbACoAAAAGAAgABQAbACsAAAAGAAkABQAdACkAAAAGAAoABQAdACoAAAAGAAsABQAdACsAAAAHAAcABQAbACcAAAAHAAgABQAbACgAAAAHAAkABQAbACkAAAAHAAoABQAbACoAAAAHAAsABQAbACsAAAAIAAcABQAcACcAAAAIAAgABQAcACgAAAAIAAkABQAcACkAAAAIAAoABQAcACoAAAAIAAsABQAcACsAAAAJAAcABQAdACcAAAAJAAgABQAdACgAAAAJAAkABQAdACkAAAAJAAoABQAdACoAAAAJAAsABQAdACsAAAAKAAcABQAeACcAAAAKAAgABQAeACgAAAAKAAkABQAeACkAAAAKAAoABQAeACoAAAAKAAsABQAeACsAAAAGAAMABQAbACYAAAAGAAQABQAbACcAAAAGAAUABQAbACgAAAAGAAYABQAbACkAAAAHAAQABQAcACcAAAAHAAUABQAcACgAAAAHAAYABQAbACYAAAAIAAQABQAdACcAAAAIAAUABQAdACgAAAAIAAYABQAdACkAAAAJAAQABQAeACcAAAAJAAUABQAeACgAAAAJAAYABQAeACkAAAAKAAQABQAfACcAAAAKAAUABQAfACgAAAAKAAYABQAfACkAAAALAAQABQAgACcAAAALAAUABQAgACgAAAALAAYABQAgACkAAAALAAcABQAfACcAAAALAAgABQAfACgAAAAMAAQABQAhACcAAAAMAAUABQAhACgAAAAMAAYABQAhACkAAAAMAAcABQAgACcAAAALAAkABQAfACkAAAALAAoABQAfACoAAAALAAsABQAfACsAAAAMAAsABQAgACsAAAANAAcABQAhACcAAAANAAsABQAhACsAAAA=")
+tile_map_data = PackedByteArray("AAAMAAgABAAJAAAAAAAMAAkABAAJAAEAAAAMAAoABAAJAAIAAAANAAgABAAKAAAAAAANAAkABAAKAAEAAAANAAoABAAKAAIAAAA=")
 tile_set = ExtResource("2_hnbyo")
 script = ExtResource("4_ev7th")
 
@@ -372,9 +375,18 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAnABYAAQAjAAIAAAAnABcAAQAjAAMAAAAnABgAAQAjAAQAAAAnABkAAQAjAAUAAAAnABoAAQAjAAYAAAAoABYAAQAkAAIAAAAoABcAAQAkAAMAAAAoABgAAQAkAAQAAAAoABkAAQAkAAUAAAAoABoAAQAkAAYAAAApABYAAQAlAAIAAAApABcAAQAlAAMAAAApABgAAQAlAAQAAAApABkAAQAlAAUAAAApABoAAQAlAAYAAAAqABYAAQAmAAIAAAAqABcAAQAmAAMAAAAqABgAAQAmAAQAAAAqABkAAQAmAAUAAAAqABoAAQAmAAYAAAArABYAAQAnAAIAAAArABcAAQAnAAMAAAArABgAAQAnAAQAAAArABkAAQAnAAUAAAArABoAAQAnAAYAAAAsABYAAQAoAAIAAAAsABcAAQAoAAMAAAAsABgAAQAoAAQAAAAsABkAAQAoAAUAAAAsABoAAQAoAAYAAAAtABYAAQApAAIAAAAtABcAAQApAAMAAAAtABgAAQApAAQAAAAtABkAAQApAAUAAAAtABoAAQApAAYAAAA=")
 tile_set = ExtResource("2_hnbyo")
 
-[node name="RightArrow" type="Sprite2D" parent="UI" unique_id=2082962599]
+[node name="RightArrow" type="Area2D" parent="UI" unique_id=1882857415]
 modulate = Color(1, 1, 1, 0)
+z_index = 10
+texture_filter = 1
 position = Vector2(1082, 324)
 scale = Vector2(0.275, 0.275)
-texture = ExtResource("32_kq8op")
 script = ExtResource("33_t5d1k")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/RightArrow" unique_id=974059568]
+position = Vector2(-50.90918, 3.6363525)
+texture = ExtResource("32_kq8op")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/RightArrow" unique_id=399190991]
+position = Vector2(-50.90918, -3.6363525)
+shape = SubResource("RectangleShape2D_t5d1k")

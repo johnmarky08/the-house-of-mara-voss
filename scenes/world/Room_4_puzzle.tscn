@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://cmw6o0eeu37it"]
+[gd_scene format=3 uid="uid://crv2frnsynjh5"]
 
 [ext_resource type="Script" uid="uid://d3xgs740xotrw" path="res://scripts/world/room4/Room4Puzzle.cs" id="1_gp86n"]
 [ext_resource type="Texture2D" uid="uid://cpf8dj4tctfjb" path="res://assets/images/bgs/DoorCloseup.png" id="1_mmc3o"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="2_arrow"]
-[ext_resource type="Script" uid="uid://cvygwt7duid6a" path="res://scripts/world/room4/BackArrowTransition.cs" id="3_back_arrow"]
+[ext_resource type="Script" path="res://scripts/world/room4/BackArrowTransition.cs" id="3_back_arrow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_back_arrow"]
 size = Vector2(220, 220)

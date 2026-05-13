@@ -4,270 +4,221 @@ using System.Linq;
 
 public static class ExamineHelper
 {
-    public static void CycleExamine(TileMapLayer currentExamine)
+    // -------------------------------------------------------------------------
+    // EXAMINE CYCLING
+    // Examines are named Examine1, Examine2, Examine3, ...
+    // Each click advances to the next. At the last one, stay there on repeat clicks.
+    // Earlier layers are freed once we advance past them.
+    // -------------------------------------------------------------------------
+    public static void CycleExamine(TileMapLayer clicked)
     {
-        if (currentExamine == null)
+        if (clicked == null)
             return;
 
-        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
-
-        var parent = currentExamine.GetParent();
-        if (Globals.Instance.IS_CLARIFYING)
-        {
-            bool hasClarify = currentExamine.GetChildren().OfType<TileMapLayer>().Any(t => t.Name.ToString().StartsWith("Clarify"));
-            if (!hasClarify && parent != null)
-                hasClarify = parent.GetChildren().OfType<TileMapLayer>().Any(t => t.Name.ToString().StartsWith("Clarify"));
-
-            if (!hasClarify)
-            {
-                Globals.Instance.IS_CLARIFYING = false;
-                Logger.Info("No Clarify layers found; cancelling clarify mode.");
-                return;
-            }
-        }
-        Node targetParent = null;
-        TileMapLayer targetLayer = null;
-
-        var childrenExamineLayers = new List<TileMapLayer>();
-        foreach (var child in currentExamine.GetChildren())
-        {
-            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith(fileStart))
-            {
-                childrenExamineLayers.Add(tileLayer);
-            }
-        }
-
-        if (childrenExamineLayers.Count > 0)
-        {
-            targetParent = currentExamine;
-
-            if (Globals.Instance.IS_CLARIFYING)
-            {
-                foreach (var child in currentExamine.GetChildren())
-                {
-                    if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
-                        QueueFreeExamine(tile);
-                }
-            }
-
-            ProcessExamineLayerCycle(childrenExamineLayers);
-            return;
-        }
-
-        targetParent = parent;
-        targetLayer = currentExamine;
-
-        if (targetParent == null)
+        // Collect all sibling Examine layers (same parent), sorted by number.
+        var parent = clicked.GetParent();
+        if (parent == null)
             return;
 
-        var examineLayers = new List<TileMapLayer>();
-
-        if (Globals.Instance.IS_CLARIFYING)
-        {
-            foreach (var child in targetParent.GetChildren())
-            {
-                if (child is TileMapLayer tile && tile.Name.ToString().StartsWith("Examine"))
-                    QueueFreeExamine(tile);
-            }
-        }
-
-        foreach (var child in targetParent.GetChildren())
-        {
-            if (child is TileMapLayer tileLayer && tileLayer.Name.ToString().StartsWith(fileStart))
-            {
-                examineLayers.Add(tileLayer);
-            }
-        }
-
+        var examineLayers = GetSortedExamineLayers(parent);
         if (examineLayers.Count == 0)
             return;
 
-        examineLayers = examineLayers.OrderBy(layer => ExtractExamineNumber(layer.Name.ToString())).ToList();
-
-        int currentIndex = -1;
-        for (int i = 0; i < examineLayers.Count; i++)
-        {
-            if (IsLayerVisible(examineLayers[i]))
-            {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        if (Globals.Instance.IS_CLARIFYING)
-        {
-            if (targetLayer != null)
-                QueueFreeExamine(targetLayer);
-
-            if (currentIndex == -1)
-            {
-                ShowExamine(examineLayers[0]);
-                if (examineLayers.Count <= 1)
-                    PruneEarlierExamineLayers(examineLayers, 0);
-                return;
-            }
-        }
+        // Find which layer is currently visible.
+        int currentIndex = FindVisibleIndex(examineLayers);
 
         if (currentIndex == -1)
-            currentIndex = examineLayers.FindIndex(layer => layer == targetLayer);
-
-        if (currentIndex == -1)
-            return;
-
-        if (currentIndex >= examineLayers.Count - 1)
         {
-            ShowExamine(examineLayers[currentIndex]);
-            PruneEarlierExamineLayers(examineLayers, currentIndex);
+            // Nothing visible yet — show the first one.
+            ShowLayer(examineLayers[0]);
             return;
         }
 
-        HideExamine(examineLayers[currentIndex]);
-        var nextExamine = examineLayers[currentIndex + 1];
-        ShowExamine(nextExamine);
+        int lastIndex = examineLayers.Count - 1;
 
-        if (currentIndex + 1 >= examineLayers.Count - 1)
-            PruneEarlierExamineLayers(examineLayers, currentIndex + 1);
+        if (currentIndex >= lastIndex)
+        {
+            // Already at the last examine — stay here, do nothing more.
+            return;
+        }
+
+        // Advance to next.
+        HideLayer(examineLayers[currentIndex]);
+        ShowLayer(examineLayers[currentIndex + 1]);
+
+        // Free all layers before the one we just showed so memory is cleaned up.
+        FreeLayersBefore(examineLayers, currentIndex + 1);
     }
 
-    private static void ProcessExamineLayerCycle(List<TileMapLayer> examineLayers)
+    // -------------------------------------------------------------------------
+    // CLARIFY
+    // There is exactly one Clarify1 layer per object.
+    // When triggered: hide/free all sibling Examine layers, then show Clarify1.
+    // -------------------------------------------------------------------------
+    public static void TriggerClarify(TileMapLayer clicked)
     {
-        if (examineLayers.Count == 0)
+        if (clicked == null)
             return;
 
-        examineLayers = examineLayers.OrderBy(layer => ExtractExamineNumber(layer.Name.ToString())).ToList();
-
-        int currentIndex = -1;
-        for (int i = 0; i < examineLayers.Count; i++)
-        {
-            if (IsLayerVisible(examineLayers[i]))
-            {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        if (currentIndex == -1)
-        {
-            ShowExamine(examineLayers[0]);
-            if (examineLayers.Count <= 1)
-                PruneEarlierExamineLayers(examineLayers, 0);
-            return;
-        }
-
-        if (currentIndex >= examineLayers.Count - 1)
-        {
-            ShowExamine(examineLayers[currentIndex]);
-            PruneEarlierExamineLayers(examineLayers, currentIndex);
-            return;
-        }
-
-        HideExamine(examineLayers[currentIndex]);
-        var nextExamine = examineLayers[currentIndex + 1];
-        ShowExamine(nextExamine);
-
-        if (currentIndex + 1 >= examineLayers.Count - 1)
-            PruneEarlierExamineLayers(examineLayers, currentIndex + 1);
-    }
-
-    public static void ShowExamine(TileMapLayer examineLayer)
-    {
-        if (examineLayer == null)
+        var parent = clicked.GetParent();
+        if (parent == null)
             return;
 
-        if (examineLayer.Name.ToString() == "Clarify1" && examineLayer.GetParent() != null && examineLayer.GetParent().Name.ToString() == "Toast")
-        {
-            var currentScene = SceneManager.Instance?.CurrentScene;
-            var cup2Node = currentScene?.GetNodeOrNull<TileMapLayer>("Objects/Cup2");
-            cup2Node?.QueueFree();
-        }
+        // Find Clarify1 among siblings or children of clicked.
+        TileMapLayer clarifyLayer = FindClarifyLayer(parent) ?? FindClarifyLayer(clicked);
 
-        var color = examineLayer.Modulate;
-        color.A = 1.0f;
-        examineLayer.Modulate = color;
-
-        if (Globals.Instance.IS_CLARIFYING)
+        if (clarifyLayer == null)
         {
+            // No Clarify layer found — cancel clarify mode and bail.
             Globals.Instance.IS_CLARIFYING = false;
-            Globals.Instance.CLARITY_TOGGLE_COUNT--;
-            CursorHelper.ResetCursor();
+            Logger.Info("[ExamineHelper] No Clarify1 found; cancelling clarify mode.");
+            return;
+        }
 
-            int newToggleNumber = Globals.Instance.CLARITY_TOGGLE_COUNT;
-            int toggleNumber = newToggleNumber + 1;
-            string newToggleName = newToggleNumber.ToString();
-            string toggleName = toggleNumber.ToString();
+        // Hide and free all sibling Examine layers.
+        var examineLayers = GetSortedExamineLayers(parent);
+        foreach (var layer in examineLayers)
+            FreeExamineLayer(layer);
 
-            var currentScene = SceneManager.Instance?.CurrentScene;
-            var togglePath = $"UI/ClarityToggle/{toggleName}";
-            var newTogglePath = $"UI/ClarityToggle/{newToggleName}";
+        // Show the Clarify layer and update global state.
+        ShowLayer(clarifyLayer);
+        ApplyClarifyGlobalState();
+    }
 
-            var toggle = currentScene?.GetNodeOrNull<TileMapLayer>(togglePath);
-            var newToggle = currentScene?.GetNodeOrNull<TileMapLayer>(newTogglePath);
+    // -------------------------------------------------------------------------
+    // HELPERS
+    // -------------------------------------------------------------------------
 
-            if (toggle != null)
-                SetLayerAlpha(toggle, 0.0f);
+    /// <summary>
+    /// Returns all TileMapLayer children of <paramref name="parent"/> whose names
+    /// start with "Examine", sorted by their trailing number.
+    /// </summary>
+    private static List<TileMapLayer> GetSortedExamineLayers(Node parent)
+    {
+        return parent.GetChildren()
+            .OfType<TileMapLayer>()
+            .Where(t => t.Name.ToString().StartsWith("Examine"))
+            .OrderBy(t => ExtractExamineNumber(t.Name.ToString()))
+            .ToList();
+    }
 
-            if (newToggle != null)
-                SetLayerAlpha(newToggle, 1.0f);
+    /// <summary>
+    /// Finds the first TileMapLayer child of <paramref name="parent"/> named "Clarify1".
+    /// </summary>
+    private static TileMapLayer FindClarifyLayer(Node parent)
+    {
+        return parent.GetChildren()
+            .OfType<TileMapLayer>()
+            .FirstOrDefault(t => t.Name.ToString() == "Clarify1");
+    }
 
-            Logger.Info("New Clarity Toggle Count: " + newToggleName);
+    private static int FindVisibleIndex(List<TileMapLayer> layers)
+    {
+        for (int i = 0; i < layers.Count; i++)
+        {
+            if (IsVisible(layers[i]))
+                return i;
+        }
+        return -1;
+    }
+
+    public static void ShowLayer(TileMapLayer layer)
+    {
+        if (layer == null)
+            return;
+
+        SetAlpha(layer, 1.0f);
+
+        // Special case: showing Clarify1 on Toast removes Cup2 from the scene.
+        if (layer.Name.ToString() == "Clarify1" &&
+            layer.GetParent()?.Name.ToString() == "Toast")
+        {
+            var cup2 = SceneManager.Instance?.CurrentScene?.GetNodeOrNull<TileMapLayer>("Objects/Cup2");
+            cup2?.QueueFree();
         }
     }
 
-    public static void HideExamine(TileMapLayer examineLayer)
+    public static void HideLayer(TileMapLayer layer)
     {
-        if (examineLayer == null)
+        if (layer == null)
             return;
 
-        SetLayerAlpha(examineLayer, 0.0f);
+        SetAlpha(layer, 0.0f);
     }
 
-    private static void SetLayerAlpha(CanvasItem layer, float alpha)
+    private static void ApplyClarifyGlobalState()
     {
-        var modulate = layer.Modulate;
-        modulate.A = alpha;
-        layer.Modulate = modulate;
+        Globals.Instance.IS_CLARIFYING = false;
+        Globals.Instance.CLARITY_TOGGLE_COUNT--;
+        CursorHelper.ResetCursor();
 
-        var selfModulate = layer.SelfModulate;
-        selfModulate.A = alpha;
-        layer.SelfModulate = selfModulate;
+        int newCount = Globals.Instance.CLARITY_TOGGLE_COUNT;
+        int oldCount = newCount + 1;
+
+        var scene = SceneManager.Instance?.CurrentScene;
+        var oldToggle = scene?.GetNodeOrNull<TileMapLayer>($"UI/ClarityToggle/{oldCount}");
+        var newToggle = scene?.GetNodeOrNull<TileMapLayer>($"UI/ClarityToggle/{newCount}");
+
+        if (oldToggle != null) SetAlpha(oldToggle, 0.0f);
+        if (newToggle != null) SetAlpha(newToggle, 1.0f);
+
+        Logger.Info($"[ExamineHelper] Clarity used. Toggle count now: {newCount}");
     }
 
-    private static bool IsLayerVisible(CanvasItem layer)
+    private static void SetAlpha(CanvasItem item, float alpha)
     {
-        return layer.Modulate.A >= 0.9f && layer.SelfModulate.A >= 0.9f;
+        var mod = item.Modulate;
+        mod.A = alpha;
+        item.Modulate = mod;
+
+        var selfMod = item.SelfModulate;
+        selfMod.A = alpha;
+        item.SelfModulate = selfMod;
     }
 
+    private static bool IsVisible(CanvasItem item)
+    {
+        // Consider visible when both Modulate and SelfModulate alpha are fully opaque.
+        return item.Modulate.A >= 0.9f && item.SelfModulate.A >= 0.9f;
+    }
+
+    /// <summary>
+    /// Extracts the trailing integer from an "ExamineN" layer name.
+    /// Always parses from the literal prefix "Examine" regardless of IS_CLARIFYING,
+    /// so sorting is never corrupted by global clarify state.
+    /// </summary>
     public static int ExtractExamineNumber(string layerName)
     {
-        string fileStart = Globals.Instance.IS_CLARIFYING ? "Clarify" : "Examine";
-
-        if (layerName.StartsWith(fileStart) && int.TryParse(layerName.Substring(fileStart.Length), out int number))
+        const string prefix = "Examine";
+        if (layerName.StartsWith(prefix) &&
+            int.TryParse(layerName.Substring(prefix.Length), out int number))
             return number;
         return 0;
     }
 
-    private static void PruneEarlierExamineLayers(IReadOnlyList<TileMapLayer> examineLayers, int keepIndex)
+    /// <summary>
+    /// Frees layers at indices 0..(keepFromIndex - 1).
+    /// </summary>
+    private static void FreeLayersBefore(List<TileMapLayer> layers, int keepFromIndex)
     {
-        for (int index = 0; index < keepIndex; index++)
-        {
-            var layer = examineLayers[index];
-            if (GodotObject.IsInstanceValid(layer))
-                layer.QueueFree();
-        }
+        for (int i = 0; i < keepFromIndex; i++)
+            FreeExamineLayer(layers[i]);
     }
 
-    private static void QueueFreeExamine(TileMapLayer examineLayer)
+    private static void FreeExamineLayer(TileMapLayer layer)
     {
-        if (examineLayer == null)
+        if (layer == null || !GodotObject.IsInstanceValid(layer))
             return;
 
-        if (examineLayer is ExamineHandler examineHandler)
+        // Disable all processing on ExamineHandler subclasses before freeing
+        // so their _ExitTree cursor cleanup runs correctly.
+        if (layer is ExamineHandler handler)
         {
-            examineHandler.HoverEnabled = false;
-            examineHandler.SetProcessInput(false);
-            examineHandler.SetProcess(false);
+            handler.HoverEnabled = false;
+            handler.SetProcessInput(false);
+            handler.SetProcess(false);
         }
 
-        examineLayer.QueueFree();
+        layer.QueueFree();
     }
 }
