@@ -24,7 +24,8 @@
 [ext_resource type="Script" uid="uid://d36th4pyw0ejh" path="res://scripts/world/room2/letter/LetterExamine2.cs" id="19_yhq2u"]
 [ext_resource type="Script" uid="uid://vadrar516d2u" path="res://scripts/world/room2/globe/GlobeExamine1.cs" id="20_ihi4w"]
 [ext_resource type="Script" uid="uid://ctagrlmrih3hu" path="res://scripts/world/room2/letter/LetterExamine1.cs" id="20_w5hff"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="30_qxf5x"]
+[ext_resource type="Texture2D" uid="uid://bhno62tgvusqq" path="res://assets/images/core/shards/photo.png" id="26_ihi4w"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="30_qxf5x"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="31_oasvk"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="32_h6hnl"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_hix3k"]
@@ -1289,7 +1290,7 @@ tile_set = SubResource("TileSet_elej8")
 script = ExtResource("5_rr3dr")
 ExamineText = "\"A book is missing. The gap is exact — not scattered, not collapsed inward. Someone took one book.\""
 DialogueDuration = 5.0
-DialogueFontSize = 26
+DialogueFontSize = 24
 
 [node name="Phone" type="TileMapLayer" parent="Objects" unique_id=872612347]
 texture_filter = 1
@@ -1322,7 +1323,7 @@ tile_set = SubResource("TileSet_elej8")
 script = ExtResource("8_vyxdy")
 ExamineText = "\"An old phone. The kind with a satisfying click when it connects.\"|\"She used to love the sound of it ringing.\""
 DialogueDurationText = "4.0|3.0"
-DialogueFontSize = 27
+DialogueFontSize = 24
 
 [node name="Painting" type="TileMapLayer" parent="Objects" unique_id=1346424177]
 texture_filter = 1
@@ -1356,7 +1357,7 @@ tile_set = SubResource("TileSet_elej8")
 script = ExtResource("11_t8ro7")
 ExamineText = "(Two figures, the same height. 'Mara' and 'Ida.' Both of them careful, labeled so no one would forget.)|\"She always labeled her drawings.\""
 DialogueDurationText = "6.0|3.0"
-DialogueFontSize = 27
+DialogueFontSize = 24
 
 [node name="LeftChair" type="TileMapLayer" parent="Objects" unique_id=1126237310]
 texture_filter = 1
@@ -1520,11 +1521,16 @@ tile_map_data = PackedByteArray("AAAUABgAAAADAAkAAAALABYAAQAIAAkAAAALABcAAQAIAAo
 tile_set = ExtResource("1_j1llv")
 
 [node name="BrassKey" type="Sprite2D" parent="UI/Inventory" unique_id=152966316]
-modulate = Color(1, 1, 1, 0)
 position = Vector2(98.66669, 392.6667)
 rotation = 0.7853982
 scale = Vector2(0.13, 0.13)
 texture = ExtResource("30_qxf5x")
+
+[node name="Photo" type="Sprite2D" parent="UI/Inventory" unique_id=1616608412]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(157.33333, 393.33334)
+scale = Vector2(0.095, 0.095)
+texture = ExtResource("26_ihi4w")
 
 [node name="ClarityToggle" type="TileMapLayer" parent="UI" unique_id=2035719442]
 texture_filter = 1

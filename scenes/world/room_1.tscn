@@ -30,7 +30,7 @@
 [ext_resource type="Script" uid="uid://bm0gf0w0sjmvw" path="res://scripts/world/room1/calendar/CalendarClarify1.cs" id="22_xwh56"]
 [ext_resource type="Script" uid="uid://beetkefdsbd2d" path="res://scripts/world/room1/drawing/DrawingClarify1.cs" id="24_h80xr"]
 [ext_resource type="Script" uid="uid://druhh55hn7ugb" path="res://scripts/world/room1/drawer/DrawerExamine2.cs" id="28_f0ooq"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="30_f0ooq"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="30_f0ooq"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="32_kq8op"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="33_t5d1k"]
 

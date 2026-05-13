@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://dal8dcqe0vbar" path="res://resources/tilemaps/core.tres" id="1_wilut"]
 [ext_resource type="Texture2D" uid="uid://buk0t56mhihju" path="res://assets/images/bgs/Room_6.png" id="2_tcfi2"]
-[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/brass_key.png" id="3_exqx5"]
+[ext_resource type="Texture2D" uid="uid://b2wcw7jqpsrgp" path="res://assets/images/core/shards/brass_key.png" id="3_exqx5"]
 [ext_resource type="Script" uid="uid://djtmmilrt81by" path="res://scripts/ui/ClarityToggle.cs" id="4_ydxrx"]
 [ext_resource type="Texture2D" uid="uid://bfmel5fosknmo" path="res://assets/images/core/arrow.png" id="5_2tnpj"]
 [ext_resource type="Script" uid="uid://c5mk3c4lcoss" path="res://scripts/ui/RightArrow.cs" id="6_lk1sq"]

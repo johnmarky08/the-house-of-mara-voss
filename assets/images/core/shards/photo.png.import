@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2wcw7jqpsrgp"
-path="res://.godot/imported/brass_key.png-5ced3a8f7952b8c42f239e9e08d408bf.ctex"
+uid="uid://bhno62tgvusqq"
+path="res://.godot/imported/photo.png-ef5c1c9d5b2680136291e9ec0fa922d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/core/brass_key.png"
-dest_files=["res://.godot/imported/brass_key.png-5ced3a8f7952b8c42f239e9e08d408bf.ctex"]
+source_file="res://assets/images/core/shards/photo.png"
+dest_files=["res://.godot/imported/photo.png-ef5c1c9d5b2680136291e9ec0fa922d1.ctex"]
 
 [params]
 
