@@ -2,6 +2,10 @@ using Godot;
 
 public partial class Room4 : Node2D
 {
+	[ExportCategory("Door Transition")]
+	[Export(PropertyHint.File, "*.tscn")] public string DoorTargetScenePath = "res://scenes/world/Room4Puzzle.tscn";
+	[Export] public NodePath DoorClickAreaPath = "Door/Area2D";
+
 	[Export] public bool DebugHoverDetection = true;
 	[Export] public float HoverPaddingPixels = 14f;
 	[Export] public Vector2 HoverLabelNudge = new Vector2(3f, -14f);
@@ -68,7 +72,9 @@ public partial class Room4 : Node2D
 	private Tween _hoverTween;
 	private int _currentSequenceIndex = 0;
 	private AnimatedSprite2D _doorAnimation;
+	private Area2D _doorClickArea;
 	private bool _doorAnimationStarted = false;
+	private bool _doorUnlocked = false;
 	private Label _sentenceLabel;
 	private CanvasLayer _sentenceLayer;
 	private static readonly Vector2 SentencePosition = new Vector2(400, 80);
@@ -87,6 +93,10 @@ public partial class Room4 : Node2D
 			GD.PrintErr("[Room4] Door animation not found in scene!");
 		else
 			_doorAnimation.Visible = false;  // Hide initially
+
+		_doorClickArea = GetNodeOrNull<Area2D>(DoorClickAreaPath);
+		if (_doorClickArea == null)
+			GD.PrintErr($"[Room4] Door click area not found at path: {DoorClickAreaPath}");
 
 		// Create label for displaying the sentence as pictures are hovered
 		_sentenceLayer = GetNodeOrNull<CanvasLayer>("SentenceLayer");
@@ -213,7 +223,33 @@ public partial class Room4 : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
-		// Click handling removed — hover-only interaction
+		if (!_doorUnlocked || SceneManager.IsChanging)
+			return;
+
+		if (@event is not InputEventMouseButton mouseButton)
+			return;
+
+		if (!mouseButton.Pressed || mouseButton.ButtonIndex != MouseButton.Left)
+			return;
+
+		if (_doorAnimation == null || !_doorAnimation.Visible)
+			return;
+
+		if (_doorClickArea == null)
+			return;
+
+		Vector2 globalMouse = GetGlobalMousePosition();
+		if (!IsInsideArea2D(_doorClickArea, globalMouse, 0f))
+			return;
+
+		if (string.IsNullOrWhiteSpace(DoorTargetScenePath))
+		{
+			GD.PrintErr("[Room4] DoorTargetScenePath is empty.");
+			return;
+		}
+
+		SceneManager.ChangeScene(DoorTargetScenePath);
+		GetTree().Root.SetInputAsHandled();
 	}
 
 	private int GetHoveredIndex(Vector2 mousePosition)
@@ -406,8 +442,13 @@ public partial class Room4 : Node2D
 		tween.TweenCallback(Callable.From(() =>
 		{
 			_doorAnimation.Stop();
-			_doorAnimation.Frame = 4;
-			GD.Print("[Room4] door_animation stopped at frame 5");
+			int frameCount = 0;
+			if (animations.Length > 0)
+				frameCount = _doorAnimation.SpriteFrames.GetFrameCount(animations[0]);
+
+			_doorAnimation.Frame = Mathf.Max(0, frameCount - 1);
+			_doorUnlocked = true;
+			GD.Print($"[Room4] door_animation stopped at frame {_doorAnimation.Frame + 1}");
 		})).SetDelay(5.0 / animSpeed);
 	}
 }

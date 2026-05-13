@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="3_5nq8d"]
 [ext_resource type="Script" uid="uid://ecdcbl5wn8tq" path="res://scripts/world/room4/Room4.cs" id="4_room4"]
 [ext_resource type="Texture2D" uid="uid://dyw806qu1seua" path="res://assets/images/tilemaps/6frames-removebg-preview.png" id="5_x1n8o"]
+[ext_resource type="Script" uid="uid://db8xibb1usidi" path="res://scripts/world/room4/Door.cs" id="6_door_click"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i16n7"]
 atlas = ExtResource("2_dk3gh")
@@ -63,7 +64,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_6pvbv")
 }],
 "loop": true,
-"name": &"Mirror",
+"name": &"Drawer",
 "speed": 5.0
 }]
 
@@ -135,15 +136,16 @@ position = Vector2(1673.4443, -302.53088)
 scale = Vector2(0.99999887, 0.9999989)
 shape = SubResource("RectangleShape2D_hwbvp")
 
-[node name="Drawer" type="AnimatedSprite2D" parent="." unique_id=85872719]
+[node name="Drawer" type="Area2D" parent="." unique_id=1613011263]
 position = Vector2(102.000015, 347)
 scale = Vector2(0.2641258, 0.26939392)
+
+[node name="Drawer" type="AnimatedSprite2D" parent="Drawer" unique_id=85872719]
+scale = Vector2(0.9999998, 0.9999998)
 sprite_frames = SubResource("SpriteFrames_h6nac")
-animation = &"Mirror"
+animation = &"Drawer"
 
-[node name="Area2D" type="Area2D" parent="Drawer" unique_id=1613011263]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Drawer/Area2D" unique_id=1201892089]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drawer" unique_id=1201892089]
 position = Vector2(-5.679138, 720.135)
 scale = Vector2(0.9999992, 0.9999992)
 shape = SubResource("RectangleShape2D_m311v")
@@ -466,12 +468,13 @@ text = "come."
 
 [node name="Door" type="AnimatedSprite2D" parent="." unique_id=552685803]
 visible = false
-position = Vector2(972.00006, 516.20386)
-scale = Vector2(2.2994866, 2.333707)
+position = Vector2(951.00006, 431.99994)
+scale = Vector2(2.5541897, 3.3286617)
 sprite_frames = SubResource("SpriteFrames_1d0rm")
 animation = &"door_animation"
 frame = 3
 frame_progress = 0.97377676
+script = ExtResource("6_door_click")
 
 [node name="Area2D" type="Area2D" parent="Door" unique_id=309766117]
 
