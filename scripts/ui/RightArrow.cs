@@ -16,7 +16,7 @@ public partial class RightArrow : Area2D
             return;
 
         if (Globals.Instance != null)
-            Globals.Instance.SHARDS_COLLECTED[0] = true;
+            Globals.SHARDS_COLLECTED[0] = true;
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 

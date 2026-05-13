@@ -3,7 +3,7 @@ public partial class Room1 : ExamineHandler
 {
     public override void _Ready()
     {
-        if (Globals.Instance != null && Globals.Instance.SHARDS_COLLECTED[0])
+        if (Globals.Instance != null && Globals.SHARDS_COLLECTED[0])
         {
             var drawerExamine1 = GetNode<TileMapLayer>("Objects/DrawerFinal/Examine1");
             var drawerExamine2 = GetNode<TileMapLayer>("Objects/DrawerFinal/Examine2");
