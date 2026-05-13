@@ -9,6 +9,7 @@ public partial class Room1 : ExamineHandler
             var drawerExamine2 = GetNode<TileMapLayer>("Objects/DrawerFinal/Examine2");
             var brassKey = GetNode<Sprite2D>("UI/Inventory/BrassKey");
             var rightArrow = GetNode<Sprite2D>("UI/RightArrow");
+            var leftArrow = GetNode<Sprite2D>("UI/LeftArrow");
 
             drawerExamine1.Visible = false;
             drawerExamine1.QueueFree();

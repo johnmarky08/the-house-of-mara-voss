@@ -10,6 +10,7 @@ public partial class Globals : Node
 	[Export] public int CLARITY_TOGGLE_COUNT = 5;
 	[Export] public bool IS_CLARIFYING = false;
 	[Export] public Array<bool> SHARDS_COLLECTED = [false, false, false, false, false, false];
+	[Export] public bool PHOTO1_COLLECTED = false;
 
 	public override void _Ready()
 	{
