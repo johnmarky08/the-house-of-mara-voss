@@ -97,7 +97,7 @@ public partial class Photo1Reward : Area2D
 		if (Globals.Instance != null)
 			Globals.Instance.PHOTO1_COLLECTED = true;
 
-		Globals.Instance.SHARDS_COLLECTED[1] = true;
+		Globals.SHARDS_COLLECTED[1] = true;
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		SceneManager.ChangeScene(NextScenePath);
 	}

@@ -27,7 +27,7 @@ public partial class TableExamine1 : ExamineHandler
 
     protected override void OnExamineClicked()
     {
-        if (Globals.Instance != null && Globals.Instance.SHARDS_COLLECTED[1])
+        if (Globals.Instance != null && Globals.SHARDS_COLLECTED[1])
             return;
 
         string roomName = "Room2";
