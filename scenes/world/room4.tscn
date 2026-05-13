@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dj02dj2tf8axo" path="res://assets/images/tilemaps/Room_4-Objects.png" id="2_dk3gh"]
 [ext_resource type="Texture2D" uid="uid://cfyahns66bu8e" path="res://assets/images/bgs/BgRoom4.png" id="2_lvo7f"]
 [ext_resource type="FontFile" uid="uid://03rc7jgbslnc" path="res://assets/fonts/CormorantGaramond-VariableFont_wght.ttf" id="3_5nq8d"]
-[ext_resource type="Script" path="res://scripts/world/room4/Drawer.cs" id="4_2wr1s"]
 [ext_resource type="Script" uid="uid://ecdcbl5wn8tq" path="res://scripts/world/room4/Room4.cs" id="4_room4"]
 [ext_resource type="Texture2D" uid="uid://dyw806qu1seua" path="res://assets/images/tilemaps/6frames-removebg-preview.png" id="5_x1n8o"]
 
@@ -139,7 +138,6 @@ shape = SubResource("RectangleShape2D_hwbvp")
 [node name="Drawer" type="Area2D" parent="." unique_id=1613011263]
 position = Vector2(102.000015, 347)
 scale = Vector2(0.2641258, 0.26939392)
-script = ExtResource("4_2wr1s")
 
 [node name="Drawer" type="AnimatedSprite2D" parent="Drawer" unique_id=85872719]
 scale = Vector2(0.9999998, 0.9999998)
