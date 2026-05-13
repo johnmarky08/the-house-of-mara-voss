@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://qqsrimoosct4"]
+[gd_scene format=3 uid="uid://ccb8musp2uddw"]
 
 [ext_resource type="Script" uid="uid://ecdcbl5wn8tq" path="res://scripts/world/room4/Room4.cs" id="1_dk3gh"]
-[ext_resource type="Texture2D" uid="uid://dbvlhtkoulqh6" path="res://assets/images/bgs/Room_4_BG.png" id="1_vm8cx"]
 [ext_resource type="Texture2D" uid="uid://dj02dj2tf8axo" path="res://assets/images/tilemaps/Room_4-Objects.png" id="2_dk3gh"]
+[ext_resource type="Texture2D" uid="uid://cfyahns66bu8e" path="res://assets/images/bgs/BgRoom4.png" id="2_i16n7"]
+[ext_resource type="Texture2D" uid="uid://dyw806qu1seua" path="res://assets/images/tilemaps/6frames-removebg-preview.png" id="4_i16n7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjcun"]
 atlas = ExtResource("2_dk3gh")
@@ -71,16 +72,59 @@ size = Vector2(391.8575, 441.73273)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dnohf"]
 size = Vector2(32.734375, 58.125)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jtaa"]
+atlas = ExtResource("4_i16n7")
+region = Rect2(180, 10, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwbvp"]
+atlas = ExtResource("4_i16n7")
+region = Rect2(354, 10, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6nac"]
+atlas = ExtResource("4_i16n7")
+region = Rect2(6, 209, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m311v"]
+atlas = ExtResource("4_i16n7")
+region = Rect2(180, 209, 174, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnohf"]
+atlas = ExtResource("4_i16n7")
+region = Rect2(354, 209, 174, 199)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m3cdq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jtaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwbvp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6nac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m311v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnohf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3cdq"]
 size = Vector2(229.25, 393.75)
 
 [node name="Room4" type="Node2D" unique_id=1922872642]
 script = ExtResource("1_dk3gh")
 
-[node name="Room4Bg" type="Sprite2D" parent="." unique_id=2002605858]
-position = Vector2(575.25, 326.75)
-scale = Vector2(0.7470703, 0.62353516)
-texture = ExtResource("1_vm8cx")
+[node name="BgRoom4" type="Sprite2D" parent="." unique_id=299768535]
+position = Vector2(571.625, 327.5)
+scale = Vector2(0.7418567, 0.63769525)
+texture = ExtResource("2_i16n7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=85872719]
 position = Vector2(102.000015, 347)
@@ -194,6 +238,11 @@ shape = SubResource("RectangleShape2D_dnohf")
 
 [node name="Area2D13" type="Area2D" parent="." unique_id=1423665294]
 
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Area2D13" unique_id=489661983]
+position = Vector2(878, 419.00003)
+scale = Vector2(2.9202588, 3.017902)
+sprite_frames = SubResource("SpriteFrames_m3cdq")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D13" unique_id=743452270]
-position = Vector2(949.625, 318.875)
+position = Vector2(983, 416)
 shape = SubResource("RectangleShape2D_m3cdq")
