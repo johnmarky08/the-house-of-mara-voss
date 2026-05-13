@@ -77,7 +77,7 @@ public partial class Room1Puzzle : Area2D
 				if (localMouse.X >= -half.X && localMouse.X <= half.X && localMouse.Y >= -half.Y && localMouse.Y <= half.Y)
 				{
 					Globals.SHARDS_COLLECTED[0] = true;
-					SceneManager.ChangeScene("res://scenes/world/room_1.tscn");
+					SceneManager.ChangeScene("res://scenes/world/room_2.tscn");
 					GetViewport().SetInputAsHandled();
 					return;
 				}

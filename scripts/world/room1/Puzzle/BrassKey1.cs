@@ -20,6 +20,6 @@ public partial class BrassKey1 : Area2D
 
 		Globals.SHARDS_COLLECTED[0] = true;
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-		SceneManager.ChangeScene("res://scenes/world/room_1.tscn");
+		SceneManager.ChangeScene("res://scenes/world/room_2.tscn");
 	}
 }
